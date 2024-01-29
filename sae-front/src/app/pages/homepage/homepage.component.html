@@ -30,31 +30,26 @@
 <!-- Main content -->
 <section class="flex p-28">
   <div class="flex basis-1/4 flex-col">
-    <div>
-      <h3 class="text-2xl my-4">Affinez la recherche</h3>
-      <hr class="mr-10" />
-
+    <form [formGroup]="filtreForm" (ngSubmit)="refreshSearch()">
       <!-- Filter by date -->
       <div class="flex flex-col items-left my-10">
-        <label for="categorie" class="text-lg mb-2">Année</label>
+        <label class="text-lg mb-2">Année</label>
         <div class="flex">
           <div class="basis-1/2">
-            <label for="annee-min" class="text-sm">Année Min</label>
+            <label class="text-sm">Année Min</label>
             <input
               type="text"
-              id="annee-min"
-              name="annee-min"
+              formControlName="anneeMin"
               class="border p-1 rounded-md w-28"
             />
           </div>
 
           <!-- Année Max -->
           <div class="basis-1/2">
-            <label for="annee-max" class="text-sm">Année Max</label>
+            <label class="text-sm">Année Max</label>
             <input
               type="text"
-              id="annee-max"
-              name="annee-max"
+              formControlName="anneeMax"
               class="border p-1 rounded-md w-28"
             />
           </div>
@@ -63,12 +58,8 @@
 
       <!-- Filter by category -->
       <div class="flex flex-col items-left my-10">
-        <label for="categorie" class="text-lg mb-2">Catégorie</label>
-        <select
-          name="categorie"
-          id="categorie"
-          class="border p-1 rounded-md w-28"
-        >
+        <label class="text-lg mb-2">Catégorie</label>
+        <select formControlName="categorie" class="border p-1 rounded-md w-28">
           <option value="tous">Tous</option>
           <option value="roman">Roman</option>
           <option value="bd">BD</option>
@@ -79,41 +70,52 @@
 
       <!-- Filter by author -->
       <div class="flex flex-col items-left my-10">
-        <label for="auteur" class="text-lg mb-2">Auteur</label>
+        <label class="text-lg mb-2">Auteur</label>
         <div class="space-y-1">
-          <label for="auteur1" class="flex items-center">
-            <input type="checkbox" id="auteur1" name="auteur1" class="mr-1" />
-            Auteur 1
+          <label class="flex items-center" *ngFor="let auteur of auteurs">
+            <input type="checkbox" class="mr-1" />
+            {{ auteur.nom }}
           </label>
-          <label for="auteur2" class="flex items-center">
-            <input type="checkbox" id="auteur2" name="auteur2" class="mr-1" />
-            Auteur 2
+        </div>
+      </div>
+
+      <div formArrayName="auteurs">
+        <div
+          *ngFor="let auteur of formArr.controls; let i = index"
+          [formGroupName]="i"
+        >
+          <label>
+            <input type="checkbox" [formControlName]="auteurs[i].nom" />
+            {{ auteurs[i].nom }}
           </label>
         </div>
       </div>
 
       <!-- Filter by language -->
-      <div class="flex flex-col items-left my-10">
-        <label for="auteur" class="text-lg mb-2">Langue</label>
+      <!-- <div class="flex flex-col items-left my-10">
+        <label class="text-lg mb-2">Langue</label>
         <div class="space-y-1">
-          <label for="auteur1" class="flex items-center">
-            <input type="checkbox" id="auteur1" name="auteur1" class="mr-1" />
-            France
+          <label *ngFor="let langue of langues" class="flex items-center">
+            <input type="checkbox" [formControl]="langue" class="mr-1" />
+            {{ langue.name }}
             <span
               class="bg-blue-600 w-fit h-fit text-white rounded-md px-2 ml-4 text-sm"
-              >51</span
+              >{{ langue.count }}</span
             >
           </label>
         </div>
-      </div>
+      </div> -->
 
       <!-- Validate -->
       <div class="flex items-center justify-center">
-        <button class="text-white bg-blue-600 px-20 py-2 rounded-sm">
+        <button
+          type="submit"
+          class="text-white bg-blue-600 px-20 py-2 rounded-sm"
+        >
           Valider les filtres
         </button>
       </div>
-    </div>
+    </form>
   </div>
   <div class="flex flex-col basis-3/4">
     <h2 class="text-4xl font-bold">Résultats de la recherche</h2>
