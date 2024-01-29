@@ -8,16 +8,15 @@
 
   <!-- Informations sur l'auteur -->
   <div class="px-10">
-    <h2 class="text-xl font-semibold">Nom Prénom</h2>
-    <p class="text-gray-600">Date de naissance: 01/01/1900</p>
-    <p class="text-gray-600">Date de mort: 01/01/2000</p>
-    <p class="text-gray-600">Nationalité: Nationalité</p>
+    <h2 class="text-xl font-semibold">{{ author.prenom }} {{ author.nom }}</h2>
+    <p class="text-gray-600">Date de naissance: {{ author.dateNaiss }}</p>
+    <p class="text-gray-600">Date de mort: {{ author.dateDeces }}</p>
+    <p class="text-gray-600">Nationalité: {{ author.nationalite }}</p>
   </div>
   <div class="px-10">
     <h3 class="text-gray-700">Biographie:</h3>
     <p class="text-gray-600">
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod
-      tempor incididunt ut labore et dolore magna aliqua.
+      {{ author.description }}
     </p>
   </div>
 </div>
