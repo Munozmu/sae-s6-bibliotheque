@@ -1,0 +1,167 @@
+<!-- Bannière de recherche -->
+<div>
+  <div
+    class="relative bg-cover bg-center h-64 md:h-96"
+    style="
+      background-image: url('https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fimages.ladepeche.fr%2Fapi%2Fv1%2Fimages%2Fview%2F5c37c8743e454675ab438947%2Flarge%2Fimage.jpg&f=1&nofb=1&ipt=6511e580f7c1deff061e626190958c21d76ab090ab172fffcef1fe80e50357d5&ipo=images');
+    "
+  >
+    <div class="absolute inset-0 bg-black opacity-50"></div>
+
+    <!-- Contenu au milieu de la bannière -->
+    <div class="absolute inset-0 flex items-center justify-center">
+      <!-- Barre de recherche -->
+      <div class="bg-white rounded-md shadow-md flex">
+        <input
+          type="text"
+          class="w-full pl-10 pr-20 py-6 rounded-md"
+          placeholder="Rechercher..."
+        />
+        <button
+          class="py-3 px-8 rounded-r-md text-white bg-[#7e9164] hover:bg-[#515e41] transition-all"
+        >
+          Rechercher
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Main content -->
+<section class="flex p-28">
+  <div class="flex basis-1/4 flex-col">
+    <div>
+      <h3 class="text-2xl my-4">Affinez la recherche</h3>
+      <hr class="mr-10" />
+
+      <!-- Filter by date -->
+      <div class="flex flex-col items-left my-10">
+        <label for="categorie" class="text-lg mb-2">Année</label>
+        <div class="flex">
+          <div class="basis-1/2">
+            <label for="annee-min" class="text-sm">Année Min</label>
+            <input
+              type="text"
+              id="annee-min"
+              name="annee-min"
+              class="border p-1 rounded-md w-28"
+            />
+          </div>
+
+          <!-- Année Max -->
+          <div class="basis-1/2">
+            <label for="annee-max" class="text-sm">Année Max</label>
+            <input
+              type="text"
+              id="annee-max"
+              name="annee-max"
+              class="border p-1 rounded-md w-28"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- Filter by category -->
+      <div class="flex flex-col items-left my-10">
+        <label for="categorie" class="text-lg mb-2">Catégorie</label>
+        <select
+          name="categorie"
+          id="categorie"
+          class="border p-1 rounded-md w-28"
+        >
+          <option value="tous">Tous</option>
+          <option value="roman">Roman</option>
+          <option value="bd">BD</option>
+          <option value="manga">Manga</option>
+          <option value="essai">Essai</option>
+        </select>
+      </div>
+
+      <!-- Filter by author -->
+      <div class="flex flex-col items-left my-10">
+        <label for="auteur" class="text-lg mb-2">Auteur</label>
+        <div class="space-y-1">
+          <label for="auteur1" class="flex items-center">
+            <input type="checkbox" id="auteur1" name="auteur1" class="mr-1" />
+            Auteur 1
+          </label>
+          <label for="auteur2" class="flex items-center">
+            <input type="checkbox" id="auteur2" name="auteur2" class="mr-1" />
+            Auteur 2
+          </label>
+        </div>
+      </div>
+
+      <!-- Filter by language -->
+      <div class="flex flex-col items-left my-10">
+        <label for="auteur" class="text-lg mb-2">Langue</label>
+        <div class="space-y-1">
+          <label for="auteur1" class="flex items-center">
+            <input type="checkbox" id="auteur1" name="auteur1" class="mr-1" />
+            France
+            <span
+              class="bg-blue-600 w-fit h-fit text-white rounded-md px-2 ml-4 text-sm"
+              >51</span
+            >
+          </label>
+        </div>
+      </div>
+
+      <!-- Validate -->
+      <div class="flex items-center justify-center">
+        <button class="text-white bg-blue-600 px-20 py-2 rounded-sm">
+          Valider les filtres
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="flex flex-col basis-3/4">
+    <h2 class="text-4xl font-bold">Résultats de la recherche</h2>
+    <h2 class="text-2xl">pour " art de la guerre "</h2>
+    <!-- Pagination and result numbers -->
+    <div class="flex py-6">
+      <div class="flex basis-1/4">
+        <p>Nombre de livres : 123</p>
+      </div>
+      <div class="flex basis-3/4">
+        <nav aria-label="Page navigation example">
+          <ul class="inline-flex -space-x-px text-sm">
+            <li>
+              <a
+                href="#"
+                class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700"
+                >Précédent</a
+              >
+            </li>
+            <li>
+              <a
+                href="#"
+                class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700"
+                >1</a
+              >
+            </li>
+
+            <li>
+              <a
+                href="#"
+                class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700"
+                >Suivant</a
+              >
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Results -->
+    <div class="flex flex-col">
+      <app-book-search-card class="w-full"></app-book-search-card>
+
+      <!-- Aucun résultat -->
+      <div class="w-full text-center py-20">
+        <h3 class="text-2xl">Aucun résultat</h3>
+        <span class="text-gray-400 italic">Essayez de changer les filtres</span>
+      </div>
+    </div>
+  </div>
+</section>
