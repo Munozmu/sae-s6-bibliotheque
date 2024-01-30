@@ -12,7 +12,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ApiResource(
     formats: ['json'],
-    normalizationContext: ['groups' => ['read:book']]
+    normalizationContext: ['groups' => ['book']]
 )]
 #[ORM\Entity(repositoryClass: LivreRepository::class)]
 class Livre
@@ -20,31 +20,31 @@ class Livre
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['read:book', 'read:book:resa'])]
+    #[Groups(['book', 'reservation', 'emprunt'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['read:book', 'read:book:resa'])]
+    #[Groups(['book', 'reservation', 'emprunt'])]
     private ?string $titre = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
-    #[Groups(['read:book', 'read:book:resa'])]
+    #[Groups(['book', 'reservation', 'emprunt'])]
     private ?\DateTimeInterface $dateSortie = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['read:book', 'read:book:resa'])]
+    #[Groups(['book', 'reservation', 'emprunt'])]
     private ?string $langue = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['read:book', 'read:book:resa'])]
+    #[Groups(['book', 'reservation', 'emprunt'])]
     private ?string $photoCouverture = null;
 
     #[ORM\OneToMany(mappedBy: 'correspondre', targetEntity: Emprunt::class)]
-    #[Groups(['read:book'])]
+    #[Groups(['book'])]
     private Collection $emprunts;
 
     #[ORM\ManyToMany(targetEntity: Categorie::class, inversedBy: 'livres')]
-    #[Groups(['read:book'])]
+    #[Groups(['book'])]
     private Collection $categorie;
 
     public function __construct()

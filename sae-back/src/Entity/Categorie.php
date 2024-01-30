@@ -5,20 +5,27 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\CategorieRepository;
+use Symfony\Component\Serializer\Annotation\Groups;
 
-#[ApiResource(formats: ['json'])]
+#[ApiResource(
+    formats: ['json'],
+    normalizationContext: ['groups' => ['categorie']]
+)]
 #[ORM\Entity(repositoryClass: CategorieRepository::class)]
 class Categorie
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['categorie'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['categorie'])]
     private ?string $nom = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['categorie'])]
     private ?string $description = null;
 
     public function getId(): ?int

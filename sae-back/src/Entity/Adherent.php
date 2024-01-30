@@ -2,63 +2,80 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Metadata\ApiResource;
-use Doctrine\ORM\Mapping as ORM;
-use App\Repository\AdherentRepository;
 use DateTimeInterface;
-use Doctrine\Common\Collections\Collection;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\DBAL\Types\Types;
+use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Metadata\ApiResource;
+use App\Repository\AdherentRepository;
+use Doctrine\Common\Collections\Collection;
 use phpDocumentor\Reflection\Types\Integer;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
-#[ApiResource(formats: ['json'])]
+#[ApiResource(
+    formats: ['json'],
+    normalizationContext: ['adherent']
+)]
 #[ORM\Entity(repositoryClass: AdherentRepository::class)]
 class Adherent implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['adherent', 'reservation', 'emprunt'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
+    #[Groups(['adherent', 'reservation', 'emprunt'])]
     private ?string $email = null;
 
     #[ORM\Column]
+    #[Groups(['adherent'])]
     private array $roles = [];
 
     /**
      * @var string The hashed password
      */
     #[ORM\Column]
+    #[Groups(['adherent'])]
     private ?string $password = null;
 
     #[ORM\Column()]
+    #[Groups(['adherent', 'reservation', 'emprunt'])]
     private ?string $nom = null;
 
     #[ORM\Column()]
+    #[Groups(['adherent', 'reservation', 'emprunt'])]
     private ?string $prenom = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Groups(['adherent'])]
     private ?\DateTimeInterface $dateNaiss = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Groups(['adherent', 'reservation', 'emprunt'])]
     private ?\DateTimeInterface $dateAdhesion = null;
 
     #[ORM\Column()]
+    #[Groups(['adherent', 'reservation', 'emprunt'])]
     private ?string $adressePostale = null;
 
     #[ORM\Column()]
+    #[Groups(['adherent', 'reservation', 'emprunt'])]
     private ?int $numTel = null;
 
     #[ORM\Column()]
+    #[Groups(['adherent'])]
     private ?string $photo = null;
 
     #[ORM\OneToMany(mappedBy: 'reserver_par', targetEntity: Reservations::class)]
+    #[Groups(['adherent'])]
     private Collection $reservations;
 
     #[ORM\OneToMany(mappedBy: 'adherent', targetEntity: Emprunt::class)]
+    #[Groups(['adherent'])]
     private Collection $emprunts;
 
     public function __construct()
