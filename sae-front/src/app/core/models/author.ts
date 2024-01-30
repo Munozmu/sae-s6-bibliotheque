@@ -1,6 +1,6 @@
 export interface Author {
   id: number;
-  nom?: string;
+  nom: string;
   prenom?: string;
   dateNaiss?: Date;
   dateDeces?: Date;

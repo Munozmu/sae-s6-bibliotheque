@@ -3,6 +3,7 @@ import { BookSearchCardComponent } from '../../components/shared/book-search-car
 import { BookService } from '../../core/services/book.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule, FormControl, AbstractControl, FormArray } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { Author } from '../../core/models/author';
 
 @Component({
   selector: 'app-homepage',
@@ -13,49 +14,39 @@ import { CommonModule } from '@angular/common';
 })
 export class HomepageComponent implements OnInit {
 
-  filtreForm: FormGroup;
+  rechercheForm: FormGroup;
 
-  constructor(
-    private bookService: BookService,
-    private formBuilder: FormBuilder
-  ) {
-    this.filtreForm = this.formBuilder.group({
-      anneeMin: [''],
-      anneeMax: [''],
-      categorie: ['tous'],
-      auteurs: this.formBuilder.array([])
+
+  // Exemple de données d'auteurs (vous pouvez remplacer par les auteurs réels de votre application)
+  auteurs = ['Auteur 1', 'Auteur 2', 'Auteur 3'];
+
+  constructor(private fb: FormBuilder) {
+    // Initialisation du formulaire avec les champs et les validateurs
+    this.rechercheForm = this.fb.group({
+      titre: [''],
+      auteur: [''],
+      dateMin: [''],
+      dateMax: ['']
     });
   }
-
-  auteurs = [
-    { id: 1, nom: 'Hugo' },
-    { id: 2, nom: 'Zola' },
-    { id: 3, nom: 'Maupassant' },
-  ]
-
 
   ngOnInit(): void {
-    this.bookService.getAllBooks().subscribe((books) => {
-      console.log(books);
-    }
-    );
-    this.filtreForm.valueChanges.subscribe(() => {
-      console.log(this.filtreForm.value);
-    });
-
-    // Ajouter les auteurs dans le formulaire
-    this.auteurs.forEach((auteur, i) => {
-      let group = this.formBuilder.group({});
-      group.addControl(this.auteurs[i].nom, this.formBuilder.control(false));
-      this.formArr.push(group);
-    });
   }
 
-  get formArr() {
-    return this.filtreForm.get('auteurs') as FormArray;
+  // Méthode déclenchée lors de la soumission du formulaire de recherche
+  rechercherLivres(): void {
+    // Accéder aux valeurs du formulaire
+    const values = this.rechercheForm.value;
+
+    // Ici, vous pouvez implémenter la logique de recherche en utilisant les filtres
+    // (par exemple, appeler un service pour obtenir les résultats de la recherche)
+    console.log('Titre:', values.titre);
+    console.log('Auteur:', values.auteur);
+    console.log('Date Min:', values.dateMin);
+    console.log('Date Max:', values.dateMax);
   }
 
-  refreshSearch() {
-    console.log("refreshSearch");
-  }
+
+
+
 }

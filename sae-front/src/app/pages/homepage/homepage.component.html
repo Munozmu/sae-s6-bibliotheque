@@ -30,91 +30,24 @@
 <!-- Main content -->
 <section class="flex p-28">
   <div class="flex basis-1/4 flex-col">
-    <form [formGroup]="filtreForm" (ngSubmit)="refreshSearch()">
-      <!-- Filter by date -->
-      <div class="flex flex-col items-left my-10">
-        <label class="text-lg mb-2">Année</label>
-        <div class="flex">
-          <div class="basis-1/2">
-            <label class="text-sm">Année Min</label>
-            <input
-              type="text"
-              formControlName="anneeMin"
-              class="border p-1 rounded-md w-28"
-            />
-          </div>
+    <form [formGroup]="rechercheForm" (ngSubmit)="rechercherLivres()">
+      <label for="titre">Titre:</label>
+      <input type="text" id="titre" formControlName="titre" />
 
-          <!-- Année Max -->
-          <div class="basis-1/2">
-            <label class="text-sm">Année Max</label>
-            <input
-              type="text"
-              formControlName="anneeMax"
-              class="border p-1 rounded-md w-28"
-            />
-          </div>
-        </div>
-      </div>
+      <label for="auteur">Auteur:</label>
+      <!-- Utilisation de la directive *ngFor pour générer les options du menu déroulant -->
+      <select id="auteur" formControlName="auteur">
+        <option value="">Sélectionnez un auteur</option>
+        <option *ngFor="let a of auteurs" [value]="a">{{ a }}</option>
+      </select>
 
-      <!-- Filter by category -->
-      <div class="flex flex-col items-left my-10">
-        <label class="text-lg mb-2">Catégorie</label>
-        <select formControlName="categorie" class="border p-1 rounded-md w-28">
-          <option value="tous">Tous</option>
-          <option value="roman">Roman</option>
-          <option value="bd">BD</option>
-          <option value="manga">Manga</option>
-          <option value="essai">Essai</option>
-        </select>
-      </div>
+      <label for="dateMin">Date Min:</label>
+      <input type="number" id="dateMin" formControlName="dateMin" />
 
-      <!-- Filter by author -->
-      <div class="flex flex-col items-left my-10">
-        <label class="text-lg mb-2">Auteur</label>
-        <div class="space-y-1">
-          <label class="flex items-center" *ngFor="let auteur of auteurs">
-            <input type="checkbox" class="mr-1" />
-            {{ auteur.nom }}
-          </label>
-        </div>
-      </div>
+      <label for="dateMax">Date Max:</label>
+      <input type="number" id="dateMax" formControlName="dateMax" />
 
-      <div formArrayName="auteurs">
-        <div
-          *ngFor="let auteur of formArr.controls; let i = index"
-          [formGroupName]="i"
-        >
-          <label>
-            <input type="checkbox" [formControlName]="auteurs[i].nom" />
-            {{ auteurs[i].nom }}
-          </label>
-        </div>
-      </div>
-
-      <!-- Filter by language -->
-      <!-- <div class="flex flex-col items-left my-10">
-        <label class="text-lg mb-2">Langue</label>
-        <div class="space-y-1">
-          <label *ngFor="let langue of langues" class="flex items-center">
-            <input type="checkbox" [formControl]="langue" class="mr-1" />
-            {{ langue.name }}
-            <span
-              class="bg-blue-600 w-fit h-fit text-white rounded-md px-2 ml-4 text-sm"
-              >{{ langue.count }}</span
-            >
-          </label>
-        </div>
-      </div> -->
-
-      <!-- Validate -->
-      <div class="flex items-center justify-center">
-        <button
-          type="submit"
-          class="text-white bg-blue-600 px-20 py-2 rounded-sm"
-        >
-          Valider les filtres
-        </button>
-      </div>
+      <button type="submit">Rechercher</button>
     </form>
   </div>
   <div class="flex flex-col basis-3/4">
