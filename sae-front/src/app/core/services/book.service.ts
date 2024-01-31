@@ -17,20 +17,15 @@ export class BookService {
   ) { }
 
   getAllBooks(): Observable<Book[]> {
-    //TODO: implement this
-    return of([]);
+    return this.http.get<Book[]>(`${this.apiUrl}/livres`);
   }
 
   getAllCategories(): Observable<string[]> {
-    return of(['cat1', 'cat2', 'cat3']);
+    return this.http.get<string[]>(`${this.apiUrl}/categories`);
   }
 
   getAllAuthors(): Observable<Author[]> {
-    return of([
-      { id: 1, nom: 'Hugo' },
-      { id: 2, nom: 'Zola' },
-      { id: 3, nom: 'Maupassant' },
-    ]);
+    return this.http.get<Author[]>(`${this.apiUrl}/auteurs`);
   }
 
 
