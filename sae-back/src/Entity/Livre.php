@@ -52,6 +52,10 @@ class Livre
     #[Groups(['book'])]
     private Collection $categories;
 
+    #[ORM\Column(type: Types::TEXT)]
+    #[Groups(['book'])]
+    private ?string $resume = null;
+
     public function __construct()
     {
         $this->emprunts = new ArrayCollection();
@@ -196,5 +200,17 @@ class Livre
     public function __toString()
     {
         return $this->titre;
+    }
+
+    public function getResume(): ?string
+    {
+        return $this->resume;
+    }
+
+    public function setResume(string $resume): static
+    {
+        $this->resume = $resume;
+
+        return $this;
     }
 }

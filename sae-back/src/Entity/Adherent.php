@@ -8,15 +8,16 @@ use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\AdherentRepository;
 use Doctrine\Common\Collections\Collection;
-use phpDocumentor\Reflection\Types\Integer;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ApiResource(
     formats: ['json'],
-    normalizationContext: ['adherent']
+    normalizationContext: ['groups' => 'adherent'],
+    denormalizationContext: ['groups' => 'adherent']
 )]
 #[ORM\Entity(repositoryClass: AdherentRepository::class)]
 class Adherent implements UserInterface, PasswordAuthenticatedUserInterface
@@ -42,45 +43,50 @@ class Adherent implements UserInterface, PasswordAuthenticatedUserInterface
     #[Groups(['adherent'])]
     private ?string $password = null;
 
-    #[ORM\Column()]
-    #[Groups(['adherent', 'reservation', 'emprunt', 'book'])]
-    private ?string $nom = null;
 
-    #[ORM\Column()]
-    #[Groups(['adherent', 'reservation', 'emprunt', 'book'])]
-    private ?string $prenom = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
-    #[Groups(['adherent'])]
-    private ?\DateTimeInterface $dateNaiss = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
-    #[Groups(['adherent', 'reservation', 'emprunt'])]
-    private ?\DateTimeInterface $dateAdhesion;
-
-    #[ORM\Column()]
-    #[Groups(['adherent', 'reservation', 'emprunt'])]
-    private ?string $adressePostale = null;
-
-    #[ORM\Column()]
-    #[Groups(['adherent', 'reservation', 'emprunt', 'book'])]
-    private ?int $numTel = null;
-
-    #[ORM\Column()]
-    #[Groups(['adherent'])]
-    private ?string $photo = null;
 
     #[ORM\OneToMany(mappedBy: 'reserver_par', targetEntity: Reservations::class)]
     #[Groups(['adherent'])]
     private Collection $reservations;
 
     #[ORM\OneToMany(mappedBy: 'adherent', targetEntity: Emprunt::class)]
+    #[Assert\Count(
+        min: 0,
+        max: 3,
+        maxMessage: 'Vous nous pouvez pas emprunter plus de 3 livres'
+    )]
     #[Groups(['adherent'])]
     private Collection $emprunts;
 
+    #[ORM\Column(length: 100)]
+    #[Groups(['adherent', 'reservation', 'emprunt', 'book'])]
+    private ?string $nom = null;
+
+    #[ORM\Column(length: 100)]
+    #[Groups(['adherent', 'reservation', 'emprunt', 'book'])]
+    private ?string $prenom = null;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Groups(['adherent', 'reservation', 'emprunt', 'book'])]
+    private ?\DateTimeInterface $dateNaiss = null;
+
+    #[ORM\Column(length: 255)]
+    #[Groups(['adherent'])]
+    private ?string $adressePostale = null;
+
+    #[ORM\Column(length: 20)]
+    #[Groups(['adherent', 'reservation', 'emprunt', 'book'])]
+    private ?string $numTel = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['adherent'])]
+    private ?string $photo = null;
+
     public function __construct()
     {
-        $this->dateAdhesion = new \DateTime();
+        // $this->dateAdhesion = new \DateTime();
         $this->reservations = new ArrayCollection();
         $this->emprunts = new ArrayCollection();
     }
@@ -90,40 +96,8 @@ class Adherent implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->id;
     }
 
-    public function getNom(): ?string
-    {
-        return $this->nom;
-    }
 
-    public function getPrenom(): ?string
-    {
-        return $this->prenom;
-    }
 
-    public function getDateNaiss(): ?DateTimeInterface
-    {
-        return $this->dateNaiss;
-    }
-
-    public function getDateAdhesion(): ?DateTimeInterface
-    {
-        return $this->dateAdhesion;
-    }
-
-    public function getAdresse(): ?string
-    {
-        return $this->adressePostale;
-    }
-
-    public function getNumTel(): ?int
-    {
-        return $this->numTel;
-    }
-
-    public function getPhoto(): ?string
-    {
-        return $this->photo;
-    }
 
     public function getEmail(): ?string
     {
@@ -250,8 +224,80 @@ class Adherent implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function __toString()
+    // public function __toString()
+    // {
+    //     return $this->nom + $this->prenom;
+    // }
+
+    public function getNom(): ?string
     {
-        return $this->nom + $this->prenom;
+        return $this->nom;
+    }
+
+    public function setNom(string $nom): static
+    {
+        $this->nom = $nom;
+
+        return $this;
+    }
+
+    public function getPrenom(): ?string
+    {
+        return $this->prenom;
+    }
+
+    public function setPrenom(string $prenom): static
+    {
+        $this->prenom = $prenom;
+
+        return $this;
+    }
+
+    public function getDateNaiss(): ?\DateTimeInterface
+    {
+        return $this->dateNaiss;
+    }
+
+    public function setDateNaiss(\DateTimeInterface $dateNaiss): static
+    {
+        $this->dateNaiss = $dateNaiss;
+
+        return $this;
+    }
+
+    public function getAdressePostale(): ?string
+    {
+        return $this->adressePostale;
+    }
+
+    public function setAdressePostale(string $adressePostale): static
+    {
+        $this->adressePostale = $adressePostale;
+
+        return $this;
+    }
+
+    public function getNumTel(): ?string
+    {
+        return $this->numTel;
+    }
+
+    public function setNumTel(string $numTel): static
+    {
+        $this->numTel = $numTel;
+
+        return $this;
+    }
+
+    public function getPhoto(): ?string
+    {
+        return $this->photo;
+    }
+
+    public function setPhoto(?string $photo): static
+    {
+        $this->photo = $photo;
+
+        return $this;
     }
 }
