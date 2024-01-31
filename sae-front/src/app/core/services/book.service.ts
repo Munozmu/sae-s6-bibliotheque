@@ -20,6 +20,10 @@ export class BookService {
     return this.http.get<Book[]>(`${this.apiUrl}/livres`);
   }
 
+  getBookById(id: number): Observable<Book> {
+    return this.http.get<Book>(`${this.apiUrl}/livres/${id}`);
+  }
+
   getAllCategories(): Observable<string[]> {
     return this.http.get<string[]>(`${this.apiUrl}/categories`);
   }
