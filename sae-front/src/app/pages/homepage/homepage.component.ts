@@ -3,6 +3,8 @@ import { BookSearchCardComponent } from '../../components/shared/book-search-car
 import { FormBuilder, FormGroup, ReactiveFormsModule, FormControl, AbstractControl, FormArray, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AuthorService } from '../../core/services/author.service';
+import { Author } from '../../core/models/author';
 
 @Component({
   selector: 'app-homepage',
@@ -19,10 +21,11 @@ export class HomepageComponent implements OnInit {
 
 
   // Fake datas
-  auteurs = ['Auteur 1', 'Auteur 2', 'Auteur 3'];
+  auteurs: string[] = [];
   categories = ['Catégorie 1', 'Catégorie 2', 'Catégorie 3'];
 
   constructor(
+    private authorService: AuthorService,
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router
@@ -59,6 +62,13 @@ export class HomepageComponent implements OnInit {
       }
       );
 
+    // Get all authors
+    this.authorService.getAllAuthors().subscribe(
+      auteurs => {
+        this.auteurs = auteurs.map(auteur => auteur.nom + ' ' + auteur.prenom);
+      }
+    );
+
 
   }
 
@@ -68,7 +78,14 @@ export class HomepageComponent implements OnInit {
    * Change URL and launch search
    */
   launchSearch() {
-    this.router.navigate(['/search'], { queryParams: { keyword: this.searchBarValue, auteur: this.rechercheForm.value.auteur, dateMin: this.rechercheForm.value.dateMin, dateMax: this.rechercheForm.value.dateMax } });
+    this.router.navigate(['/search'], {
+      queryParams: {
+        keyword: this.searchBarValue,
+        auteur: this.rechercheForm.value.auteur,
+        dateMin: this.rechercheForm.value.dateMin,
+        dateMax: this.rechercheForm.value.dateMax
+      }
+    });
     this.isSearchLaunched = true;
   }
 
