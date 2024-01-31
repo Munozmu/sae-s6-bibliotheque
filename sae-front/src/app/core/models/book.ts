@@ -7,4 +7,5 @@ export interface Book {
   langue?: string;
   photoCouverture?: string;
   auteurs: Author[];
+  resume?: string;
 }

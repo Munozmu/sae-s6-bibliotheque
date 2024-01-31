@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthorService } from '../../core/services/author.service';
 import { Author } from '../../core/models/author';
+import { CategoriesService } from '../../core/services/categories.service';
 
 @Component({
   selector: 'app-homepage',
@@ -22,10 +23,11 @@ export class HomepageComponent implements OnInit {
 
   // Fake datas
   auteurs: string[] = [];
-  categories = ['Catégorie 1', 'Catégorie 2', 'Catégorie 3'];
+  categories: string[] = [];
 
   constructor(
     private authorService: AuthorService,
+    private categorieService: CategoriesService,
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router
@@ -69,6 +71,12 @@ export class HomepageComponent implements OnInit {
       }
     );
 
+    // Get all categories
+    this.categorieService.getAllCategories().subscribe(
+      categories => {
+        this.categories = categories.map(categorie => categorie.nom);
+      }
+    );
 
   }
 
