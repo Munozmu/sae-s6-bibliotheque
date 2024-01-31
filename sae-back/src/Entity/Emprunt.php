@@ -2,32 +2,41 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Metadata\ApiResource;
-use App\Repository\EmpruntRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Metadata\ApiResource;
+use App\Repository\EmpruntRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Serializer\Annotation\Groups;
 
-#[ApiResource(formats: ['json'])]
+#[ApiResource(
+    formats: ['json'],
+    normalizationContext: ['groups' => ['emprunt']]
+)]
 #[ORM\Entity(repositoryClass: EmpruntRepository::class)]
 class Emprunt
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['emprunt', 'adherent', 'book'])]
     private ?int $id = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Groups(['emprunt', 'adherent', 'book'])]
     private ?\DateTimeInterface $dateEmprunt = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Groups(['emprunt', 'adherent', 'book'])]
     private ?\DateTimeInterface $dateRetour = null;
 
     #[ORM\ManyToOne(inversedBy: 'emprunts')]
+    #[Groups(['emprunt'])]
     private ?Livre $correspondre = null;
 
     #[ORM\ManyToOne(inversedBy: 'emprunts')]
+    #[Groups(['emprunt', 'book'])]
     private ?Adherent $adherent = null;
 
 

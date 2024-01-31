@@ -4,5 +4,6 @@ import { BookDetailsComponent } from './pages/book-details/book-details.componen
 
 export const routes: Routes = [
   { path: '', component: HomepageComponent },
+  { path: 'search', component: HomepageComponent },
   { path: 'book/:id', component: BookDetailsComponent },
 ];
