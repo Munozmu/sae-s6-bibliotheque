@@ -1,0 +1,171 @@
+<div class="flex flex-col justify-center items-center h-full py-20 px-40">
+  <!-- TABS NAVIGATION -->
+  <div class="w-full">
+    <div
+      class="text-sm font-medium text-center text-gray-500 border-b border-gray-200"
+    >
+      <ul class="flex flex-wrap -mb-px">
+        <li class="me-2" *ngFor="let t of tabs; let i = index">
+          <button
+            (click)="changeTab(t.link)"
+            [ngClass]="
+              currentTab === t.link
+                ? 'inline-block p-4 text-blue-600 border-b-2 border-blue-600 rounded-t-lg active '
+                : 'inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300'
+            "
+          >
+            {{ t.title }}
+          </button>
+        </li>
+
+        <li>
+          <a
+            class="inline-block p-4 text-gray-400 rounded-t-lg cursor-not-allowed"
+            >Mes emprunts</a
+          >
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="w-full mt-8 pb-4 border-b flex items-center gap-10">
+    <div>
+      <img
+        class="rounded-full w-32 h-32 object-cover"
+        src="https://cdn.drivek.com/configurator-imgs/cars/fr/Original/AUDI/S3/39766_SEDAN-4-DOORS/audi-s3-sedan-2020-front-side-1.jpg"
+        alt="Image de profil"
+      />
+    </div>
+    <div>
+      <h1 class="text-3xl font-semibold">Mon compte</h1>
+      <h1 class="text-2xl font-light">Gabin Munoz</h1>
+      <span class="text-sm">Membre depuis juillet 2023</span>
+    </div>
+  </div>
+
+  <!-- Profile section -->
+  @if (currentTab === 'profile') {
+  <form class="w-full">
+    <div class="w-full my-5">
+      <h3 class="text-xl">Modifier vos informations</h3>
+      <span class="text-sm font-light text-gray-500"
+        >Pensez à sauvegarder après modification</span
+      >
+    </div>
+    <!-- Nom et Prénom sur la même ligne -->
+    <div class="flex mb-4">
+      <div class="w-1/2 mr-2">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="nom">
+          Nom
+        </label>
+        <input
+          class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          id="nom"
+          type="text"
+          placeholder="Votre nom"
+        />
+      </div>
+      <div class="w-1/2 ml-2">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="prenom">
+          Prénom
+        </label>
+        <input
+          class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          id="prenom"
+          type="text"
+          placeholder="Votre prénom"
+        />
+      </div>
+    </div>
+
+    <!-- Adresse et Téléphone sur la même ligne -->
+    <div class="flex mb-4">
+      <div class="w-1/2 mr-2">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="adresse">
+          Adresse
+        </label>
+        <input
+          class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          id="adresse"
+          type="text"
+          placeholder="Votre adresse"
+        />
+      </div>
+      <div class="w-1/2 ml-2">
+        <label
+          class="block text-gray-700 text-sm font-bold mb-2"
+          for="telephone"
+        >
+          Téléphone
+        </label>
+        <input
+          class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          id="telephone"
+          type="tel"
+          placeholder="Votre téléphone"
+        />
+      </div>
+    </div>
+
+    <!-- Mot de passe et Confirmation sur la même ligne -->
+    <div class="flex mb-4">
+      <div class="w-1/2 mr-2">
+        <label
+          class="block text-gray-700 text-sm font-bold mb-2"
+          for="motDePasse"
+        >
+          Mot de passe
+        </label>
+        <input
+          class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          id="motDePasse"
+          type="password"
+          placeholder="Votre mot de passe"
+        />
+      </div>
+      <div class="w-1/2 ml-2">
+        <label
+          class="block text-gray-700 text-sm font-bold mb-2"
+          for="confirmationMotDePasse"
+        >
+          Confirmation mot de passe
+        </label>
+        <input
+          class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          id="confirmationMotDePasse"
+          type="password"
+          placeholder="Confirmez votre mot de passe"
+        />
+      </div>
+    </div>
+
+    <!-- Bouton Soumettre -->
+    <div class="flex items-center justify-end">
+      <button
+        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+        type="button"
+      >
+        Soumettre
+      </button>
+    </div>
+  </form>
+  } @else {
+  <div class="w-full flex flex-col">
+    <h1 class="text-3xl font-semibold my-4">Mes réservations</h1>
+    <div class="grid gap-10 grid-cols-5">
+      <app-book-card-small></app-book-card-small>
+      <app-book-card-small></app-book-card-small>
+      <app-book-card-small></app-book-card-small>
+    </div>
+  </div>
+  }
+
+  <!-- TODO: Check if there was a reservation
+  <div class="w-full mt-8 lg:my-14 pb-2 border-b">
+    <h1 class="text-xl md:text-3xl uppercase">Réservation effectuées</h1>
+  </div>
+  <div class="grid gap-10 grid-cols-3">
+    <app-book-card-small></app-book-card-small>
+    <app-book-card-small></app-book-card-small>
+    <app-book-card-small></app-book-card-small>
+  </div> -->
+</div>

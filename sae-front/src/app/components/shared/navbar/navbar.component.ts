@@ -1,15 +1,16 @@
 import { Component } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { LoginModalComponent } from "../login-modal/login-modal.component";
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
+  imports: [RouterModule, LoginModalComponent, CommonModule],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss',
-  imports: [LoginModalComponent, CommonModule]
 })
-export class NavbarComponent {
+export class NavbarComponent {}
 
   isLoginModalDisplayed: boolean = false;
 
