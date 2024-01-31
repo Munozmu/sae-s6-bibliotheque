@@ -4,10 +4,15 @@
     <nav>
       <ol class="inline-flex items-center space-x-1">
         <li>
-          <a href="" class="underline text-blue-500">Recherche</a>
+          <a
+            class="underline text-blue-500"
+            [routerLink]="['/']"
+            routerLinkActive="router-link-active"
+            >Recherche</a
+          >
           <span class="text-gray-300 px-2">></span>
         </li>
-        <li>Nom du livre</li>
+        <li>{{ currentBook.titre }}</li>
       </ol>
     </nav>
   </div>
@@ -26,10 +31,13 @@
     <div class="p-8 flex flex-col w-full py-10">
       <div class="basis-4/5">
         <h5 class="mb-2 text-4xl font-bold tracking-tight text-gray-900">
-          L'art de la guerre
+          {{ currentBook.titre }}
         </h5>
         <p class="font-normal text-gray-700">
-          <a href="" class="underline">Sun Tzu</a> - 2019 - 256 pages
+          <a href="" class="underline">
+            {{ currentBook.auteurs[0].nom }} {{ currentBook.auteurs[0].prenom }}
+          </a>
+          - {{ currentBook.dateSortie | date : "YYYY" }}
         </p>
       </div>
       <div class="basis-1/5 flex justify-end items-center w-full">
@@ -47,12 +55,12 @@
   </div>
 
   <!-- Informations sur l'auteur -->
-  <app-author-infos></app-author-infos>
+  <app-author-infos [authorId]="currentBook.auteurs[0].id"></app-author-infos>
 
   <!-- Livres du même auteur -->
   <section class="flex flex-col mt-20">
     <h1 class="text-3xl font-semibold mb-10">Livres du même auteur</h1>
-    <div class="grid grid-cols-3">
+    <div class="grid gap-5 grid-cols-3">
       <app-book-card-small></app-book-card-small>
       <app-book-card-small></app-book-card-small>
       <app-book-card-small></app-book-card-small>

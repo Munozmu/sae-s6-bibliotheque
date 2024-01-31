@@ -1,0 +1,70 @@
+<div class="flex py-20 px-40 flex-col">
+  <div class="flex w-full flex-col">
+    <h1 class="text-4xl font-semibold">Catalogue</h1>
+    <span class="text-gray-600 font-light"
+      >Votre site préféré compte près de {{ books.length }} références</span
+    >
+    <hr class="mt-8 mb-4" />
+  </div>
+
+  <!-- Choix des catégories -->
+  <div class="flex my-4 flex-col">
+    @if (!isSelectedCat) {
+    <h3 class="text-2xl my-4">Par catégorie</h3>
+    <div class="flex gap-5">
+      <button
+        [routerLink]="['/catalog']"
+        [queryParams]="{ category: c.id }"
+        *ngFor="let c of categories"
+        class="text-left block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100"
+      >
+        <h5 class="mb-2 text-2xl font-semibold tracking-tight text-gray-900">
+          {{ c.nom }}
+        </h5>
+        <p class="font-normal text-gray-600">
+          {{ c.description }}
+        </p>
+      </button>
+    </div>
+    } @else {
+    <div>
+      <nav>
+        <ol class="inline-flex items-center space-x-1">
+          <li>
+            <button
+              class="underline text-blue-500"
+              [routerLink]="['/catalog']"
+              (click)="isSelectedCat = false"
+              routerLinkActive="router-link-active"
+            >
+              Catalogue
+            </button>
+            <span class="text-gray-300 px-2">></span>
+          </li>
+          <li>{{ currentCategory.nom }}</li>
+        </ol>
+      </nav>
+      <h3 class="text-2xl my-4">Tous les {{ currentCategory.nom }}s</h3>
+    </div>
+    }
+  </div>
+
+  <!-- Content -->
+  <section class="flex w-full my-10">
+    @if (books.length > 0) {
+    <div class="grid grid-cols-5">
+      <app-book-card-small
+        *ngFor="let b of books"
+        [book]="b"
+      ></app-book-card-small>
+    </div>
+    } @else {
+    <div class="flex w-full flex-col items-center justify-center col-span-5">
+      <h3 class="text-2xl font-semibold">Aucun livre trouvé</h3>
+      <p class="text-gray-600 font-light">
+        Aucun livre ne correspond à votre recherche
+      </p>
+    </div>
+    }
+  </section>
+</div>

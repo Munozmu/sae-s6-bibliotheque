@@ -1,0 +1,283 @@
+<div
+  class="modal-login flex items-center justify-center fixed inset-0 bg-black bg-opacity-60 z-20"
+>
+  <div
+    class="flex bg-white rounded-lg shadow-lg overflow-hidden mx-auto max-w-sm lg:max-w-1xl"
+  >
+    <!-- Content -->
+    <div class="w-full p-8">
+      <h2 class="text-2xl font-semibold text-gray-700 text-center">
+        {{ registered ? "Connexion" : "Inscription" }}
+      </h2>
+      <p class="text-xl text-gray-600 text-center">
+        {{ registered ? "Bon retour" : "Créez un compte" }}
+      </p>
+      <div class="mt-4 flex items-center justify-between">
+        <span class="border-b w-1/5 lg:w-1/4"></span>
+        <button
+          (click)="switchRegistration()"
+          href="#"
+          class="text-xs text-center text-gray-500 uppercase underline"
+        >
+          {{
+            registered ? "ou inscrivez-vous" : "ou connectez-vous avec un mail"
+          }}
+        </button>
+        <span class="border-b w-1/5 lg:w-1/4"></span>
+      </div>
+
+      <!-- Register form -->
+      <form
+        class="py-6"
+        [formGroup]="registrationForm"
+        (ngSubmit)="onSubmitRegister()"
+        *ngIf="!registered"
+      >
+        <div class="mt-4" *ngIf="!registered">
+          <div class="flex justify-between">
+            <div class="w-1/2 pr-2">
+              <label class="block text-gray-700 text-sm font-bold mb-2">
+                Prénom
+              </label>
+              <input
+                class="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none"
+                type="text"
+                maxlength="15"
+                formControlName="firstName"
+              />
+              <div
+                *ngIf="
+                  formControlsRegistration['firstName'].invalid &&
+                  (formControlsRegistration['firstName'].dirty ||
+                    formControlsRegistration['firstName'].touched)
+                "
+                class="text-red-500 text-sm mt-1"
+              >
+                Prénom est requis
+              </div>
+            </div>
+            <div class="w-1/2 pl-2">
+              <label class="block text-gray-700 text-sm font-bold mb-2">
+                Nom
+              </label>
+              <input
+                class="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none"
+                type="text"
+                maxlength="15"
+                formControlName="lastName"
+              />
+              <div
+                *ngIf="
+                  formControlsRegistration['lastName'].invalid &&
+                  (formControlsRegistration['lastName'].dirty ||
+                    formControlsRegistration['lastName'].touched)
+                "
+                class="text-red-500 text-sm mt-1"
+              >
+                Nom est requis
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-4">
+            <div class="flex justify-between">
+              <div class="w-1/2 pr-2">
+                <label class="block text-gray-700 text-sm font-bold mb-2">
+                  Téléphone
+                </label>
+                <input
+                  class="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none"
+                  type="phone"
+                  maxlength="10"
+                  formControlName="phone"
+                />
+                <div
+                  *ngIf="
+                    formControlsRegistration['phone'].invalid &&
+                    (formControlsRegistration['phone'].dirty ||
+                      formControlsRegistration['phone'].touched)
+                  "
+                  class="text-red-500 text-sm mt-1"
+                >
+                  Le téléphone est requis et doit être valide
+                </div>
+              </div>
+              <div class="w-1/2 pl-2">
+                <label class="block text-gray-700 text-sm font-bold mb-2">
+                  Date de naissance
+                </label>
+                <input
+                  class="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none"
+                  type="date"
+                  formControlName="dateOfBirth"
+                />
+                <div
+                  *ngIf="
+                    formControlsRegistration['dateOfBirth'].invalid &&
+                    (formControlsRegistration['dateOfBirth'].dirty ||
+                      formControlsRegistration['dateOfBirth'].touched)
+                  "
+                  class="text-red-500 text-sm mt-1"
+                >
+                  La date de naissance est requise
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-4">
+            <label class="block text-gray-700 text-sm font-bold mb-2">
+              Adresse
+            </label>
+            <input
+              class="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none"
+              type="text"
+              maxlength="50"
+              formControlName="address"
+            />
+            <div
+              *ngIf="
+                formControlsRegistration['address'].invalid &&
+                (formControlsRegistration['address'].dirty ||
+                  formControlsRegistration['address'].touched)
+              "
+              class="text-red-500 text-sm mt-1"
+            >
+              L'adresse est requise
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-4">
+          <label class="block text-gray-700 text-sm font-bold mb-2">
+            Mail
+          </label>
+          <input
+            class="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none"
+            type="email"
+            maxlength="50"
+            formControlName="email"
+          />
+          <div
+            *ngIf="
+              formControlsRegistration['email'].invalid &&
+              (formControlsRegistration['email'].dirty ||
+                formControlsRegistration['email'].touched)
+            "
+            class="text-red-500 text-sm mt-1"
+          >
+            Le mail est requis et doit être valide
+          </div>
+        </div>
+
+        <div class="flex justify-between">
+          <label class="block text-gray-700 text-sm font-bold mb-2">
+            Mot de passe
+          </label>
+        </div>
+        <input
+          class="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none"
+          type="password"
+          maxlength="20"
+          formControlName="password"
+        />
+        <div
+          *ngIf="
+            formControlsRegistration['password'].invalid &&
+            (formControlsRegistration['password'].dirty ||
+              formControlsRegistration['password'].touched)
+          "
+          class="text-red-500 text-sm mt-1"
+        >
+          Le mot de passe est requis et doit contenir au moins 8 caractères
+        </div>
+
+        <div class="mt-8">
+          <button
+            type="submit"
+            class="bg-gray-700 text-white font-bold py-2 px-4 w-full rounded hover:bg-gray-600"
+          >
+            S'inscrire
+          </button>
+        </div>
+
+        <div class="mt-4 flex items-center justify-between">
+          <span class="border-b w-1/5 md:w-1/4"></span>
+          <span class="border-b w-1/5 md:w-1/4"></span>
+        </div>
+      </form>
+
+      <!-- Login form -->
+      <form
+        class="py-6"
+        [formGroup]="loginForm"
+        (ngSubmit)="onSubmitLogin()"
+        *ngIf="registered"
+      >
+        <div class="mt-4">
+          <label class="block text-gray-700 text-sm font-bold mb-2">
+            Mail
+          </label>
+          <input
+            class="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none"
+            type="email"
+            maxlength="50"
+            formControlName="email"
+          />
+          <div
+            *ngIf="
+              formControlsLogin['email'].invalid &&
+              (formControlsLogin['email'].dirty ||
+                formControlsLogin['email'].touched)
+            "
+            class="text-red-500 text-sm mt-1"
+          >
+            Le mail est requis et doit être valide
+          </div>
+        </div>
+
+        <div class="flex justify-between">
+          <label class="block text-gray-700 text-sm font-bold mb-2">
+            Mot de passe
+          </label>
+        </div>
+        <input
+          class="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none"
+          type="password"
+          maxlength="20"
+          formControlName="password"
+        />
+        <div
+          *ngIf="
+            formControlsLogin['password'].invalid &&
+            (formControlsLogin['password'].dirty ||
+              formControlsLogin['password'].touched)
+          "
+          class="text-red-500 text-sm mt-1"
+        >
+          Le mot de passe est requis et doit contenir au moins 8 caractères
+        </div>
+
+        <div class="mt-8">
+          <button
+            type="submit"
+            class="bg-gray-700 text-white font-bold py-2 px-4 w-full rounded hover:bg-gray-600"
+          >
+            Se connecter
+          </button>
+        </div>
+
+        <div class="mt-4 flex items-center justify-between">
+          <span class="border-b w-1/5 md:w-1/4"></span>
+          <span class="border-b w-1/5 md:w-1/4"></span>
+        </div>
+      </form>
+      <button
+        (click)="onCloseModal()"
+        class="border border-gray-700 text-gray-700 font-bold py-2 px-4 w-full rounded hover:bg-gray-600 hover:text-white"
+      >
+        Annuler
+      </button>
+    </div>
+  </div>
+</div>

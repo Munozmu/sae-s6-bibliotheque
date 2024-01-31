@@ -30,10 +30,7 @@
   <div
     class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4"
   >
-    <a
-      href="https://flowbite.com/"
-      class="flex items-center space-x-3 rtl:space-x-reverse"
-    >
+    <a class="flex items-center space-x-3 rtl:space-x-reverse">
       <img
         src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.ceresa.fr%2Fwp-content%2Fuploads%2F2018%2F12%2FLogo_de_luniversite_Toulouse_-_Jean_Jaures-768x183.png&f=1&nofb=1&ipt=ec2d7ce853aefedbd829db6a02f8f0b0ca2bac06232108764381611e54d3ba49&ipo=images"
         class="h-8"
@@ -47,9 +44,7 @@
         type="button"
         class="flex text-sm items-center rounded-full md:me-0 focus:ring-4 focus:ring-gray-300"
         id="user-menu-button"
-        aria-expanded="false"
-        data-dropdown-toggle="user-dropdown"
-        data-dropdown-placement="bottom"
+        (click)="openModal()"
       >
         <div class="flex flex-col px-4" routerLink="/account">
           <span class="font-bold">Mon compte</span>
@@ -159,3 +154,7 @@
     </div>
   </div>
 </nav>
+<app-login-modal
+  (modalClosed)="onModalClosed($event)"
+  *ngIf="isLoginModalDisplayed"
+></app-login-modal>
