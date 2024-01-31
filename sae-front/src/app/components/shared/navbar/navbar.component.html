@@ -47,9 +47,7 @@
         type="button"
         class="flex text-sm items-center rounded-full md:me-0 focus:ring-4 focus:ring-gray-300"
         id="user-menu-button"
-        aria-expanded="false"
-        data-dropdown-toggle="user-dropdown"
-        data-dropdown-placement="bottom"
+        (click)="openModal()"
       >
         <div class="flex flex-col px-4">
           <span class="font-bold">Mon compte</span>
@@ -159,4 +157,7 @@
     </div>
   </div>
 </nav>
-<app-login-modal></app-login-modal>
+<app-login-modal
+  (modalClosed)="onModalClosed($event)"
+  *ngIf="isLoginModalDisplayed"
+></app-login-modal>

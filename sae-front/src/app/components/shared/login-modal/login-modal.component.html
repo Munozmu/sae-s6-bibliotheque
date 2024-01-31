@@ -1,25 +1,37 @@
-<div class="modal-login flex items-center justify-center fixed inset-0 bg-black bg-opacity-60 z-20">
+<div
+  class="modal-login flex items-center justify-center fixed inset-0 bg-black bg-opacity-60 z-20"
+>
   <div class="py-6">
-    <div class="flex bg-white rounded-lg shadow-lg overflow-hidden mx-auto max-w-sm lg:max-w-1xl">
+    <div
+      class="flex bg-white rounded-lg shadow-lg overflow-hidden mx-auto max-w-sm lg:max-w-1xl"
+    >
       <div class="w-full p-8">
         <h2 class="text-2xl font-semibold text-gray-700 text-center">
-          {{ registered ? 'Login' : 'Register' }}
+          {{ registered ? "Connexion" : "Inscription" }}
         </h2>
         <p class="text-xl text-gray-600 text-center">
-          {{ registered ? 'Welcome back!' : 'Create an account' }}
+          {{ registered ? "Bon retour" : "Créez un compte" }}
         </p>
         <div class="mt-4 flex items-center justify-between">
           <span class="border-b w-1/5 lg:w-1/4"></span>
-          <a href="#" class="text-xs text-center text-gray-500 uppercase">
-            or login with email
-          </a>
+          <button
+            (click)="switchRegistration()"
+            href="#"
+            class="text-xs text-center text-gray-500 uppercase underline"
+          >
+            {{
+              registered
+                ? "ou connectez-vous avec un mail"
+                : "ou inscrivez-vous"
+            }}
+          </button>
           <span class="border-b w-1/5 lg:w-1/4"></span>
         </div>
-        <div class="mt-4" ngIf="!registered">
+        <div class="mt-4" *ngIf="!registered">
           <div class="flex justify-between">
             <div class="w-1/2 pr-2">
               <label class="block text-gray-700 text-sm font-bold mb-2">
-                First Name
+                Prénom
               </label>
               <input
                 class="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none"
@@ -28,7 +40,7 @@
             </div>
             <div class="w-1/2 pl-2">
               <label class="block text-gray-700 text-sm font-bold mb-2">
-                Last Name
+                Nom
               </label>
               <input
                 class="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none"
@@ -39,7 +51,7 @@
         </div>
         <div class="mt-4">
           <label class="block text-gray-700 text-sm font-bold mb-2">
-            Email Address
+            Adresse mail
           </label>
           <input
             class="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none"
@@ -47,22 +59,29 @@
           />
         </div>
 
-          <div class="flex justify-between">
-            <label class="block text-gray-700 text-sm font-bold mb-2">
-              Password
-            </label>
-          </div>
-          <input
-            class="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none"
-            type="password"
-          />
+        <div class="flex justify-between">
+          <label class="block text-gray-700 text-sm font-bold mb-2">
+            Mot de passe
+          </label>
+        </div>
+        <input
+          class="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none"
+          type="password"
+        />
         <div class="mt-8">
           <button
             class="bg-gray-700 text-white font-bold py-2 px-4 w-full rounded hover:bg-gray-600"
           >
-            {{ registered ? 'Login' :  'Register'}}
+            {{ registered ? "Connexion" : "S'inscrire" }}
+          </button>
+          <button
+            (click)="onCloseModal()"
+            class="border mt-1 border-gray-700 text-gray-700 font-bold py-2 px-4 w-full rounded hover:bg-gray-600 hover:text-white"
+          >
+            Annuler
           </button>
         </div>
+
         <div class="mt-4 flex items-center justify-between">
           <span class="border-b w-1/5 md:w-1/4"></span>
           <span class="border-b w-1/5 md:w-1/4"></span>
