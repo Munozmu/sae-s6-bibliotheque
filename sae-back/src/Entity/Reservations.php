@@ -10,7 +10,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ApiResource(
     formats: ['json'],
-    normalizationContext: ['groups' => ['read:resa']]
+    normalizationContext: ['groups' => ['reservation']]
 )]
 #[ORM\Entity(repositoryClass: ReservationsRepository::class)]
 class Reservations
@@ -18,20 +18,20 @@ class Reservations
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['read:resa'])]
+    #[Groups(['reservation', 'adherent'])]
     private ?int $id = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
-    #[Groups(['read:resa'])]
+    #[Groups(['reservation', 'adherent'])]
     private ?\DateTimeInterface $dateResa = null;
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    #[Groups(['read:resa'])]
+    #[Groups(['reservation', 'adherent'])]
     private ?Livre $lier = null;
 
     #[ORM\ManyToOne(inversedBy: 'reservations')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['read:resa'])]
+    #[Groups(['reservation'])]
     private ?Adherent $reserver_par = null;
 
     public function getId(): ?int

@@ -12,7 +12,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ApiResource(
     formats: ['json'],
-    normalizationContext: ['groups' => ['read:book']]
+    normalizationContext: ['groups' => ['book']]
 )]
 #[ORM\Entity(repositoryClass: LivreRepository::class)]
 class Livre
@@ -20,37 +20,43 @@ class Livre
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['read:book', 'read:book:resa'])]
+    #[Groups(['book', 'reservation', 'emprunt', 'auteur', 'categorie'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['read:book', 'read:book:resa'])]
+    #[Groups(['book', 'reservation', 'emprunt', 'auteur', 'categorie'])]
     private ?string $titre = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
-    #[Groups(['read:book', 'read:book:resa'])]
+    #[Groups(['book', 'reservation', 'emprunt', 'auteur', 'categorie'])]
     private ?\DateTimeInterface $dateSortie = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['read:book', 'read:book:resa'])]
+    #[Groups(['book', 'reservation', 'emprunt', 'auteur', 'categorie'])]
     private ?string $langue = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['read:book', 'read:book:resa'])]
+    #[Groups(['book', 'reservation', 'emprunt'])]
     private ?string $photoCouverture = null;
 
     #[ORM\OneToMany(mappedBy: 'correspondre', targetEntity: Emprunt::class)]
-    #[Groups(['read:book'])]
+    #[Groups(['book'])]
     private Collection $emprunts;
 
+
+    #[ORM\ManyToMany(targetEntity: Auteur::class, mappedBy: 'livres')]
+    #[Groups(['book'])]
+    private Collection $auteurs;
+
     #[ORM\ManyToMany(targetEntity: Categorie::class, inversedBy: 'livres')]
-    #[Groups(['read:book'])]
-    private Collection $categorie;
+    #[Groups(['book'])]
+    private Collection $categories;
 
     public function __construct()
     {
         $this->emprunts = new ArrayCollection();
-        $this->categorie = new ArrayCollection();
+        $this->auteurs = new ArrayCollection();
+        $this->categories = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -137,25 +143,52 @@ class Livre
     }
 
     /**
-     * @return Collection<int, Categorie>
+     * @return Collection<int, Auteur>
      */
-    public function getCategorie(): Collection
+    public function getAuteurs(): Collection
     {
-        return $this->categorie;
+        return $this->auteurs;
     }
 
-    public function addCategorie(Categorie $categorie): static
+    public function addAuteur(Auteur $auteur): static
     {
-        if (!$this->categorie->contains($categorie)) {
-            $this->categorie->add($categorie);
+        if (!$this->auteurs->contains($auteur)) {
+            $this->auteurs->add($auteur);
+            $auteur->addLivre($this);
         }
 
         return $this;
     }
 
-    public function removeCategorie(Categorie $categorie): static
+    public function removeAuteur(Auteur $auteur): static
     {
-        $this->categorie->removeElement($categorie);
+        if ($this->auteurs->removeElement($auteur)) {
+            $auteur->removeLivre($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Categorie>
+     */
+    public function getCategories(): Collection
+    {
+        return $this->categories;
+    }
+
+    public function addCategory(Categorie $category): static
+    {
+        if (!$this->categories->contains($category)) {
+            $this->categories->add($category);
+        }
+
+        return $this;
+    }
+
+    public function removeCategory(Categorie $category): static
+    {
+        $this->categories->removeElement($category);
 
         return $this;
     }
