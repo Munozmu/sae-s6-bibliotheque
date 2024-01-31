@@ -11,7 +11,7 @@ import { CommonModule } from '@angular/common';
 })
 export class NavbarComponent {
 
-  isLoginModalDisplayed: boolean = true;
+  isLoginModalDisplayed: boolean = false;
 
   onModalClosed(isClosed: boolean) {
     if (isClosed) this.isLoginModalDisplayed = false;

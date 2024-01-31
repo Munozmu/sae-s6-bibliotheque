@@ -54,12 +54,9 @@ export class LoginModalComponent {
   }
 
   onSubmitRegister() {
-    // Implement the logic for form submission
     if (this.registrationForm.valid) {
-      // If the form is valid, perform the necessary actions
       console.log('Form submitted:', this.registrationForm.value);
     } else {
-      // If the form is invalid, display error messages or handle accordingly
       console.log('Form invalid');
     }
   }

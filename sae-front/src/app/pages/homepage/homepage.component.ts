@@ -1,49 +1,75 @@
 import { Component, OnInit } from '@angular/core';
 import { BookSearchCardComponent } from '../../components/shared/book-search-card/book-search-card.component';
-import { BookService } from '../../core/services/book.service';
-import { FormBuilder, FormGroup, ReactiveFormsModule, FormControl, AbstractControl, FormArray } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, FormControl, AbstractControl, FormArray, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { Author } from '../../core/models/author';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-homepage',
   standalone: true,
-  imports: [BookSearchCardComponent, ReactiveFormsModule, CommonModule],
+  imports: [BookSearchCardComponent, ReactiveFormsModule, CommonModule, FormsModule],
   templateUrl: './homepage.component.html',
   styleUrl: './homepage.component.scss'
 })
 export class HomepageComponent implements OnInit {
 
   rechercheForm: FormGroup;
+  searchBarValue = '';
+  isSearchLaunched = true;
 
 
-  // Exemple de données d'auteurs (vous pouvez remplacer par les auteurs réels de votre application)
+  // Fake datas
   auteurs = ['Auteur 1', 'Auteur 2', 'Auteur 3'];
+  categories = ['Catégorie 1', 'Catégorie 2', 'Catégorie 3'];
 
-  constructor(private fb: FormBuilder) {
-    // Initialisation du formulaire avec les champs et les validateurs
+  constructor(
+    private fb: FormBuilder,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
+    // Init form
     this.rechercheForm = this.fb.group({
       titre: [''],
       auteur: [''],
-      dateMin: [''],
-      dateMax: ['']
+      dateMin: ['1950'],
+      dateMax: ['2024'],
+      categorie: ['']
     });
   }
 
   ngOnInit(): void {
+
+    // Get routes param
+    this.route.queryParams
+      .subscribe(params => {
+        console.log(params);
+      }
+      );
+
+    // Get routes param and actualize form values
+    this.route.queryParams
+      .subscribe(params => {
+        this.searchBarValue = params['keyword'];
+        this.rechercheForm.patchValue({
+          titre: params['keyword'],
+          auteur: params['auteur'],
+          dateMin: params['dateMin'],
+          dateMax: params['dateMax']
+        });
+      }
+      );
+
+
   }
 
-  // Méthode déclenchée lors de la soumission du formulaire de recherche
-  rechercherLivres(): void {
-    // Accéder aux valeurs du formulaire
-    const values = this.rechercheForm.value;
 
-    // Ici, vous pouvez implémenter la logique de recherche en utilisant les filtres
-    // (par exemple, appeler un service pour obtenir les résultats de la recherche)
-    console.log('Titre:', values.titre);
-    console.log('Auteur:', values.auteur);
-    console.log('Date Min:', values.dateMin);
-    console.log('Date Max:', values.dateMax);
+  /**
+   * Trigerred when user click on search button
+   * Change URL and launch search
+   */
+  launchSearch() {
+    this.router.navigate(['/search'], { queryParams: { keyword: this.searchBarValue, auteur: this.rechercheForm.value.auteur, dateMin: this.rechercheForm.value.dateMin, dateMax: this.rechercheForm.value.dateMax } });
+    this.isSearchLaunched = true;
   }
 
 
