@@ -18,12 +18,16 @@ export class HomepageComponent implements OnInit {
   isSearchLaunched = true;
 
 
-  // Exemple de données d'auteurs (vous pouvez remplacer par les auteurs réels de votre application)
+  // Fake datas
   auteurs = ['Auteur 1', 'Auteur 2', 'Auteur 3'];
   categories = ['Catégorie 1', 'Catégorie 2', 'Catégorie 3'];
 
-  constructor(private fb: FormBuilder, private route: ActivatedRoute, private router: Router) {
-    // Initialisation du formulaire avec les champs et les validateurs
+  constructor(
+    private fb: FormBuilder,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
+    // Init form
     this.rechercheForm = this.fb.group({
       titre: [''],
       auteur: [''],
@@ -42,25 +46,30 @@ export class HomepageComponent implements OnInit {
       }
       );
 
+    // Get routes param and actualize form values
+    this.route.queryParams
+      .subscribe(params => {
+        this.searchBarValue = params['keyword'];
+        this.rechercheForm.patchValue({
+          titre: params['keyword'],
+          auteur: params['auteur'],
+          dateMin: params['dateMin'],
+          dateMax: params['dateMax']
+        });
+      }
+      );
+
+
   }
 
 
+  /**
+   * Trigerred when user click on search button
+   * Change URL and launch search
+   */
   launchSearch() {
     this.router.navigate(['/search'], { queryParams: { keyword: this.searchBarValue, auteur: this.rechercheForm.value.auteur, dateMin: this.rechercheForm.value.dateMin, dateMax: this.rechercheForm.value.dateMax } });
     this.isSearchLaunched = true;
-  }
-
-  // Méthode déclenchée lors de la soumission du formulaire de recherche
-  rechercherLivres(): void {
-    // Accéder aux valeurs du formulaire
-    const values = this.rechercheForm.value;
-
-    // Ici, vous pouvez implémenter la logique de recherche en utilisant les filtres
-    // (par exemple, appeler un service pour obtenir les résultats de la recherche)
-    console.log('Titre:', values.titre);
-    console.log('Auteur:', values.auteur);
-    console.log('Date Min:', values.dateMin);
-    console.log('Date Max:', values.dateMax);
   }
 
 

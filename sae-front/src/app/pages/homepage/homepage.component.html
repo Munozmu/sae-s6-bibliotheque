@@ -38,7 +38,7 @@
 <section class="flex p-28 gap-5" *ngIf="isSearchLaunched">
   <div class="flex basis-1/4 flex-col w-90">
     <h3 class="text-2xl">Filtres</h3>
-    <form [formGroup]="rechercheForm" (ngSubmit)="rechercherLivres()">
+    <form [formGroup]="rechercheForm" (ngSubmit)="launchSearch()">
       <!-- Titre -->
       <div class="mt-2">
         <label for="titre" class="block text-sm font-medium text-gray-700"
