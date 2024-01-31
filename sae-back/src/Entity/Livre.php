@@ -39,7 +39,7 @@ class Livre
     #[Groups(['book', 'reservation', 'emprunt'])]
     private ?string $photoCouverture = null;
 
-    #[ORM\OneToMany(mappedBy: 'correspondre', targetEntity: Emprunt::class)]
+    #[ORM\OneToMany(mappedBy: 'livre', targetEntity: Emprunt::class)]
     #[Groups(['book'])]
     private Collection $emprunts;
 
@@ -196,5 +196,10 @@ class Livre
     public function __toString()
     {
         return $this->titre;
+    }
+
+    public function toString()
+    {
+        return $this->auteurs;
     }
 }

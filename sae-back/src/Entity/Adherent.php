@@ -50,13 +50,13 @@ class Adherent implements UserInterface, PasswordAuthenticatedUserInterface
     #[Groups(['adherent', 'reservation', 'emprunt', 'book'])]
     private ?string $prenom = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(type: 'datetime')]
     #[Groups(['adherent'])]
     private ?\DateTimeInterface $dateNaiss = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(type: 'datetime')]
     #[Groups(['adherent', 'reservation', 'emprunt'])]
-    private ?\DateTimeInterface $dateAdhesion;
+    private ?\DateTimeInterface $dateAdhesion = null;
 
     #[ORM\Column()]
     #[Groups(['adherent', 'reservation', 'emprunt'])]

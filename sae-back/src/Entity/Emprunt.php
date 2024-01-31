@@ -33,7 +33,7 @@ class Emprunt
 
     #[ORM\ManyToOne(inversedBy: 'emprunts')]
     #[Groups(['emprunt'])]
-    private ?Livre $correspondre = null;
+    private ?Livre $livre = null;
 
     #[ORM\ManyToOne(inversedBy: 'emprunts')]
     #[Groups(['emprunt', 'book'])]
@@ -75,12 +75,12 @@ class Emprunt
 
     public function getCorrespondre(): ?Livre
     {
-        return $this->correspondre;
+        return $this->livre;
     }
 
-    public function setCorrespondre(?Livre $correspondre): static
+    public function setCorrespondre(?Livre $livre): static
     {
-        $this->correspondre = $correspondre;
+        $this->livre = $livre;
 
         return $this;
     }
