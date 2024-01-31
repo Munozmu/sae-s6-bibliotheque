@@ -18,15 +18,15 @@ class Reservations
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['reservation'])]
+    #[Groups(['reservation', 'adherent'])]
     private ?int $id = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
-    #[Groups(['reservation'])]
+    #[Groups(['reservation', 'adherent'])]
     private ?\DateTimeInterface $dateResa = null;
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    #[Groups(['reservation'])]
+    #[Groups(['reservation', 'adherent'])]
     private ?Livre $lier = null;
 
     #[ORM\ManyToOne(inversedBy: 'reservations')]

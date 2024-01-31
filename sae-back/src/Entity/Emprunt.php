@@ -20,15 +20,15 @@ class Emprunt
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['emprunt'])]
+    #[Groups(['emprunt', 'adherent', 'book'])]
     private ?int $id = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
-    #[Groups(['emprunt'])]
+    #[Groups(['emprunt', 'adherent', 'book'])]
     private ?\DateTimeInterface $dateEmprunt = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
-    #[Groups(['emprunt'])]
+    #[Groups(['emprunt', 'adherent', 'book'])]
     private ?\DateTimeInterface $dateRetour = null;
 
     #[ORM\ManyToOne(inversedBy: 'emprunts')]
@@ -36,7 +36,7 @@ class Emprunt
     private ?Livre $correspondre = null;
 
     #[ORM\ManyToOne(inversedBy: 'emprunts')]
-    #[Groups(['emprunt'])]
+    #[Groups(['emprunt', 'book'])]
     private ?Adherent $adherent = null;
 
 

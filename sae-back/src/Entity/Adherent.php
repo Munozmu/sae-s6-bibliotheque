@@ -24,11 +24,11 @@ class Adherent implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['adherent', 'reservation', 'emprunt'])]
+    #[Groups(['adherent', 'reservation', 'emprunt', 'book'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
-    #[Groups(['adherent', 'reservation', 'emprunt'])]
+    #[Groups(['adherent', 'reservation', 'emprunt', 'book'])]
     private ?string $email = null;
 
     #[ORM\Column]
@@ -43,11 +43,11 @@ class Adherent implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $password = null;
 
     #[ORM\Column()]
-    #[Groups(['adherent', 'reservation', 'emprunt'])]
+    #[Groups(['adherent', 'reservation', 'emprunt', 'book'])]
     private ?string $nom = null;
 
     #[ORM\Column()]
-    #[Groups(['adherent', 'reservation', 'emprunt'])]
+    #[Groups(['adherent', 'reservation', 'emprunt', 'book'])]
     private ?string $prenom = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
@@ -56,14 +56,14 @@ class Adherent implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     #[Groups(['adherent', 'reservation', 'emprunt'])]
-    private ?\DateTimeInterface $dateAdhesion = null;
+    private ?\DateTimeInterface $dateAdhesion;
 
     #[ORM\Column()]
     #[Groups(['adherent', 'reservation', 'emprunt'])]
     private ?string $adressePostale = null;
 
     #[ORM\Column()]
-    #[Groups(['adherent', 'reservation', 'emprunt'])]
+    #[Groups(['adherent', 'reservation', 'emprunt', 'book'])]
     private ?int $numTel = null;
 
     #[ORM\Column()]
@@ -80,6 +80,7 @@ class Adherent implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function __construct()
     {
+        $this->dateAdhesion = new \DateTime();
         $this->reservations = new ArrayCollection();
         $this->emprunts = new ArrayCollection();
     }
