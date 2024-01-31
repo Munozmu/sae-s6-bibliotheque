@@ -15,19 +15,21 @@ export class HomepageComponent implements OnInit {
 
   rechercheForm: FormGroup;
   searchBarValue = '';
-  isSearchLaunched = false;
+  isSearchLaunched = true;
 
 
   // Exemple de données d'auteurs (vous pouvez remplacer par les auteurs réels de votre application)
   auteurs = ['Auteur 1', 'Auteur 2', 'Auteur 3'];
+  categories = ['Catégorie 1', 'Catégorie 2', 'Catégorie 3'];
 
   constructor(private fb: FormBuilder, private route: ActivatedRoute, private router: Router) {
     // Initialisation du formulaire avec les champs et les validateurs
     this.rechercheForm = this.fb.group({
       titre: [''],
       auteur: [''],
-      dateMin: [''],
-      dateMax: ['']
+      dateMin: ['1950'],
+      dateMax: ['2024'],
+      categorie: ['']
     });
   }
 
