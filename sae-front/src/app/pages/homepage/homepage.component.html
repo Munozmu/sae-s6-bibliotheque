@@ -30,9 +30,17 @@
 </div>
 
 <!-- Main content -->
-<section class="flex justify-center" *ngIf="!isSearchLaunched">
-  <p class="my-20">
-    Effectuez une recherche parmis les livres de la bibliothèque
+<section class="flex flex-col items-center my-20" *ngIf="!isSearchLaunched">
+  <p>Effectuez une recherche parmis les livres de la bibliothèque</p>
+
+  <p>
+    Vous pouvez consulter le
+    <a
+      class="underline text-blue-500"
+      [routerLink]="['/catalog']"
+      routerLinkActive="router-link-active"
+      >Catalogue</a
+    >
   </p>
 </section>
 <section class="flex p-28 gap-5" *ngIf="isSearchLaunched">

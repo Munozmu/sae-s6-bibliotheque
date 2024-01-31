@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { BookSearchCardComponent } from '../../components/shared/book-search-card/book-search-card.component';
 import { FormBuilder, FormGroup, ReactiveFormsModule, FormControl, AbstractControl, FormArray, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { AuthorService } from '../../core/services/author.service';
 import { Author } from '../../core/models/author';
 import { CategoriesService } from '../../core/services/categories.service';
@@ -10,7 +10,7 @@ import { CategoriesService } from '../../core/services/categories.service';
 @Component({
   selector: 'app-homepage',
   standalone: true,
-  imports: [BookSearchCardComponent, ReactiveFormsModule, CommonModule, FormsModule],
+  imports: [BookSearchCardComponent, ReactiveFormsModule, CommonModule, FormsModule, RouterModule],
   templateUrl: './homepage.component.html',
   styleUrl: './homepage.component.scss'
 })
@@ -18,7 +18,7 @@ export class HomepageComponent implements OnInit {
 
   rechercheForm: FormGroup;
   searchBarValue = '';
-  isSearchLaunched = true;
+  isSearchLaunched = false;
 
 
   // Fake datas
