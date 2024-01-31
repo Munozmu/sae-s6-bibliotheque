@@ -1,26 +1,27 @@
 import { Component, OnInit } from '@angular/core';
 import { BookSearchCardComponent } from '../../components/shared/book-search-card/book-search-card.component';
-import { BookService } from '../../core/services/book.service';
-import { FormBuilder, FormGroup, ReactiveFormsModule, FormControl, AbstractControl, FormArray } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, FormControl, AbstractControl, FormArray, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { Author } from '../../core/models/author';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-homepage',
   standalone: true,
-  imports: [BookSearchCardComponent, ReactiveFormsModule, CommonModule],
+  imports: [BookSearchCardComponent, ReactiveFormsModule, CommonModule, FormsModule],
   templateUrl: './homepage.component.html',
   styleUrl: './homepage.component.scss'
 })
 export class HomepageComponent implements OnInit {
 
   rechercheForm: FormGroup;
+  searchBarValue = '';
+  isSearchLaunched = false;
 
 
   // Exemple de données d'auteurs (vous pouvez remplacer par les auteurs réels de votre application)
   auteurs = ['Auteur 1', 'Auteur 2', 'Auteur 3'];
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private route: ActivatedRoute, private router: Router) {
     // Initialisation du formulaire avec les champs et les validateurs
     this.rechercheForm = this.fb.group({
       titre: [''],
@@ -31,6 +32,20 @@ export class HomepageComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    // Get routes param
+    this.route.queryParams
+      .subscribe(params => {
+        console.log(params);
+      }
+      );
+
+  }
+
+
+  launchSearch() {
+    this.router.navigate(['/search'], { queryParams: { keyword: this.searchBarValue, auteur: this.rechercheForm.value.auteur, dateMin: this.rechercheForm.value.dateMin, dateMax: this.rechercheForm.value.dateMax } });
+    this.isSearchLaunched = true;
   }
 
   // Méthode déclenchée lors de la soumission du formulaire de recherche

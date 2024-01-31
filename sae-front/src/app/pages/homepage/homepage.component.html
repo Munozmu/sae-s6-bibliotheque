@@ -16,8 +16,10 @@
           type="text"
           class="w-full pl-10 pr-20 py-6 rounded-md"
           placeholder="Rechercher..."
+          [(ngModel)]="searchBarValue"
         />
         <button
+          (click)="launchSearch()"
           class="py-3 px-8 rounded-r-md text-white bg-[#7e9164] hover:bg-[#515e41] transition-all"
         >
           Rechercher
@@ -28,7 +30,12 @@
 </div>
 
 <!-- Main content -->
-<section class="flex p-28">
+<section class="flex justify-center" *ngIf="!isSearchLaunched">
+  <p class="my-20">
+    Effectuez une recherche parmis les livres de la bibliothèque
+  </p>
+</section>
+<section class="flex p-28" *ngIf="isSearchLaunched">
   <div class="flex basis-1/4 flex-col">
     <form [formGroup]="rechercheForm" (ngSubmit)="rechercherLivres()">
       <label for="titre">Titre:</label>
@@ -52,7 +59,7 @@
   </div>
   <div class="flex flex-col basis-3/4">
     <h2 class="text-4xl font-bold">Résultats de la recherche</h2>
-    <h2 class="text-2xl">pour " art de la guerre "</h2>
+    <h2 class="text-2xl">pour " {{ searchBarValue }}"</h2>
     <!-- Pagination and result numbers -->
     <div class="flex py-6">
       <div class="flex basis-1/4">
