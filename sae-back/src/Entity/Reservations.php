@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Metadata\ApiResource;
+use App\EventListener\ReservationNotifier;
 use App\Repository\ReservationsRepository;
 use Symfony\Component\Serializer\Annotation\Groups;
 
@@ -13,6 +14,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
     normalizationContext: ['groups' => ['reservation']]
 )]
 #[ORM\Entity(repositoryClass: ReservationsRepository::class)]
+#[ORM\EntityListeners([ReservationNotifier::class])]
 class Reservations
 {
     #[ORM\Id]
