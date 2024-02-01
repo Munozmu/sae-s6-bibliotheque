@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { LoginModalComponent } from "../login-modal/login-modal.component";
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../../core/auth/auth.service';
@@ -18,6 +18,7 @@ export class NavbarComponent implements OnInit {
 
   constructor(
     protected authService: AuthService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -30,6 +31,10 @@ export class NavbarComponent implements OnInit {
 
   openModal() {
     this.isLoginModalDisplayed = true;
+  }
+
+  redirectToAccount() {
+    this.router.navigateByUrl('/account');
   }
 
 }
