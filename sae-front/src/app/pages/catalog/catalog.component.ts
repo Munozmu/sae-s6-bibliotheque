@@ -58,6 +58,7 @@ export class CatalogComponent implements OnInit {
         this.bookService.getAllBooks().subscribe((books) => {
           this.books = books;
         });
+        this.isSelectedCat = false;
       }
     });
 
