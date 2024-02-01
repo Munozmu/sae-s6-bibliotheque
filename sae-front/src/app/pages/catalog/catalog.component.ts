@@ -33,7 +33,6 @@ export class CatalogComponent implements OnInit {
   ngOnInit(): void {
 
     // Get all books
-    // Get all books
     this.bookService.getAllBooks().subscribe((books) => {
       this.books = books;
     });
@@ -63,6 +62,5 @@ export class CatalogComponent implements OnInit {
     });
 
   }
-
 
 }
