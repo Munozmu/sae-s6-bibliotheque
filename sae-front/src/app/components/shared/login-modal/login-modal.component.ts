@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule, FormControl, AbstractControl } from '@angular/forms';
+import { AuthService } from '../../../core/auth/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login-modal',
@@ -19,7 +21,11 @@ export class LoginModalComponent {
   registrationForm: FormGroup;
 
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router
+  ) {
 
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -56,17 +62,23 @@ export class LoginModalComponent {
   onSubmitRegister() {
     if (this.registrationForm.valid) {
       console.log('Form submitted:', this.registrationForm.value);
+      this.authService.login();
+      this.onCloseModal();
+      this.router.navigateByUrl('/account');
     } else {
-      console.log('Form invalid');
+      console.error('Form invalid');
     }
   }
 
   onSubmitLogin() {
     if (this.loginForm.valid) {
       console.log('Form submitted:', this.loginForm.value);
+      this.authService.login();
+      this.onCloseModal();
+      this.router.navigateByUrl('/account');
     }
     else {
-      console.log('Form invalid');
+      console.error('Form invalid');
     }
   }
 
