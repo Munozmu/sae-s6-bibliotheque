@@ -5,9 +5,9 @@ namespace App\Entity;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Metadata\ApiResource;
+use App\EventListener\EmpruntNotifier;
 use App\Repository\EmpruntRepository;
-use Doctrine\Common\Collections\Collection;
-use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping\EntityListeners;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ApiResource(
@@ -15,6 +15,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
     normalizationContext: ['groups' => ['emprunt']]
 )]
 #[ORM\Entity(repositoryClass: EmpruntRepository::class)]
+#[ORM\EntityListeners([EmpruntNotifier::class])]
 class Emprunt
 {
     #[ORM\Id]
@@ -32,7 +33,7 @@ class Emprunt
     private ?\DateTimeInterface $dateRetour = null;
 
     #[ORM\ManyToOne(inversedBy: 'emprunts')]
-    #[Groups(['emprunt'])]
+    #[Groups(['emprunt', 'edherent'])]
     private ?Livre $correspondre = null;
 
     #[ORM\ManyToOne(inversedBy: 'emprunts')]
