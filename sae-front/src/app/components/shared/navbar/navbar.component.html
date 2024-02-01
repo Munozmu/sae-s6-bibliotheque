@@ -30,7 +30,10 @@
   <div
     class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4"
   >
-    <a class="flex items-center space-x-3 rtl:space-x-reverse">
+    <a
+      class="flex items-center space-x-3 rtl:space-x-reverse"
+      [routerLink]="['/']"
+    >
       <img
         src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.ceresa.fr%2Fwp-content%2Fuploads%2F2018%2F12%2FLogo_de_luniversite_Toulouse_-_Jean_Jaures-768x183.png&f=1&nofb=1&ipt=ec2d7ce853aefedbd829db6a02f8f0b0ca2bac06232108764381611e54d3ba49&ipo=images"
         class="h-8"
@@ -44,9 +47,12 @@
         type="button"
         class="flex text-sm items-center rounded-full md:me-0 focus:ring-4 focus:ring-gray-300"
         id="user-menu-button"
-        (click)="openModal()"
+        (click)="
+          authService.getIsAuthenticated() ? redirectToAccount() : openModal()
+        "
       >
-        <div class="flex flex-col px-4" routerLink="/account">
+        @if (authService.getIsAuthenticated()) {
+        <div class="flex flex-col px-4">
           <span class="font-bold">Mon compte</span>
           <span class="text-sm">Gabin Munoz</span>
         </div>
@@ -55,70 +61,12 @@
           src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fupload.wikimedia.org%2Fwikipedia%2Fcommons%2F3%2F33%2FTom_Cruise_by_Gage_Skidmore_2.jpg&f=1&nofb=1&ipt=21055b92b1aef61d4440a1836fb909480fb54603951bf8f3ca4e63668602eea2&ipo=images"
           alt="user photo"
         />
-      </button>
-      <!-- Dropdown menu -->
-      <div
-        class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow"
-        id="user-dropdown"
-      >
-        <div class="px-4 py-3">
-          <span class="block text-sm text-gray-900">Bonnie Green</span>
-          <span class="block text-sm text-gray-500 truncate">name</span>
+        } @else {
+        <div class="flex flex-col px-4 items-end">
+          <span class="font-bold">Mon compte</span>
+          <span class="text-sm text-gray-600">Se connecter / s'inscrire</span>
         </div>
-        <ul class="py-2" aria-labelledby="user-menu-button">
-          <li>
-            <a
-              href="#"
-              class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-white"
-              >Dashboard</a
-            >
-          </li>
-          <li>
-            <a
-              href="#"
-              class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-white"
-              >Settings</a
-            >
-          </li>
-          <li>
-            <a
-              href="#"
-              class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-white"
-              >Earnings</a
-            >
-          </li>
-          <li>
-            <a
-              href="#"
-              class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-white"
-              >Sign out</a
-            >
-          </li>
-        </ul>
-      </div>
-      <button
-        data-collapse-toggle="navbar-user"
-        type="button"
-        class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
-        aria-controls="navbar-user"
-        aria-expanded="false"
-      >
-        <span class="sr-only">Open main menu</span>
-        <svg
-          class="w-5 h-5"
-          aria-hidden="true"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 17 14"
-        >
-          <path
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M1 1h15M1 7h15M1 13h15"
-          />
-        </svg>
+        }
       </button>
     </div>
     <div
@@ -130,22 +78,23 @@
       >
         <li>
           <a
-            href="#"
+            [routerLink]="['/catalog']"
             class="block py-2 px-3 text-white bg-red-700 rounded md:bg-transparent md:text-red-700 md:p-0"
-            aria-current="page"
             >Catalogue</a
           >
         </li>
         <li>
           <a
-            href="#"
+            [routerLink]="['/catalog']"
+            [queryParams]="{ category: '1' }"
             class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-red-700 md:p-0 hover:text-white border-gray-700"
             >Romans</a
           >
         </li>
         <li>
           <a
-            href="#"
+            [routerLink]="['/catalog']"
+            [queryParams]="{ category: '2' }"
             class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-red-700 md:p-0 border-gray-700"
             >Essais</a
           >
