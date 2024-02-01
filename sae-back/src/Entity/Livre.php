@@ -2,10 +2,13 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Metadata\ApiResource;
+use Symfony\Component\Validator\Constraints as Assert;
+
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\LivreRepository;
+use ApiPlatform\Metadata\ApiResource;
+use App\EventListener\LivreNotifier;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -15,6 +18,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
     normalizationContext: ['groups' => ['book']]
 )]
 #[ORM\Entity(repositoryClass: LivreRepository::class)]
+#[ORM\EntityListeners([LivreNotifier::class])]
 class Livre
 {
     #[ORM\Id]
@@ -50,6 +54,11 @@ class Livre
 
     #[ORM\ManyToMany(targetEntity: Categorie::class, inversedBy: 'livres')]
     #[Groups(['book'])]
+    #[Assert\Count(
+        min: 1,
+        max: 3,
+        maxMessage: 'Un livre ne peut pas appartenir à plus de 3 Catégories'
+    )]
     private Collection $categories;
 
     #[ORM\Column(type: Types::TEXT)]
