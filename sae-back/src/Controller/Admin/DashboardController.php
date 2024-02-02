@@ -44,9 +44,46 @@ class DashboardController extends AbstractDashboardController
         // $this->livreRepository = $livreRepository;
         // $this->reservationsRepository = $reservationsRepository;
     }
+    protected $adherentRepository;
+    protected $auteurRepository;
+    protected $categorieRepository;
+    protected $empruntRepository;
+    protected $livreRepository;
+    protected $reservationsRepository;
+
+    public function __construct(
+        AdherentRepository $adherentRepository,
+        // AuteurRepository $auteurRepository,
+        // CategorieRepository $categorieRepository,
+        EmpruntRepository $empruntRepository,
+        // LivreRepository $livreRepository,
+        // ReservationsRepository $reservationsRepository,
+    )
+    {
+        $this->adherentRepository = $adherentRepository;
+        // $this->auteurRepository = $auteurRepository;
+        // $this->categorieRepository = $categorieRepository;
+        $this->empruntRepository = $empruntRepository;
+        // $this->livreRepository = $livreRepository;
+        // $this->reservationsRepository = $reservationsRepository;
+    }
     #[Route('/admin', name: 'admin')]
     public function index(): Response
     {
+        return $this->render('admin/emprunts.html.twig', [
+            'AllAdherents' => $this->adherentRepository->findAll(),
+            'LivresEmprunts' => $this->empruntRepository->getAllEmprunts(),
+        ]);
+    }
+
+    #[Route('/emprunts', name: 'emprunts')]
+    public function emprunt(): Response
+    {
+        return $this->render('admin/emprunts.html.twig', [
+            'AllAdherents' => $this->adherentRepository->findAll(),
+            'LivresEmprunts' => $this->empruntRepository->getAllEmprunts(),
+            // 'DureeEmprunts' => ,
+        ]);
         return $this->render('admin/emprunts.html.twig', [
             'AllAdherents' => $this->adherentRepository->findAll(),
             'LivresEmprunts' => $this->empruntRepository->getAllEmprunts(),
@@ -74,11 +111,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
         yield MenuItem::section('gestion');
         yield MenuItem::linkToCrud('Emprunt', 'fas fa-text', Emprunt::class);
-<<<<<<< HEAD
-        // yield MenuItem::linkToRoute('Tableau de Bord', 'fas fa-chart-bar', 'emprunts_dashboard');
-=======
         // yield MenuItem::linkToRoute('Tableau de Bord', 'fas fa-chart-bar', 'emprunts');
->>>>>>> 2cf3366 (Tableau de bord)
         // yield MenuItem::linkToCrud('Reservations', 'fas fa-text', Reservations::class);
         yield MenuItem::linkToCrud('Adherent', 'fas fa-text', Adherent::class);
         yield MenuItem::section('catalogue');

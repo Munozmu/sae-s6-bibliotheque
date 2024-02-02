@@ -83,6 +83,8 @@ class Adherent implements UserInterface, PasswordAuthenticatedUserInterface
     #[Groups(['adherent', 'reservation', 'emprunt', 'book'])]
     private ?\DateTimeInterface $dateNaiss = null;
 
+
+
     #[ORM\Column()]
     #[Groups(['adherent', 'reservation', 'emprunt'])]
     private ?string $adressePostale = null;
