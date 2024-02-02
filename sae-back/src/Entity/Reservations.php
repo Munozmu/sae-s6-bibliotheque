@@ -34,7 +34,7 @@ class Reservations
     #[ORM\ManyToOne(inversedBy: 'reservations')]
     #[ORM\JoinColumn(nullable: false)]
     #[Groups(['reservation'])]
-    private ?Adherent $adherent = null;
+    private ?Adherent $reserver_par = null;
 
     public function getId(): ?int
     {
@@ -67,12 +67,12 @@ class Reservations
 
     public function getReserverPar(): ?Adherent
     {
-        return $this->adherent;
+        return $this->reserver_par;
     }
 
-    public function setReserverPar(?Adherent $adherent): static
+    public function setReserverPar(?Adherent $reserver_par): static
     {
-        $this->adherent = $adherent;
+        $this->reserver_par = $reserver_par;
 
         return $this;
     }

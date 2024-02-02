@@ -80,9 +80,9 @@ class Emprunt
         return $this->correspondre;
     }
 
-    public function setCorrespondre(?Livre $livre): static
+    public function setCorrespondre(?Livre $correspondre): static
     {
-        $this->correspondre = $livre;
+        $this->correspondre = $correspondre;
 
 
 

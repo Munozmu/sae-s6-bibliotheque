@@ -25,9 +25,11 @@ class AdherentCrudController extends AbstractCrudController
             TextField::new('prenom'),
             DateField::new('dateNaiss'),
             TextField::new('email'),
-            TextField::new('adresse'),
+            TextField::new('password'),
+            TextField::new('adressePostale'),
             TextField::new('numTel'),
             TextField::new('photo'),
+
             AssociationField::new('reservations'),
             AssociationField::new('emprunts'),        
         ];

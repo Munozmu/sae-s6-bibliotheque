@@ -22,7 +22,7 @@
             <ul>
                 {% for emprunt in LivresEmprunts %}
                     <li>
-                        {{ emprunt.livre.titre }} -
+                        {{ emprunt.correspondre.titre }} -
                         Date de début d'emprunt : {{ emprunt.dateEmprunt|date('Y-m-d') }} -
                         Date de fin d'emprunt : {{ emprunt.dateRetour|date('Y-m-d') }}
                     </li>
