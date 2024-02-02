@@ -21,10 +21,17 @@ class EmpruntRepository extends ServiceEntityRepository
         parent::__construct($registry, Emprunt::class);
     }
 
-//    /**
-//     * @return Emprunt[] Returns an array of Emprunt objects
-//     */
-//    public function findByExampleField($value): array
+    public function getAllEmprunts(): array
+{
+    return $this->createQueryBuilder('e')
+        ->orderBy('e.id', 'ASC')
+        ->getQuery()
+        ->getResult()
+    ;
+}
+
+ 
+//    public function getAllEmprunts($value): array
 //    {
 //        return $this->createQueryBuilder('e')
 //            ->andWhere('e.exampleField = :val')
