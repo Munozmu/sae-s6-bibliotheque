@@ -79,12 +79,12 @@ class Adherent implements UserInterface, PasswordAuthenticatedUserInterface
     #[Groups(['adherent', 'reservation', 'emprunt', 'book'])]
     private ?string $prenom = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(type: 'datetime')]
     #[Groups(['adherent', 'reservation', 'emprunt', 'book'])]
     private ?\DateTimeInterface $dateNaiss = null;
 
-    #[ORM\Column(length: 255)]
-    #[Groups(['adherent'])]
+    #[ORM\Column()]
+    #[Groups(['adherent', 'reservation', 'emprunt'])]
     private ?string $adressePostale = null;
 
     #[ORM\Column(length: 20)]
@@ -96,6 +96,7 @@ class Adherent implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $photo = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Groups(['adherent', 'reservation', 'emprunt'])]
     private ?\DateTimeInterface $dateAdhesion = null;
 
     public function __construct()
@@ -110,7 +111,7 @@ class Adherent implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->id;
     }
 
-
+    
 
 
     public function getEmail(): ?string

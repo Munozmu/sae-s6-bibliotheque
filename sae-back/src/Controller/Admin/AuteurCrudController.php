@@ -20,14 +20,25 @@ class AuteurCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
-            TextField::new('nom'),
             TextField::new('prenom'),
+            TextField::new('nom'),
             DateField::new('dateNaissance'),
             DateField::new('dateDeces'),
             TextField::new('nationalite'),  
             TextField::new('photo'),
             TextEditorField::new('description'),
-            AssociationField::new('livre'),
+            AssociationField::new('livres')
+            ->formatValue(function ($value, $entity) {
+                // Personnalisez la façon dont les catégories sont affichées dans la liste
+                $livres = $entity->getLivres();
+
+                $livresList = [];
+                foreach ($livres as $livres) {
+                    $livresList[] = $livres->getTitre();
+                }
+
+                return implode(', ', $livresList);
+            }),
         ];
     }
 }

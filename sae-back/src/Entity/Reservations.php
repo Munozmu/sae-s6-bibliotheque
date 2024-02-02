@@ -29,12 +29,12 @@ class Reservations
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     #[Groups(['reservation', 'adherent'])]
-    private ?Livre $lier = null;
+    private ?Livre $livre = null;
 
     #[ORM\ManyToOne(inversedBy: 'reservations')]
     #[ORM\JoinColumn(nullable: false)]
     #[Groups(['reservation'])]
-    private ?Adherent $reserver_par = null;
+    private ?Adherent $adherent = null;
 
     public function getId(): ?int
     {
@@ -55,24 +55,24 @@ class Reservations
 
     public function getLier(): ?Livre
     {
-        return $this->lier;
+        return $this->livre;
     }
 
-    public function setLier(?Livre $lier): static
+    public function setLier(?Livre $livre): static
     {
-        $this->lier = $lier;
+        $this->livre = $livre;
 
         return $this;
     }
 
     public function getReserverPar(): ?Adherent
     {
-        return $this->reserver_par;
+        return $this->adherent;
     }
 
-    public function setReserverPar(?Adherent $reserver_par): static
+    public function setReserverPar(?Adherent $adherent): static
     {
-        $this->reserver_par = $reserver_par;
+        $this->adherent = $adherent;
 
         return $this;
     }
