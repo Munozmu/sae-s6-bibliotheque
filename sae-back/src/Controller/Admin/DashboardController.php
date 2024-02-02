@@ -44,29 +44,7 @@ class DashboardController extends AbstractDashboardController
         // $this->livreRepository = $livreRepository;
         // $this->reservationsRepository = $reservationsRepository;
     }
-    protected $adherentRepository;
-    protected $auteurRepository;
-    protected $categorieRepository;
-    protected $empruntRepository;
-    protected $livreRepository;
-    protected $reservationsRepository;
 
-    public function __construct(
-        AdherentRepository $adherentRepository,
-        // AuteurRepository $auteurRepository,
-        // CategorieRepository $categorieRepository,
-        EmpruntRepository $empruntRepository,
-        // LivreRepository $livreRepository,
-        // ReservationsRepository $reservationsRepository,
-    )
-    {
-        $this->adherentRepository = $adherentRepository;
-        // $this->auteurRepository = $auteurRepository;
-        // $this->categorieRepository = $categorieRepository;
-        $this->empruntRepository = $empruntRepository;
-        // $this->livreRepository = $livreRepository;
-        // $this->reservationsRepository = $reservationsRepository;
-    }
     #[Route('/admin', name: 'admin')]
     public function index(): Response
     {
@@ -76,29 +54,6 @@ class DashboardController extends AbstractDashboardController
         ]);
     }
 
-    #[Route('/emprunts', name: 'emprunts')]
-    public function emprunt(): Response
-    {
-        return $this->render('admin/emprunts.html.twig', [
-            'AllAdherents' => $this->adherentRepository->findAll(),
-            'LivresEmprunts' => $this->empruntRepository->getAllEmprunts(),
-            // 'DureeEmprunts' => ,
-        ]);
-        return $this->render('admin/emprunts.html.twig', [
-            'AllAdherents' => $this->adherentRepository->findAll(),
-            'LivresEmprunts' => $this->empruntRepository->getAllEmprunts(),
-        ]);
-    }
-
-    #[Route('/emprunts', name: 'emprunts')]
-    public function emprunt(): Response
-    {
-        return $this->render('admin/emprunts.html.twig', [
-            'AllAdherents' => $this->adherentRepository->findAll(),
-            'LivresEmprunts' => $this->empruntRepository->getAllEmprunts(),
-            // 'DureeEmprunts' => ,
-        ]);
-    }
 
     public function configureDashboard(): Dashboard
     {
