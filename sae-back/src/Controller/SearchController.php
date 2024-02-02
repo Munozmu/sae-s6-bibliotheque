@@ -22,9 +22,9 @@ class SearchController extends AbstractController
         $anneeMax = $request->query->get('anneeMax');
 
 
-        $dataLivre = new Livre();
+        $dataLivre = $livreRepo->searchByParameter($keywords,$lang,$anneeMin,$anneeMax);
 
 
-        return $this->json($category);
+        return $this->json($dataLivre);
     }
 }

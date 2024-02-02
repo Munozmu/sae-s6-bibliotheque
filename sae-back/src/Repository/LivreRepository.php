@@ -4,6 +4,8 @@ namespace App\Repository;
 
 use App\Entity\Livre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Query\Parameter;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -35,6 +37,23 @@ class LivreRepository extends ServiceEntityRepository
 //            ->getResult()
 //        ;
 //    }
+
+
+    public function searchByParameter($keyword,$lang,$anneeMin,$anneeMax) : array
+    {
+    return $this->createQueryBuilder('l')
+        ->andWhere("l.titre LIKE :keyword")
+        ->andWhere("l.langue LIKE :lang")
+        ->andWhere("YEAR(l.date_sortie) BETWEEN :anneeMin AND :anneeMax")
+        ->setParameters([
+            'keyword' => '%' . $keyword . '%',
+            'lang' => '%' . $lang . '%',
+            'anneeMin' => $anneeMin,
+            'anneeMax' => $anneeMax
+        ])
+        ->getQuery()
+        ->getResult();
+    }
 
 //    public function findOneBySomeField($value): ?Livre
 //    {
