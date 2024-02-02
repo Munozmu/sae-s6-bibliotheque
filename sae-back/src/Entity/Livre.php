@@ -222,4 +222,9 @@ class Livre
 
         return $this;
     }
+
+    public function toString()
+    {
+        return $this->auteurs;
+    }
 }

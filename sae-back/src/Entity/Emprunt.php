@@ -33,8 +33,9 @@ class Emprunt
     private ?\DateTimeInterface $dateRetour = null;
 
     #[ORM\ManyToOne(inversedBy: 'emprunts')]
-    #[Groups(['emprunt', 'edherent'])]
+    #[Groups(['emprunt', 'adherent'])]
     private ?Livre $correspondre = null;
+
 
     #[ORM\ManyToOne(inversedBy: 'emprunts')]
     #[Groups(['emprunt', 'book'])]
@@ -82,6 +83,8 @@ class Emprunt
     public function setCorrespondre(?Livre $correspondre): static
     {
         $this->correspondre = $correspondre;
+
+
 
         return $this;
     }

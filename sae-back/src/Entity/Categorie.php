@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\CategorieRepository;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ApiResource(
@@ -22,11 +23,11 @@ class Categorie
     #[Groups(['categorie', 'book'])]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column]
     #[Groups(['categorie', 'book'])]
     private ?string $nom = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(type: 'text', nullable: true)]
     #[Groups(['categorie', 'book'])]
     private ?string $description = null;
 

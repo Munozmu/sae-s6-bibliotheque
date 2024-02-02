@@ -29,7 +29,7 @@ class Reservations
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     #[Groups(['reservation', 'adherent'])]
-    private ?Livre $lier = null;
+    private ?Livre $livre = null;
 
     #[ORM\ManyToOne(inversedBy: 'reservations')]
     #[ORM\JoinColumn(nullable: false)]
@@ -55,12 +55,12 @@ class Reservations
 
     public function getLier(): ?Livre
     {
-        return $this->lier;
+        return $this->livre;
     }
 
-    public function setLier(?Livre $lier): static
+    public function setLier(?Livre $livre): static
     {
-        $this->lier = $lier;
+        $this->livre = $livre;
 
         return $this;
     }
