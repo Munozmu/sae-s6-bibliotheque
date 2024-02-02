@@ -95,9 +95,12 @@ class Adherent implements UserInterface, PasswordAuthenticatedUserInterface
     #[Groups(['adherent'])]
     private ?string $photo = null;
 
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    private ?\DateTimeInterface $dateAdhesion = null;
+
     public function __construct()
     {
-        // $this->dateAdhesion = new \DateTime();
+        $this->dateAdhesion = new \DateTime();
         $this->reservations = new ArrayCollection();
         $this->emprunts = new ArrayCollection();
     }
@@ -308,6 +311,18 @@ class Adherent implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPhoto(?string $photo): static
     {
         $this->photo = $photo;
+
+        return $this;
+    }
+
+    public function getDateAdhesion(): ?\DateTimeInterface
+    {
+        return $this->dateAdhesion;
+    }
+
+    public function setDateAdhesion(\DateTimeInterface $dateAdhesion): static
+    {
+        $this->dateAdhesion = $dateAdhesion;
 
         return $this;
     }
