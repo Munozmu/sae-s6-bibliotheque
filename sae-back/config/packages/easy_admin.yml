@@ -1,0 +1,6 @@
+# config/packages/easy_admin.yaml
+
+easy_admin:
+    design:
+        templates:
+            layout: '@EasyAdmin/default/easy_admin.html.twig'
