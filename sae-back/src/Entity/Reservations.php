@@ -20,21 +20,22 @@ class Reservations
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['reservation', 'adherent'])]
+    #[Groups(['reservation', 'adherent', 'book'])]
     private ?int $id = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
-    #[Groups(['reservation', 'adherent'])]
+    #[Groups(['reservation', 'adherent', 'book'])]
     private ?\DateTimeInterface $dateResa = null;
-
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
-    #[Groups(['reservation', 'adherent'])]
-    private ?Livre $lier = null;
 
     #[ORM\ManyToOne(inversedBy: 'reservations')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['reservation'])]
+    #[Groups(['reservation', 'book'])]
     private ?Adherent $reserver_par = null;
+
+    #[ORM\ManyToOne(inversedBy: 'reservations')]
+    #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['reservation', 'adherent'])]
+    private ?Livre $lier = null;
 
     public function getId(): ?int
     {
@@ -49,18 +50,6 @@ class Reservations
     public function setDateResa(\DateTimeInterface $dateResa): static
     {
         $this->dateResa = $dateResa;
-
-        return $this;
-    }
-
-    public function getLier(): ?Livre
-    {
-        return $this->lier;
-    }
-
-    public function setLier(?Livre $lier): static
-    {
-        $this->lier = $lier;
 
         return $this;
     }
@@ -80,5 +69,17 @@ class Reservations
     public function __toString()
     {
         return $this->dateResa;
+    }
+
+    public function getLier(): ?Livre
+    {
+        return $this->lier;
+    }
+
+    public function setLier(?Livre $lier): static
+    {
+        $this->lier = $lier;
+
+        return $this;
     }
 }

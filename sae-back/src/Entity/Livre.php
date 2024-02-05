@@ -65,11 +65,16 @@ class Livre
     #[Groups(['book'])]
     private ?string $resume = null;
 
+    #[ORM\OneToMany(mappedBy: 'lier', targetEntity: Reservations::class)]
+    #[Groups(['book'])]
+    private Collection $reservations;
+
     public function __construct()
     {
         $this->emprunts = new ArrayCollection();
         $this->auteurs = new ArrayCollection();
         $this->categories = new ArrayCollection();
+        $this->reservations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -219,6 +224,36 @@ class Livre
     public function setResume(string $resume): static
     {
         $this->resume = $resume;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Reservations>
+     */
+    public function getReservations(): Collection
+    {
+        return $this->reservations;
+    }
+
+    public function addReservation(Reservations $reservation): static
+    {
+        if (!$this->reservations->contains($reservation)) {
+            $this->reservations->add($reservation);
+            $reservation->setLier($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReservation(Reservations $reservation): static
+    {
+        if ($this->reservations->removeElement($reservation)) {
+            // set the owning side to null (unless already changed)
+            if ($reservation->getLier() === $this) {
+                $reservation->setLier(null);
+            }
+        }
 
         return $this;
     }

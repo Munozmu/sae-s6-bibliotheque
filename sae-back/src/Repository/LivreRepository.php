@@ -39,46 +39,22 @@ class LivreRepository extends ServiceEntityRepository
     //    }
 
 
-    public function searchByParameter($keyword, $lang, $anneeMin, $anneeMax): array
+    public function searchByParameter($keyword, $lang, $anneeMin, $anneeMax, $author, $category): array
     {
-        // return $this->createQueryBuilder('l')
-        //     ->andWhere("l.titre LIKE :keyword")
-        //     ->andWhere("l.langue LIKE :lang")
-        //     ->andWhere("l.dateSortie BETWEEN :anneeMin AND :anneeMax")
-        //     ->setParameters([
-        //         'keyword' => '%' . $keyword . '%',
-        //         'lang' => '%' . $lang . '%',
-        //         'anneeMin' => $anneeMin . '-01-01',
-        //         'anneeMax' => $anneeMax . '-31-12'
-        //     ])
-        //     ->getQuery()
-        //     ->getResult();
-
-        // $entityManager = $this->getEntityManager();
-
-        // $query = $entityManager->createQuery(
-        //     "Select l
-        //     From App\Entity\Livre l
-        //     Where l.titre LIKE :keyword
-        //     And l.langue LIKE :lang
-        //     And l.dateSortie BETWEEN '2024-01-01' AND '2025-31-12'
-        //     "
-        // )->setParameters([
-        //     'keyword' => '%' . $keyword . '%',
-        //     'lang' => '%' . $lang . '%',
-        //     'anneeMin' => '2024-01-01',
-        //     'anneeMax' => '2025-31-12'
-        // ]);
-
-        // return $query->getResult();
         $conn = $this->getEntityManager()->getConnection();
 
         $sql = "
-            SELECT *
-            FROM livre
-            WHERE livre.titre LIKE :keyword 
+            SELECT livre.id AS livre_id ,livre.titre,livre.date_sortie,livre.langue,livre.photo_couverture,livre.resume,auteur.id AS auteur_id,auteur.nom AS auteur_nom , auteur.prenom , categorie.id AS cate_id , categorie.nom AS cate_nom
+            FROM livre , auteur , auteur_livre , livre_categorie, categorie
+            WHERE auteur_livre.livre_id = livre.id
+            AND auteur_livre.auteur_id = auteur.id
+            AND livre_categorie.livre_id = livre.id
+            AND livre_categorie.categorie_id = categorie.id
+            AND livre.titre LIKE :keyword 
             AND livre.date_sortie BETWEEN :anneeMin AND :anneeMax 
             AND livre.langue LIKE :lang
+            AND auteur.nom LIKE :auteur
+            AND categorie.nom LIKE :categorie
         ";
 
         $resultSet = $conn->executeQuery($sql, [
@@ -86,6 +62,8 @@ class LivreRepository extends ServiceEntityRepository
             'lang' => '%' . $lang . '%',
             'anneeMin' => $anneeMin . '-01-01',
             'anneeMax' => $anneeMax . '-12-31',
+            'auteur' => '%' . $author . '%',
+            'categorie' => '%' . $category . '%'
         ]);
 
         return $resultSet->fetchAllAssociative();
