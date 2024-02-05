@@ -17,7 +17,10 @@ export class AuthService {
   constructor(
     private http: HttpClient,
     private adherentService: AdherentService
-  ) { }
+  ) {
+    this.refreshCurrentUser();
+    console.log(this.isLoggedIn());
+  }
 
   // Create global BehaviorSubject to share the authentication state
   private currentUserSubject: BehaviorSubject<Adherent> = new BehaviorSubject<Adherent>({} as Adherent);
@@ -43,6 +46,7 @@ export class AuthService {
   refreshCurrentUser(): void {
     this.getCurrentUser().subscribe(
       (user) => {
+        console.log('refreshCurrentUser', user);
         this.currentUserSubject.next(user);
       }
     );
@@ -52,6 +56,7 @@ export class AuthService {
     return of(this.getToken()).pipe(
       switchMap((token) => {
         if (token) {
+          this.isAuthenticated = true;
           const userId = JSON.parse(token).user.id;
           return this.adherentService.getAdherent(userId);
         } else {
