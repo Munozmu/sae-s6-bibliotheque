@@ -36,6 +36,7 @@ class Emprunt
     #[Groups(['emprunt', 'adherent'])]
     private ?Livre $correspondre = null;
 
+
     #[ORM\ManyToOne(inversedBy: 'emprunts')]
     #[Groups(['emprunt', 'book'])]
     private ?Adherent $adherent = null;
@@ -86,6 +87,8 @@ class Emprunt
     public function setCorrespondre(?Livre $correspondre): static
     {
         $this->correspondre = $correspondre;
+
+
 
         return $this;
     }

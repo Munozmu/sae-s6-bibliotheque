@@ -37,14 +37,26 @@
     </div>
     <div>
       <h1 class="text-3xl font-semibold">Mon compte</h1>
-      <h1 class="text-2xl font-light">Gabin Munoz</h1>
-      <span class="text-sm">Membre depuis juillet 2023</span>
+      <h1
+        class="text-2xl font-light"
+        *ngIf="currentUser$ | async as currentUser"
+      >
+        {{ currentUser.prenom }} {{ currentUser.nom }}
+      </h1>
+      <span class="text-sm" *ngIf="currentUser$ | async as currentUser"
+        >Membre depuis le
+        {{ currentUser.dateAdhesion | date : "dd/MM/yyyy" }}</span
+      >
     </div>
   </div>
 
   <!-- Profile section -->
   @if (currentTab === 'profile') {
-  <form class="w-full">
+  <form
+    class="w-full"
+    [formGroup]="editProfileForm"
+    (ngSubmit)="onSubmitEditProfile()"
+  >
     <div class="w-full my-5">
       <h3 class="text-xl">Modifier vos informations</h3>
       <span class="text-sm font-light text-gray-500"
@@ -62,6 +74,7 @@
           id="nom"
           type="text"
           placeholder="Votre nom"
+          formControlName="nom"
         />
       </div>
       <div class="w-1/2 ml-2">
@@ -73,6 +86,7 @@
           id="prenom"
           type="text"
           placeholder="Votre prénom"
+          formControlName="prenom"
         />
       </div>
     </div>
@@ -88,6 +102,7 @@
           id="adresse"
           type="text"
           placeholder="Votre adresse"
+          formControlName="adressePostale"
         />
       </div>
       <div class="w-1/2 ml-2">
@@ -102,6 +117,7 @@
           id="telephone"
           type="tel"
           placeholder="Votre téléphone"
+          formControlName="numTel"
         />
       </div>
     </div>
@@ -139,10 +155,13 @@
     </div>
 
     <!-- Bouton Soumettre -->
-    <div class="flex items-center justify-end">
+    <div class="flex flex-col items-center justify-end">
+      <span class="text-green-500 my-3" *ngIf="confirmMessage">
+        Les modifications ont été sauvegardées
+      </span>
       <button
         class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-        type="button"
+        type="submit"
       >
         Soumettre
       </button>

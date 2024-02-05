@@ -31,11 +31,11 @@ class Auteur
     #[Groups(['auteur', 'book'])]
     private ?string $prenom = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(type: 'datetime')]
     #[Groups(['auteur'])]
     private ?\DateTimeInterface $dateNaissance = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    #[ORM\Column(type: 'datetime', nullable: true)]
     #[Groups(['auteur'])]
     private ?\DateTimeInterface $dateDeces = null;
 
@@ -152,7 +152,7 @@ class Auteur
     
     public function __toString()
     {
-        return $this->nom + $this->prenom;
+        return $this->nom;
     }
 
     /**

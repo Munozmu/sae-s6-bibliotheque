@@ -3,6 +3,7 @@ import { Router, RouterModule } from '@angular/router';
 import { LoginModalComponent } from "../login-modal/login-modal.component";
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../../core/auth/auth.service';
+import { Adherent } from '../../../core/models/adherent';
 
 @Component({
   selector: 'app-navbar',
@@ -15,14 +16,15 @@ export class NavbarComponent implements OnInit {
 
   isLoginModalDisplayed: boolean = false;
 
-
   constructor(
     protected authService: AuthService,
     private router: Router
   ) { }
 
-  ngOnInit(): void {
+  currentUser$ = this.authService.currentUser$;
 
+  ngOnInit(): void {
+    this.authService.refreshCurrentUser();
   }
 
   onModalClosed(isClosed: boolean) {

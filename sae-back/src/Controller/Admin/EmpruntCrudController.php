@@ -22,7 +22,7 @@ class EmpruntCrudController extends AbstractCrudController
         return [
             DateField::new('dateEmprunt'),
             DateField::new('dateRetour'),
-            AssociationField::new('livre'),
+            AssociationField::new('correspondre'),
             AssociationField::new('adherent')
         ];
     }

@@ -25,8 +25,29 @@ class LivreCrudController extends AbstractCrudController
             TextField::new('langue'),
             DateField::new('dateSortie'),
             TextField::new('photoCouverture'),
-            AssociationField::new('categorie'),
-            AssociationField::new('auteur')
+            AssociationField::new('categories')
+            ->formatValue(function ($value, $entity) {
+                // Personnalisez la façon dont les catégories sont affichées dans la liste
+                $categories = $entity->getCategories();
+
+                $categoriesList = [];
+                foreach ($categories as $categorie) {
+                    $categoriesList[] = $categorie->getNom();
+                }
+
+                return implode(', ', $categoriesList);
+            }),
+            AssociationField::new('auteurs')
+                ->formatValue(function ($value, $entity) {
+                    // Personnalisez la façon dont les auteurs sont affichés dans la liste
+                    $auteurs = $entity->getAuteurs();
+                    $auteursList = [];
+                    foreach ($auteurs as $auteur) {
+                        $auteursList[] = $auteur->getPrenom(). ' ' .$auteur->getNom(); // Ajoutez le nom complet de l'auteur
+                    }
+
+                    return implode(', ', $auteursList);
+                }),
         ];
     }
 }

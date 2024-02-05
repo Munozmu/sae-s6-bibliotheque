@@ -20,14 +20,16 @@ class AdherentCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
-            TextField::new('dateAdhesion'),
+            DateField::new('dateAdhesion'),
             TextField::new('nom'),
             TextField::new('prenom'),
             DateField::new('dateNaiss'),
             TextField::new('email'),
-            TextField::new('adresse'),
+            TextField::new('password'),
+            TextField::new('adressePostale'),
             TextField::new('numTel'),
             TextField::new('photo'),
+
             AssociationField::new('reservations'),
             AssociationField::new('emprunts'),        
         ];
