@@ -23,7 +23,7 @@ class LivreRepository extends ServiceEntityRepository
         parent::__construct($registry, Livre::class);
     }
 
-        public function getAllLivresWithEmprunts(): array
+    public function getAllLivresWithEmprunts(): array
     {
         return $this->createQueryBuilder('l')
             ->leftJoin('l.emprunts', 'e')
