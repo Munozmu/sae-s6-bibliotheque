@@ -16,8 +16,15 @@ class EmpruntNotifier
 
         $maxEmprunts = 3;
         $adherent = $emprunts->getAdherent();
+        $livre = $emprunts->getCorrespondre();
+        //Check si l'utilisateur a dépassé le nombre d'emprunt
         if (count($adherent->getEmprunts()) >= $maxEmprunts) {
             throw new \Exception("Le nombre total d'emprunt a été atteint, veuillez rendre des livres avant de pouvoir emprunter à nouveau");
+        }
+
+        // Check si le livre est empruntable par l'utilisateur
+        if (!$livre->isAvailable()) {
+            throw new \Exception("Le livre que vous voulez emprunter n'est pas disponible");
         }
     }
 }

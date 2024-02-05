@@ -257,9 +257,27 @@ class Livre
 
         return $this;
     }
-  
+
     public function toString()
     {
         return $this->auteurs;
+    }
+
+    public function isAvailable(Emprunt $emprunts): ?bool
+    {
+        $isAvailable = true;
+
+        // Vérifie si le livre n'est pas emprunter actuellement
+        foreach ($this->getEmprunts() as $unEmprunts) {
+            if ($unEmprunts->isEnCours()) {
+                $isAvailable = false;
+            }
+        }
+
+        // Vérifie si le livre n'a pas une réservation en cours
+        if (count($this->getReservations()) > 0) {
+            $isAvailable = false;
+        }
+        return $isAvailable;
     }
 }
