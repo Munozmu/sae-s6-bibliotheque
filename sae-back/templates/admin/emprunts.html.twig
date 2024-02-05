@@ -6,28 +6,21 @@
 
 {% block main %}
     <div class="container">
-        <h1>Tableau de Bord</h1>
-
-        <section>
-            <h2>Emprunteurs</h2>
-            <ul>
-                {% for adherent in AllAdherents %}
-                    <li>{{ adherent.nom }} {{ adherent.prenom }}</li>
-                {% endfor %}
-            </ul>
-        </section>
-
         <section>
             <h2>Livres Empruntés</h2>
-            <ul>
-                {% for emprunt in LivresEmprunts %}
-                    <li>
-                        {{ emprunt.correspondre.titre }} -
-                        Date de début d'emprunt : {{ emprunt.dateEmprunt|date('Y-m-d') }} -
-                        Date de fin d'emprunt : {{ emprunt.dateRetour|date('Y-m-d') }}
-                    </li>
-                {% endfor %}
-            </ul>
+            <br></br>
+            <div class="bg-light p-3 rounded mb-3">
+                <ul class="list-unstyled">
+                    {% for emprunt in LivresEmprunts %}
+                        <li class="mb-3">
+                            <strong>Emprunteur:</strong> {{ emprunt.adherent.nom }} {{ emprunt.adherent.prenom }} |
+                            <strong>Livre:</strong> {{ emprunt.correspondre.titre }} |
+                            <strong>Date de début d'emprunt:</strong> {{ emprunt.dateEmprunt|date('Y-m-d') }} |
+                            <strong>Date de fin d'emprunt:</strong> {{ emprunt.dateRetour ? emprunt.dateRetour|date('Y-m-d') : 'Non retourné' }}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
         </section>
     </div>
 {% endblock %}

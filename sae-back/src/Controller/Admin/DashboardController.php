@@ -33,7 +33,7 @@ class DashboardController extends AbstractDashboardController
         // AuteurRepository $auteurRepository,
         // CategorieRepository $categorieRepository,
         EmpruntRepository $empruntRepository,
-        // LivreRepository $livreRepository,
+        LivreRepository $livreRepository,
         // ReservationsRepository $reservationsRepository,
     )
     {
@@ -41,7 +41,7 @@ class DashboardController extends AbstractDashboardController
         // $this->auteurRepository = $auteurRepository;
         // $this->categorieRepository = $categorieRepository;
         $this->empruntRepository = $empruntRepository;
-        // $this->livreRepository = $livreRepository;
+        $this->livreRepository = $livreRepository;
         // $this->reservationsRepository = $reservationsRepository;
     }
 
@@ -61,10 +61,25 @@ class DashboardController extends AbstractDashboardController
             ->setTitle(' Bibliothèque');
     }
 
+    public function configureLivres(): Dashboard
+    {
+        return Dashboard::new()
+            ->setTitle('Livres');
+    }
+
+    #[Route('/admin/livre', name: 'livre_history')]
+    public function livreHistory(): Response
+    {
+        return $this->render('admin/history.html.twig', [
+            'livres' => $this->livreRepository->getAllLivresWithEmprunts(),
+        ]);
+    }
+
     public function configureMenuItems(): iterable
     {
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
         yield MenuItem::section('gestion');
+        yield MenuItem::linkToRoute('Historique','fas fa-history', 'livre_history');
         yield MenuItem::linkToCrud('Emprunt', 'fas fa-text', Emprunt::class);
         // yield MenuItem::linkToRoute('Tableau de Bord', 'fas fa-chart-bar', 'emprunts');
         // yield MenuItem::linkToCrud('Reservations', 'fas fa-text', Reservations::class);
