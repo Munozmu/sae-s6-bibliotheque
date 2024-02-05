@@ -21,6 +21,27 @@ class LivreRepository extends ServiceEntityRepository
         parent::__construct($registry, Livre::class);
     }
 
+    public function getAllLivresWithEmprunts(): array
+    {
+        return $this->createQueryBuilder('l')
+            ->leftJoin('l.emprunts', 'e')
+            ->addSelect('e') // Sélectionnez également les emprunts
+            ->orderBy('l.id', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+
+    // Version historique
+    // public function getAllLivresWithEmprunts(): array
+    // {
+    //     return $this->createQueryBuilder('l')
+    //         ->leftJoin('l.emprunts', 'e', Join::WITH, 'e.enCours = false') // Inclure tous les emprunts, même ceux qui ont déjà été retournés
+    //         ->orderBy('l.id', 'ASC')
+    //         ->getQuery()
+    //         ->getResult();
+    // }
+
 //    /**
 //     * @return Livre[] Returns an array of Livre objects
 //     */
