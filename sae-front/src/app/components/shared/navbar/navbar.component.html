@@ -47,14 +47,14 @@
         type="button"
         class="flex text-sm items-center rounded-full md:me-0 focus:ring-4 focus:ring-gray-300"
         id="user-menu-button"
-        (click)="
-          authService.getIsAuthenticated() ? redirectToAccount() : openModal()
-        "
+        (click)="authService.isLoggedIn() ? redirectToAccount() : openModal()"
       >
-        @if (authService.getIsAuthenticated()) {
+        @if (authService.isLoggedIn()) {
         <div class="flex flex-col px-4">
           <span class="font-bold">Mon compte</span>
-          <span class="text-sm">Gabin Munoz</span>
+          <span class="text-sm" *ngIf="currentUser$ | async as currentUser"
+            >{{ currentUser.prenom }} {{ currentUser.nom }}</span
+          >
         </div>
         <img
           class="w-8 h-8 rounded-full"

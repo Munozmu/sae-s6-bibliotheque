@@ -6,6 +6,7 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { AuthorService } from '../../core/services/author.service';
 import { Author } from '../../core/models/author';
 import { CategoriesService } from '../../core/services/categories.service';
+import { AuthService } from '../../core/auth/auth.service';
 
 @Component({
   selector: 'app-homepage',
@@ -27,6 +28,7 @@ export class HomepageComponent implements OnInit {
 
   constructor(
     private authorService: AuthorService,
+    private authService: AuthService,
     private categorieService: CategoriesService,
     private fb: FormBuilder,
     private route: ActivatedRoute,
@@ -50,6 +52,9 @@ export class HomepageComponent implements OnInit {
         console.log(params);
       }
       );
+
+    // DEV ONLY : Connect user
+    this.authService.login({ username: 'loic@gmail.com', password: 'loic' });
 
     // Get routes param and actualize form values
     this.route.queryParams
