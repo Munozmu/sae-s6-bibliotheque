@@ -43,13 +43,13 @@
                 class="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none"
                 type="text"
                 maxlength="15"
-                formControlName="firstName"
+                formControlName="prenom"
               />
               <div
                 *ngIf="
-                  formControlsRegistration['firstName'].invalid &&
-                  (formControlsRegistration['firstName'].dirty ||
-                    formControlsRegistration['firstName'].touched)
+                  formControlsRegistration['prenom'].invalid &&
+                  (formControlsRegistration['prenom'].dirty ||
+                    formControlsRegistration['prenom'].touched)
                 "
                 class="text-red-500 text-sm mt-1"
               >
@@ -64,13 +64,13 @@
                 class="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none"
                 type="text"
                 maxlength="15"
-                formControlName="lastName"
+                formControlName="nom"
               />
               <div
                 *ngIf="
-                  formControlsRegistration['lastName'].invalid &&
-                  (formControlsRegistration['lastName'].dirty ||
-                    formControlsRegistration['lastName'].touched)
+                  formControlsRegistration['nom'].invalid &&
+                  (formControlsRegistration['nom'].dirty ||
+                    formControlsRegistration['nom'].touched)
                 "
                 class="text-red-500 text-sm mt-1"
               >
@@ -89,13 +89,13 @@
                   class="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none"
                   type="phone"
                   maxlength="10"
-                  formControlName="phone"
+                  formControlName="numTel"
                 />
                 <div
                   *ngIf="
-                    formControlsRegistration['phone'].invalid &&
-                    (formControlsRegistration['phone'].dirty ||
-                      formControlsRegistration['phone'].touched)
+                    formControlsRegistration['numTel'].invalid &&
+                    (formControlsRegistration['numTel'].dirty ||
+                      formControlsRegistration['numTel'].touched)
                   "
                   class="text-red-500 text-sm mt-1"
                 >
@@ -109,13 +109,13 @@
                 <input
                   class="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none"
                   type="date"
-                  formControlName="dateOfBirth"
+                  formControlName="dateNaiss"
                 />
                 <div
                   *ngIf="
-                    formControlsRegistration['dateOfBirth'].invalid &&
-                    (formControlsRegistration['dateOfBirth'].dirty ||
-                      formControlsRegistration['dateOfBirth'].touched)
+                    formControlsRegistration['dateNaiss'].invalid &&
+                    (formControlsRegistration['dateNaiss'].dirty ||
+                      formControlsRegistration['dateNaiss'].touched)
                   "
                   class="text-red-500 text-sm mt-1"
                 >
@@ -133,13 +133,13 @@
               class="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none"
               type="text"
               maxlength="50"
-              formControlName="address"
+              formControlName="adressePostale"
             />
             <div
               *ngIf="
-                formControlsRegistration['address'].invalid &&
-                (formControlsRegistration['address'].dirty ||
-                  formControlsRegistration['address'].touched)
+                formControlsRegistration['adressePostale'].invalid &&
+                (formControlsRegistration['adressePostale'].dirty ||
+                  formControlsRegistration['adressePostale'].touched)
               "
               class="text-red-500 text-sm mt-1"
             >
@@ -222,13 +222,13 @@
             class="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none"
             type="email"
             maxlength="50"
-            formControlName="email"
+            formControlName="username"
           />
           <div
             *ngIf="
-              formControlsLogin['email'].invalid &&
-              (formControlsLogin['email'].dirty ||
-                formControlsLogin['email'].touched)
+              formControlsLogin['username'].invalid &&
+              (formControlsLogin['username'].dirty ||
+                formControlsLogin['username'].touched)
             "
             class="text-red-500 text-sm mt-1"
           >

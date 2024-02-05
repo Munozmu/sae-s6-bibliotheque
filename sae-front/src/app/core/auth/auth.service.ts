@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of, switchMap } from 'rxjs';
+import { BehaviorSubject, Observable, map, of, switchMap } from 'rxjs';
 import { AdherentService } from '../services/adherent.service';
 import { Adherent } from '../models/adherent';
+import { AccessToken } from '../models/accesstoken';
 
 @Injectable({
   providedIn: 'root'
@@ -18,18 +19,33 @@ export class AuthService {
     private adherentService: AdherentService
   ) { }
 
-  // login(credentials: { username: string, password: string }) {
-  login() {
-    this.isAuthenticated = true;
-    return this.http.post(`${this.apiURL}/logout`, {});
+  // Create global BehaviorSubject to share the authentication state
+  private currentUserSubject: BehaviorSubject<Adherent> = new BehaviorSubject<Adherent>({} as Adherent);
+  currentUser$: Observable<Adherent | null> = this.currentUserSubject.asObservable();
+
+  login(credentials: { username: string, password: string }) {
+
+    this.http.post(`${this.apiURL}/login`, credentials).subscribe(
+      (response: any) => {
+        this.isAuthenticated = true;
+        this.setToken(response);
+        this.refreshCurrentUser();
+      }
+    );
+
   }
 
   logout() {
     this.isAuthenticated = false;
+    this.removeToken();
   }
 
-  getIsAuthenticated(): boolean {
-    return this.isAuthenticated;
+  refreshCurrentUser(): void {
+    this.getCurrentUser().subscribe(
+      (user) => {
+        this.currentUserSubject.next(user);
+      }
+    );
   }
 
   getCurrentUser(): Observable<Adherent> {
@@ -47,7 +63,7 @@ export class AuthService {
   }
 
   // LOCAL TOKEN MANAGEMENT
-  setToken(token: string): void {
+  setToken(token: AccessToken): void {
     localStorage.setItem('access_token', JSON.stringify(token));
   }
 
@@ -57,6 +73,10 @@ export class AuthService {
 
   removeToken(): void {
     localStorage.removeItem('access_token');
+  }
+
+  isLoggedIn(): boolean {
+    return this.isAuthenticated;
   }
 
 

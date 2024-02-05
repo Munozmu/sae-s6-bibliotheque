@@ -17,4 +17,12 @@ export class AdherentService {
   getAdherent(id: number) {
     return this.http.get<Adherent>(`${this.apiURL}/adherents/${id}`);
   }
+
+  postAdherent(adherent: Adherent) {
+    return this.http.post<Adherent>(`${this.apiURL}/adherents`, adherent);
+  }
+
+  updateAdherent(adherent: Adherent) {
+    return this.http.patch<Adherent>(`${this.apiURL}/adherents/${adherent.id}`, adherent);
+  }
 }
