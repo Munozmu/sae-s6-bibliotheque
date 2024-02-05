@@ -41,6 +41,10 @@ class Emprunt
     #[Groups(['emprunt', 'book'])]
     private ?Adherent $adherent = null;
 
+    #[ORM\Column]
+    #[Groups(['emprunt', 'book'])]
+    private ?bool $enCours = true;
+
 
     public function __construct()
     {
@@ -104,5 +108,17 @@ class Emprunt
     public function __toString()
     {
         return $this->dateEmprunt + $this->dateRetour;
+    }
+
+    public function isEnCours(): ?bool
+    {
+        return $this->enCours;
+    }
+
+    public function setEnCours(bool $enCours): static
+    {
+        $this->enCours = $enCours;
+
+        return $this;
     }
 }
