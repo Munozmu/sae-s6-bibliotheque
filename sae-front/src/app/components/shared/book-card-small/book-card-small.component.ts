@@ -12,4 +12,5 @@ import { CommonModule, DatePipe } from '@angular/common';
 export class BookCardSmallComponent {
   @Input() book: Book = {} as Book;
   @Input() isReserved: boolean = false;
+  @Input() isDisabled: boolean = false;
 }

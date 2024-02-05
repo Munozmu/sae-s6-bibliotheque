@@ -1,4 +1,7 @@
-<div class="flex flex-col max-w-40 lg:max-w-xs p-3 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100">
+<div class="flex flex-col max-w-40 lg:max-w-xs p-3 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100"
+     [class.grayscale]="isDisabled"
+     [class.opacity-60]="isDisabled"
+     [class.pointer-events-none]="isDisabled">
   <img
     src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fstatic.fnac-static.com%2Fmultimedia%2FImages%2FFR%2FNR%2Ff7%2F9a%2F7f%2F8362743%2F1507-1%2Ftsp20220729061039%2FL-Art-de-la-guerre.jpg&f=1&nofb=1&ipt=1c9c0acddcea2dd47fd29abb195d3ccf5f2758a90bfdbc549c889c34e876595c&ipo=images"
     alt=""
