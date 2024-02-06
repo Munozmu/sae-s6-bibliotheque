@@ -22,9 +22,18 @@ class EmpruntNotifier
             throw new \Exception("Le nombre total d'emprunt a été atteint, veuillez rendre des livres avant de pouvoir emprunter à nouveau");
         }
 
+        $reservations = $livre->getReservations();
+        $idEmprunteur =  $emprunts->getAdherent()->getId();
+        $idAdherentResa = $reservations[0]->getReserverPar()->getId();
         // Check si le livre est empruntable par l'utilisateur
-        if (!$livre->isAvailable()) {
+        if (!$livre->isAvailable() && $idAdherentResa !== $idEmprunteur) {
             throw new \Exception("Le livre que vous voulez emprunter n'est pas disponible");
+        }
+
+        if (count($reservations) > 0) {
+            if ($idAdherentResa === $idEmprunteur) {
+                $entityManager = $event->getObjectManager();
+            }
         }
     }
 }

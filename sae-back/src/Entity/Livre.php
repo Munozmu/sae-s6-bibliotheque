@@ -263,7 +263,7 @@ class Livre
         return $this->auteurs;
     }
 
-    public function isAvailable(Emprunt $emprunts): ?bool
+    public function isAvailable(): ?bool
     {
         $isAvailable = true;
 
@@ -272,11 +272,6 @@ class Livre
             if ($unEmprunts->isEnCours()) {
                 $isAvailable = false;
             }
-        }
-
-        // Vérifie si le livre n'a pas une réservation en cours
-        if (count($this->getReservations()) > 0) {
-            $isAvailable = false;
         }
         return $isAvailable;
     }
