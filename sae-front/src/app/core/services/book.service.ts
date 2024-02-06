@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Book } from '../models/book';
-import { Observable, of } from 'rxjs';
+import { Observable, map, of } from 'rxjs';
 import { Author } from '../models/author';
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
+import { AuthService } from '../auth/auth.service';
+import { BookStatus } from '../models/bookStatus';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +15,8 @@ export class BookService {
   private apiUrl: string = environment.apiUrl;
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private authService: AuthService
   ) { }
 
   getAllBooks(): Observable<Book[]> {
@@ -43,6 +46,62 @@ export class BookService {
     const isBookReserved = book.reservations && book.reservations.length > 0;
 
     return !(isBookBorrowed || isBookReserved);
+  }
+
+
+  /**
+   * Check if a book can be reserved of borowed
+   */
+  getBookStatus(book: Book): Observable<BookStatus> {
+    let userId: number;
+
+    return this.authService.currentUser$.pipe(
+      map(user => {
+        if (user) {
+          userId = user.id;
+
+          let avalaible = true;
+          let borrowed = false;
+          let reserved = false;
+          let reservedByUser = false;
+          let borrowedByUser = false;
+
+          // Si le livre est réservé
+          if (book.reservations && book.reservations.length > 0) {
+            reserved = true;
+            if (book.reservations[0].reserver_par?.id === userId) {
+              reservedByUser = true;
+            }
+          }
+
+          // Si le livre est emprunté
+          if (book.emprunts && book.emprunts.length > 0 && book.emprunts[book.emprunts.length - 1].enCours) {
+            borrowed = true;
+            if (book.emprunts[book.emprunts.length - 1].adherent?.id === userId) {
+              borrowedByUser = true;
+            }
+          }
+
+          avalaible = !(borrowed || reserved);
+
+          return {
+            avalaible,
+            borrowed,
+            reserved,
+            reservedByUser,
+            borrowedByUser
+          };
+        } else {
+          return {
+            avalaible: false,
+            borrowed: false,
+            reserved: false,
+            reservedByUser: false,
+            borrowedByUser: false
+          };
+        }
+      })
+    );
   }
 
 

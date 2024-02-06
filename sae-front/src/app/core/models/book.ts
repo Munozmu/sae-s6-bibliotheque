@@ -6,12 +6,17 @@ export interface Book {
   dateSortie?: Date;
   langue?: string;
   photoCouverture?: string;
-  emprunts?: [
-    {
-      enCours?: boolean;
-    }
-  ];
-  reservations?: any[];
+  emprunts?: {
+    enCours?: boolean;
+    adherent?: {
+      id?: number;
+    };
+  }[];
+  reservations?: {
+    reserver_par?: {
+      id?: number;
+    };
+  }[];
   auteurs: Author[];
   resume?: string;
 }
