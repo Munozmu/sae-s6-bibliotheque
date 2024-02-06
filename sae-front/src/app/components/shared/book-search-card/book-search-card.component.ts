@@ -25,11 +25,16 @@ export class BookSearchCardComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.bookService.getBookStatus(this.book).subscribe(status => {
-      this.bookStatus = status;
+    this.bookService.getBookById(this.book.livreId || 0).subscribe(book => {
+      this.bookService.getBookStatus(book).subscribe(status => {
+        this.bookStatus = status;
+        console.log('Bookstatus:', this.bookStatus);
+      }
+      );
     }
     );
-
   }
 
 }
+
+

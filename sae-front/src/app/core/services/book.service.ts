@@ -55,6 +55,7 @@ export class BookService {
 
           // Si le livre est réservé
           if (book.reservations && book.reservations.length > 0) {
+            console.log('reservations:', book.reservations);
             reserved = true;
             if (book.reservations[0].reserver_par?.id === userId) {
               reservedByUser = true;
