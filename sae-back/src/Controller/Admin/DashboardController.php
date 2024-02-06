@@ -18,6 +18,7 @@ use App\Repository\CategorieRepository;
 use App\Repository\EmpruntRepository;
 use App\Repository\LivreRepository;
 use App\Repository\ReservationsRepository;
+use Symfony\Component\HttpFoundation\Request;
 
 class DashboardController extends AbstractDashboardController
 {
@@ -72,6 +73,25 @@ class DashboardController extends AbstractDashboardController
     {
         return $this->render('admin/history.html.twig', [
             'livres' => $this->livreRepository->getAllLivresWithEmprunts(),
+            'count' => $this->livreRepository->countAllEmprunts(),
+        ]);
+    }
+
+    #[Route('/admin/retour', name: 'retour_emprunt')]
+    public function retourEmprunt(Request $request): Response
+    {
+        $empruntId = $request->query->get('empruntId');
+        $emprunt = null;
+        // Si l'ID de l'emprunt est disponible, récupérer l'emprunt correspondant
+        if ($empruntId) {
+            $emprunt = $this->empruntRepository->find($empruntId);
+        }
+        if ($emprunt) {
+            $this->empruntRepository->retourEmprunt($emprunt);
+        }
+        return $this->render('admin/retour.html.twig', [
+            'AllAdherents' => $this->adherentRepository->findAll(),
+            'LivresEmprunts' => $this->empruntRepository->getActualEmprunts(),
         ]);
     }
 
@@ -81,6 +101,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::section('gestion');
         yield MenuItem::linkToRoute('Historique','fas fa-history', 'livre_history');
         yield MenuItem::linkToCrud('Emprunt', 'fas fa-text', Emprunt::class);
+        yield MenuItem::linkToRoute('Retour','fas fa-text', 'retour_emprunt');
         // yield MenuItem::linkToRoute('Tableau de Bord', 'fas fa-chart-bar', 'emprunts');
         // yield MenuItem::linkToCrud('Reservations', 'fas fa-text', Reservations::class);
         yield MenuItem::linkToCrud('Adherent', 'fas fa-text', Adherent::class);
