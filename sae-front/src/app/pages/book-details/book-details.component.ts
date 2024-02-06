@@ -20,7 +20,8 @@ export class BookDetailsComponent implements OnInit {
 
   currentBook: Book = {} as Book;
 
-  isBookAvalaible = false;
+  isBookReserved = true;
+  isBookBorrowed = true;
   isUserLogged = false;
 
   constructor(
@@ -61,19 +62,35 @@ export class BookDetailsComponent implements OnInit {
         if (book) {
           this.currentBook = book;
 
-          console.log(this.currentBook);
-
+          // -------
           // Disabled the button if the book is already borrowed or reserved
-          if (this.currentBook.emprunts && this.currentBook.reservations) {
-            if ((this.currentBook.emprunts as any[]).length === 0 && this.currentBook.reservations?.length === 0) {
-              this.isBookAvalaible = true;
+          // -------
+
+          // Si il y a un emprunt
+          if (this.currentBook.emprunts) {
+            const emprunts = this.currentBook.emprunts as any[];
+            if (emprunts.length === 0 || !emprunts[emprunts.length - 1].enCours) {
+              this.isBookBorrowed = false;
+            } else {
+              this.isBookBorrowed = true;
             }
-            else {
-              this.isBookAvalaible = false;
+          } else {
+            this.isBookBorrowed = false;
+          }
+
+          if (this.currentBook.reservations) {
+            if (this.currentBook.reservations.length === 0) {
+              this.isBookReserved = false;
+            } else {
+              this.isBookReserved = true;
             }
+          } else {
+            this.isBookReserved = false;
           }
 
 
+          console.log(this.isBookBorrowed);
+          console.log(this.isBookReserved);
         }
 
       });
