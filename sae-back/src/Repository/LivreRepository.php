@@ -6,6 +6,7 @@ use App\Entity\Livre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Query\Parameter;
+use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -23,26 +24,35 @@ class LivreRepository extends ServiceEntityRepository
         parent::__construct($registry, Livre::class);
     }
 
-    public function getAllLivresWithEmprunts(): array
-    {
-        return $this->createQueryBuilder('l')
-            ->leftJoin('l.emprunts', 'e')
-            ->addSelect('e') // Sélectionnez également les emprunts
-            ->orderBy('l.id', 'ASC')
-            ->getQuery()
-            ->getResult();
-    }
-
-
-    // Version historique
     // public function getAllLivresWithEmprunts(): array
     // {
     //     return $this->createQueryBuilder('l')
-    //         ->leftJoin('l.emprunts', 'e', Join::WITH, 'e.enCours = false') // Inclure tous les emprunts, même ceux qui ont déjà été retournés
+    //         ->leftJoin('l.emprunts', 'e')
+    //         ->addSelect('e') // Sélectionnez également les emprunts
     //         ->orderBy('l.id', 'ASC')
     //         ->getQuery()
     //         ->getResult();
     // }
+
+
+    // Version historique
+    public function getAllLivresWithEmprunts(): array
+    {
+        return $this->createQueryBuilder('l')
+            ->leftJoin('l.emprunts', 'e', Join::WITH, 'e.enCours = false')
+            ->orderBy('l.titre', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function countAllEmprunts(): int
+    {
+        return $this->createQueryBuilder('e')
+            ->select('COUNT(e.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
 
 //    /**
     //     * @return Livre[] Returns an array of Livre objects
