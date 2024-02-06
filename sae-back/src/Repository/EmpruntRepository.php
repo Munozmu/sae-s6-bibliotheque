@@ -5,7 +5,10 @@ namespace App\Repository;
 use App\Entity\Emprunt;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\Query\Expr\Join;
 /**
  * @extends ServiceEntityRepository<Emprunt>
  *
@@ -16,40 +19,39 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class EmpruntRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    private $em;
+
+    public function __construct(ManagerRegistry $registry, EntityManagerInterface $entityManager)
     {
         parent::__construct($registry, Emprunt::class);
+        $this->em = $entityManager;
     }
 
     public function getAllEmprunts(): array
-{
-    return $this->createQueryBuilder('e')
-        ->orderBy('e.id', 'ASC')
-        ->getQuery()
-        ->getResult()
-    ;
-}
+    {
+        return $this->createQueryBuilder('e')
+            ->orderBy('e.id', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
 
- 
-//    public function getAllEmprunts($value): array
-//    {
-//        return $this->createQueryBuilder('e')
-//            ->andWhere('e.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('e.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    public function getActualEmprunts(): array
+    {
+        return $this->createQueryBuilder('e')
+            ->where('e.enCours = true')
+            ->orderBy('e.id', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
 
-//    public function findOneBySomeField($value): ?Emprunt
-//    {
-//        return $this->createQueryBuilder('e')
-//            ->andWhere('e.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    public function retourEmprunt(Emprunt $emprunt): Void
+    {
+        if ($emprunt) {
+            // Modifier l'état de l'emprunt
+            $emprunt->setEnCours(false);
+
+            // Mettre à jour la base de données
+            $this->_em->flush();
+        }
+    }
 }

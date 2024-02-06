@@ -43,11 +43,12 @@ class Emprunt
 
     #[ORM\Column]
     #[Groups(['emprunt', 'book'])]
-    private ?bool $enCours = true;
+    private ?bool $enCours = null;
 
 
     public function __construct()
     {
+        $this->setEnCours(true);
     }
 
     public function getId(): ?int

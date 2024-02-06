@@ -1,0 +1,24 @@
+{# templates/admin/retour.html.twig #}
+
+{% extends '@EasyAdmin/page/content.html.twig' %}
+
+{% block body_id 'dashboard' %}
+
+{% block main %}
+    <div class="container">
+        <section>
+            <h2>Emprunts en Cours</h2>
+            <form action="{{ path('retour_emprunt') }}" method="update">
+                <ul class="list-unstyled">
+                    {% for emprunt in LivresEmprunts %}
+                        <li>
+                            <input type="radio" name="empruntId" value="{{ emprunt.id }}">
+                            {{ emprunt.adherent.nom }} {{ emprunt.adherent.prenom }} - {{ emprunt.correspondre.titre }}
+                        </li>
+                    {% endfor %}
+                </ul>
+                <button type="submit" class="btn btn-primary">Retourner Emprunt</button>
+            </form>
+        </section>
+    </div>
+{% endblock %}
