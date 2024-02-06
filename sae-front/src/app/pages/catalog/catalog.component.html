@@ -2,7 +2,8 @@
   <div class="flex w-full flex-col">
     <h1 class="text-4xl font-semibold">Catalogue</h1>
     <span class="text-gray-600 font-light"
-      >Votre site préféré compte près de {{ books.length }} références</span
+      >Votre site préféré compte près de {{ books.length }} références dans la
+      catégorie {{ currentCategory.nom }}</span
     >
     <hr class="mt-8 mb-4" />
   </div>
@@ -16,7 +17,7 @@
         [routerLink]="['/catalog']"
         [queryParams]="{ category: c.id }"
         *ngFor="let c of categories"
-        class="text-left block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100"
+        class="text-left block max-w-sm p-6 bg-white border border-gray-200 rounded-sm shadow-sm hover:bg-gray-100"
       >
         <h5 class="mb-2 text-2xl font-semibold tracking-tight text-gray-900">
           {{ c.nom }}
@@ -52,7 +53,7 @@
   <!-- Content -->
   <section class="flex w-full my-10">
     @if (books.length > 0) {
-    <div class="grid grid-cols-5">
+    <div class="grid grid-cols-4">
       <app-book-card-small
         *ngFor="let b of books"
         [book]="b"
