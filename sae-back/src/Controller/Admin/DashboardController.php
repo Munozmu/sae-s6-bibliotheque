@@ -18,6 +18,7 @@ use App\Repository\CategorieRepository;
 use App\Repository\EmpruntRepository;
 use App\Repository\LivreRepository;
 use App\Repository\ReservationsRepository;
+use Symfony\Component\HttpFoundation\Request;
 
 class DashboardController extends AbstractDashboardController
 {
@@ -33,7 +34,7 @@ class DashboardController extends AbstractDashboardController
         // AuteurRepository $auteurRepository,
         // CategorieRepository $categorieRepository,
         EmpruntRepository $empruntRepository,
-        // LivreRepository $livreRepository,
+        LivreRepository $livreRepository,
         // ReservationsRepository $reservationsRepository,
     )
     {
@@ -41,7 +42,7 @@ class DashboardController extends AbstractDashboardController
         // $this->auteurRepository = $auteurRepository;
         // $this->categorieRepository = $categorieRepository;
         $this->empruntRepository = $empruntRepository;
-        // $this->livreRepository = $livreRepository;
+        $this->livreRepository = $livreRepository;
         // $this->reservationsRepository = $reservationsRepository;
     }
 
@@ -61,11 +62,46 @@ class DashboardController extends AbstractDashboardController
             ->setTitle(' Bibliothèque');
     }
 
+    public function configureLivres(): Dashboard
+    {
+        return Dashboard::new()
+            ->setTitle('Livres');
+    }
+
+    #[Route('/admin/livre', name: 'livre_history')]
+    public function livreHistory(): Response
+    {
+        return $this->render('admin/history.html.twig', [
+            'livres' => $this->livreRepository->getAllLivresWithEmprunts(),
+            'count' => $this->livreRepository->countAllEmprunts(),
+        ]);
+    }
+
+    #[Route('/admin/retour', name: 'retour_emprunt')]
+    public function retourEmprunt(Request $request): Response
+    {
+        $empruntId = $request->query->get('empruntId');
+        $emprunt = null;
+        // Si l'ID de l'emprunt est disponible, récupérer l'emprunt correspondant
+        if ($empruntId) {
+            $emprunt = $this->empruntRepository->find($empruntId);
+        }
+        if ($emprunt) {
+            $this->empruntRepository->retourEmprunt($emprunt);
+        }
+        return $this->render('admin/retour.html.twig', [
+            'AllAdherents' => $this->adherentRepository->findAll(),
+            'LivresEmprunts' => $this->empruntRepository->getActualEmprunts(),
+        ]);
+    }
+
     public function configureMenuItems(): iterable
     {
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
         yield MenuItem::section('gestion');
+        yield MenuItem::linkToRoute('Historique','fas fa-history', 'livre_history');
         yield MenuItem::linkToCrud('Emprunt', 'fas fa-text', Emprunt::class);
+        yield MenuItem::linkToRoute('Retour','fas fa-text', 'retour_emprunt');
         // yield MenuItem::linkToRoute('Tableau de Bord', 'fas fa-chart-bar', 'emprunts');
         // yield MenuItem::linkToCrud('Reservations', 'fas fa-text', Reservations::class);
         yield MenuItem::linkToCrud('Adherent', 'fas fa-text', Adherent::class);
