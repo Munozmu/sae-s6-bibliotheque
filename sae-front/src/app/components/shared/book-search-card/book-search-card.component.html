@@ -18,16 +18,24 @@
       <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">
         {{ book.titre }}
       </h5>
+      <p class="my-3">
+        {{ book.resume | slice : 0 : 200 }}...
+        <a class="underline" [routerLink]="['/book/', book.livreId]"
+          >Lire la suite</a
+        >
+      </p>
       <p class="font-normal text-gray-700">
-        <a href="" class="underline">
-          <span *ngIf="book.auteurs">{{ book.auteurs[0] }}</span>
+        <a class="underline">
+          <span *ngIf="book.auteurId"
+            >{{ book.auteurNom }} {{ book.auteurPrenom }}</span
+          >
         </a>
         - {{ book.dateSortie | date : "YYYY" }} - 256 pages
       </p>
     </div>
     <div class="basis-1/5 flex justify-end w-full">
       <button
-        [routerLink]="['/book/', book.id]"
+        [routerLink]="['/book/', book.livreId]"
         class="mx-5 border border-blue-700 text-blue-700 py-3 px-8 w-fit h-fit transition-all hover:bg-blue-700 hover:text-white"
       >
         Voir les détails

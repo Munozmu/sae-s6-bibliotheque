@@ -2,6 +2,7 @@ import { Author } from "./author";
 
 export interface Book {
   id: number;
+  livreId?: number;
   titre?: string;
   dateSortie?: Date;
   langue?: string;
@@ -19,4 +20,7 @@ export interface Book {
   }[];
   auteurs: Author[];
   resume?: string;
+  auteurNom?: string;
+  auteurPrenom?: string;
+  auteurId?: number;
 }

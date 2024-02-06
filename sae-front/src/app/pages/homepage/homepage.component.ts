@@ -110,7 +110,7 @@ export class HomepageComponent implements OnInit {
     this.searchEngineService.searchBooks(
       this.searchBarValue,
       this.rechercheForm.value.categorie,
-      this.rechercheForm.value.auteur.split(' ')[0],
+      this.rechercheForm.value.auteur ? this.rechercheForm.value.auteur.split(' ')[0] : '',
       '',
       this.rechercheForm.value.dateMin,
       this.rechercheForm.value.dateMax

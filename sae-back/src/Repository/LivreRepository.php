@@ -44,7 +44,7 @@ class LivreRepository extends ServiceEntityRepository
         $conn = $this->getEntityManager()->getConnection();
 
         $sql = "
-            SELECT livre.id AS livre_id ,livre.titre,livre.date_sortie,livre.langue,livre.photo_couverture,livre.resume,auteur.id AS auteur_id,auteur.nom AS auteur_nom , auteur.prenom , categorie.id AS cate_id , categorie.nom AS cate_nom
+            SELECT livre.id AS livreId ,livre.titre,livre.date_sortie AS dateSortie,livre.langue,livre.photo_couverture,livre.resume,auteur.id AS auteurId,auteur.nom AS auteurNom , auteur.prenom AS auteurPrenom , categorie.id AS cate_id , categorie.nom AS cate_nom
             FROM livre , auteur , auteur_livre , livre_categorie, categorie
             WHERE auteur_livre.livre_id = livre.id
             AND auteur_livre.auteur_id = auteur.id
