@@ -54,7 +54,7 @@ class LivreRepository extends ServiceEntityRepository
     }
 
 
-//    /**
+    //    /**
     //     * @return Livre[] Returns an array of Livre objects
     //     */
     //    public function findByExampleField($value): array
@@ -69,7 +69,6 @@ class LivreRepository extends ServiceEntityRepository
     //        ;
     //    }
 
-<<<<<<< HEAD
 
     public function searchByParameter($keyword, $lang, $anneeMin, $anneeMax, $author, $category): array
     {
@@ -110,15 +109,4 @@ class LivreRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
-=======
-//    public function findOneBySomeField($value): ?Livre
-//    {
-//        return $this->createQueryBuilder('l')
-//            ->andWhere('l.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
->>>>>>> e702767 (historique - almost done)
 }
