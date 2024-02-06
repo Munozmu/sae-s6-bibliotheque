@@ -21,7 +21,6 @@ export class HomepageComponent implements OnInit {
 
   rechercheForm: FormGroup;
   searchBarValue = '';
-  isSearchLaunched = false;
 
   searchResults: Book[] = [];
 
@@ -51,12 +50,7 @@ export class HomepageComponent implements OnInit {
 
   ngOnInit(): void {
 
-    // Get routes param
-    this.route.queryParams
-      .subscribe(params => {
-        console.log(params);
-      }
-      );
+
 
     // DEV ONLY : Connect user
     this.authService.login({ username: 'loic@gmail.com', password: 'loic' });
@@ -71,6 +65,14 @@ export class HomepageComponent implements OnInit {
           dateMin: params['dateMin'],
           dateMax: params['dateMax']
         });
+      }
+      );
+
+    // Get routes param
+    this.route.queryParams
+      .subscribe(params => {
+        console.log(params);
+        this.refreshSearch();
       }
       );
 
@@ -96,17 +98,22 @@ export class HomepageComponent implements OnInit {
    * Change URL and launch search
    */
   launchSearch() {
+
     this.router.navigate(['/search'], {
       queryParams: {
-        keyword: this.searchBarValue,
+        keyword: this.searchBarValue ? this.searchBarValue : '',
         auteur: this.rechercheForm.value.auteur,
         dateMin: this.rechercheForm.value.dateMin,
         dateMax: this.rechercheForm.value.dateMax
       }
     });
 
-    this.isSearchLaunched = true;
+    this.refreshSearch();
 
+  }
+
+  refreshSearch() {
+    this.resetSearch();
     this.searchEngineService.searchBooks(
       this.searchBarValue,
       this.rechercheForm.value.categorie,
@@ -120,7 +127,10 @@ export class HomepageComponent implements OnInit {
         this.searchResults = books;
       }
     )
+  }
 
+  resetSearch() {
+    this.searchResults = [];
   }
 
 

@@ -30,21 +30,7 @@
   </div>
 </div>
 
-<!-- Main content -->
-<section class="flex flex-col items-center my-20" *ngIf="!isSearchLaunched">
-  <p>Effectuez une recherche parmis les livres de la bibliothèque</p>
-
-  <p>
-    Vous pouvez consulter le
-    <a
-      class="underline text-blue-500"
-      [routerLink]="['/catalog']"
-      routerLinkActive="router-link-active"
-      >Catalogue</a
-    >
-  </p>
-</section>
-<section class="flex p-28 gap-5" *ngIf="isSearchLaunched">
+<section class="flex p-28 gap-5">
   <div class="flex basis-1/4 flex-col w-90">
     <h3 class="text-2xl">Filtres</h3>
     <form [formGroup]="rechercheForm" (ngSubmit)="launchSearch()">
@@ -137,8 +123,18 @@
     </form>
   </div>
   <div class="flex flex-col basis-3/4">
-    <h2 class="text-4xl font-bold">Résultats de la recherche</h2>
-    <h2 class="text-2xl">pour " {{ searchBarValue }}"</h2>
+    <h2 class="text-4xl font-bold">
+      {{
+        this.searchBarValue === undefined
+          ? "Aucune recherche"
+          : "Résultats de la recherche"
+      }}
+    </h2>
+    <h2 class="text-2xl" *ngIf="!(this.searchBarValue === undefined)">
+      <span *ngIf="this.searchBarValue.length > 0"
+        >pour " {{ searchBarValue }}"</span
+      >
+    </h2>
     <!-- Pagination and result numbers -->
     <div class="flex py-6">
       <div class="flex basis-1/4">
