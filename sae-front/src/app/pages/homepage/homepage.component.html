@@ -138,7 +138,7 @@
     <!-- Pagination and result numbers -->
     <div class="flex py-6">
       <div class="flex basis-1/4">
-        <p>Nombre de livres : 123</p>
+        <p>Nombre de livres : {{ searchResults.length }}</p>
       </div>
       <div class="flex basis-3/4">
         <nav aria-label="Page navigation example">
@@ -172,13 +172,17 @@
 
     <!-- Results -->
     <div class="flex flex-col">
-      <app-book-search-card class="w-full"></app-book-search-card>
+      @for (book of searchResults; track book.id) {
+      <app-book-search-card class="w-full" [book]="book"></app-book-search-card>
+      }
 
       <!-- Aucun résultat -->
+      @if (searchResults.length === 0) {
       <div class="w-full text-center py-20">
         <h3 class="text-2xl">Aucun résultat</h3>
         <span class="text-gray-400 italic">Essayez de changer les filtres</span>
       </div>
+      }
     </div>
   </div>
 </section>

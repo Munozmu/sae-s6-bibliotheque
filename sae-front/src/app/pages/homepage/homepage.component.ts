@@ -7,6 +7,8 @@ import { AuthorService } from '../../core/services/author.service';
 import { Author } from '../../core/models/author';
 import { CategoriesService } from '../../core/services/categories.service';
 import { AuthService } from '../../core/auth/auth.service';
+import { SearchEngineService } from '../../core/services/search-engine.service';
+import { Book } from '../../core/models/book';
 
 @Component({
   selector: 'app-homepage',
@@ -21,6 +23,8 @@ export class HomepageComponent implements OnInit {
   searchBarValue = '';
   isSearchLaunched = false;
 
+  searchResults: Book[] = [];
+
 
   // Fake datas
   auteurs: string[] = [];
@@ -32,7 +36,8 @@ export class HomepageComponent implements OnInit {
     private categorieService: CategoriesService,
     private fb: FormBuilder,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private searchEngineService: SearchEngineService
   ) {
     // Init form
     this.rechercheForm = this.fb.group({
@@ -99,7 +104,23 @@ export class HomepageComponent implements OnInit {
         dateMax: this.rechercheForm.value.dateMax
       }
     });
+
     this.isSearchLaunched = true;
+
+    this.searchEngineService.searchBooks(
+      this.searchBarValue,
+      this.rechercheForm.value.categorie,
+      this.rechercheForm.value.auteur.split(' ')[0],
+      '',
+      this.rechercheForm.value.dateMin,
+      this.rechercheForm.value.dateMax
+    ).subscribe(
+      books => {
+        console.log(books);
+        this.searchResults = books;
+      }
+    )
+
   }
 
 

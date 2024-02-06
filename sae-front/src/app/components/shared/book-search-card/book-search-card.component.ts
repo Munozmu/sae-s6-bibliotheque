@@ -1,13 +1,35 @@
-import { Component } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { Book } from '../../../core/models/book';
+import { BookStatus } from '../../../core/models/bookStatus';
+import { BookService } from '../../../core/services/book.service';
+import { CommonModule, DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-book-search-card',
   standalone: true,
-  imports: [RouterModule],
+  imports: [RouterModule, DatePipe, CommonModule],
   templateUrl: './book-search-card.component.html',
   styleUrl: './book-search-card.component.scss'
 })
-export class BookSearchCardComponent {
+export class BookSearchCardComponent implements OnInit {
+
+  @Input() book: Book = {} as Book;
+
+  bookStatus: BookStatus = {} as BookStatus;
+
+  constructor(
+    private bookService: BookService,
+  ) { }
+
+
+  ngOnInit(): void {
+
+    this.bookService.getBookStatus(this.book).subscribe(status => {
+      this.bookStatus = status;
+    }
+    );
+
+  }
 
 }
