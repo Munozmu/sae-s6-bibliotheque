@@ -33,4 +33,18 @@ export class BookService {
   }
 
 
+  /**
+   * Check if a book can be booked or not
+   * @param book Book to check
+   * @returns true if the book is avalaible
+   */
+  isBookAvailable(book: Book): boolean {
+    const isBookBorrowed = book.emprunts && book.emprunts.length > 0 && book.emprunts[book.emprunts.length - 1].enCours;
+    const isBookReserved = book.reservations && book.reservations.length > 0;
+
+    return !(isBookBorrowed || isBookReserved);
+  }
+
+
+
 }
