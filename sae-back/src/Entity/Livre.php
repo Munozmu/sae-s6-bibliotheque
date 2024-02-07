@@ -262,4 +262,31 @@ class Livre
     {
         return $this->auteurs;
     }
+
+    public function isAvailable(): ?bool
+    {
+        $isAvailable = true;
+
+        // Vérifie si le livre n'est pas emprunter actuellement
+        foreach ($this->getEmprunts() as $unEmprunts) {
+            if ($unEmprunts->isEnCours()) {
+                $isAvailable = false;
+            }
+        }
+        return $isAvailable;
+    }
+
+    public function isInReservation(?int $idAdherent): ?bool
+    {
+        $isInReservation = false;
+
+        $reservation = $this->getReservations();
+
+        if (count($reservation) > 0) {
+            if ($idAdherent !== $reservation[0]->getReserverPar()->getId()) {
+                $isInReservation = true;
+            }
+        }
+        return $isInReservation;
+    }
 }
