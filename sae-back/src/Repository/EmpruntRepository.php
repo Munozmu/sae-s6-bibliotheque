@@ -2,7 +2,11 @@
 
 namespace App\Repository;
 
+
+use App\Entity\Adherent;
 use App\Entity\Emprunt;
+use App\Entity\Livre;
+use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\HttpFoundation\Request;
@@ -35,6 +39,16 @@ class EmpruntRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function getLivresNonDisponiblesAvecDateRetour(): array
+    {
+        return $this->createQueryBuilder('e')
+            ->leftJoin('e.correspondre', 'livre')
+            ->where('e.enCours = true')
+            ->select('livre.titre', 'e.dateRetour')
+            ->getQuery()
+            ->getResult();
+    }
+
     public function getActualEmprunts(): array
     {
         return $this->createQueryBuilder('e')
@@ -53,5 +67,19 @@ class EmpruntRepository extends ServiceEntityRepository
             // Mettre à jour la base de données
             $this->_em->flush();
         }
+    }
+
+    public function makeEmprunt(Adherent $adherent, Livre $livre, DateTime $dateDebut, DateTime $dateRetour): Void
+    {
+        $emprunt = new Emprunt();
+        $emprunt->setAdherent($adherent);
+        $emprunt->setCorrespondre($livre);
+        $emprunt->setDateEmprunt($dateDebut);
+        $emprunt->setDateRetour($dateRetour);
+
+        // Persist et flush pour enregistrer les changements
+        $entityManager = $this->getEntityManager();
+        $entityManager->persist($emprunt);
+        $entityManager->flush();
     }
 }
