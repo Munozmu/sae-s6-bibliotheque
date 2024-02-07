@@ -27,6 +27,10 @@ class Reservations
     #[Groups(['reservation', 'adherent', 'book'])]
     private ?\DateTimeInterface $dateResa = null;
 
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    #[Groups(['reservation', 'adherent'])]
+    private ?Livre $livre = null;
+
     #[ORM\ManyToOne(inversedBy: 'reservations')]
     #[ORM\JoinColumn(nullable: false)]
     #[Groups(['reservation', 'book'])]

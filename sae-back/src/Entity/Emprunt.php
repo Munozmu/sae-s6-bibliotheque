@@ -8,7 +8,6 @@ use ApiPlatform\Metadata\ApiResource;
 use App\EventListener\EmpruntNotifier;
 use App\Repository\EmpruntRepository;
 use Doctrine\ORM\Mapping\EntityListeners;
-use phpDocumentor\Reflection\Types\Boolean;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ApiResource(
