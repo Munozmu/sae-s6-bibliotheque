@@ -6,12 +6,13 @@ use App\Entity\Emprunt;
 use Doctrine\ORM\Events;
 use Doctrine\ORM\Event\PrePersistEventArgs;
 use Doctrine\Bundle\DoctrineBundle\Attribute\AsEntityListener;
+use Doctrine\ORM\EntityManagerInterface;
 
 #[AsEntityListener(event: Events::prePersist, method: 'prePersist', entity: Emprunt::class)]
 class EmpruntNotifier
 {
 
-    public function prePersist(Emprunt $emprunts, PrePersistEventArgs $event): void
+    public function prePersist(Emprunt $emprunts, PrePersistEventArgs $event, EntityManagerInterface $ent): void
     {
 
         $maxEmprunts = 3;
@@ -28,12 +29,6 @@ class EmpruntNotifier
         // Check si le livre est empruntable par l'utilisateur
         if (!$livre->isAvailable() && $idAdherentResa !== $idEmprunteur) {
             throw new \Exception("Le livre que vous voulez emprunter n'est pas disponible");
-        }
-
-        if (count($reservations) > 0) {
-            if ($idAdherentResa === $idEmprunteur) {
-                $entityManager = $event->getObjectManager();
-            }
         }
     }
 }

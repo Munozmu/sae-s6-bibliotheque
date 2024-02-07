@@ -14,8 +14,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ApiResource(
-    formats: ['json'],
-    normalizationContext: ['groups' => ['book']]
+    formats: ['jsonapi'],
+    normalizationContext: ['groups' => ['book']],
 )]
 #[ORM\Entity(repositoryClass: LivreRepository::class)]
 #[ORM\EntityListeners([LivreNotifier::class])]
@@ -274,5 +274,19 @@ class Livre
             }
         }
         return $isAvailable;
+    }
+
+    public function isInReservation(?int $idAdherent): ?bool
+    {
+        $isInReservation = false;
+
+        $reservation = $this->getReservations();
+
+        if (count($reservation) > 0) {
+            if ($idAdherent !== $reservation[0]->getReserverPar()->getId()) {
+                $isInReservation = true;
+            }
+        }
+        return $isInReservation;
     }
 }
