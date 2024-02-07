@@ -24,11 +24,11 @@ class Livre
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['book', 'reservation', 'emprunt', 'auteur', 'categorie'])]
+    #[Groups(['book', 'reservation', 'emprunt', 'auteur', 'categorie', 'adherent'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['book', 'reservation', 'emprunt', 'auteur', 'categorie'])]
+    #[Groups(['book', 'reservation', 'emprunt', 'auteur', 'categorie', 'adherent'])]
     private ?string $titre = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
@@ -40,7 +40,7 @@ class Livre
     private ?string $langue = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['book', 'reservation', 'emprunt'])]
+    #[Groups(['book', 'reservation', 'emprunt', 'adherent'])]
     private ?string $photoCouverture = null;
 
     #[ORM\OneToMany(mappedBy: 'correspondre', targetEntity: Emprunt::class)]
@@ -257,7 +257,7 @@ class Livre
 
         return $this;
     }
-  
+
     public function toString()
     {
         return $this->auteurs;

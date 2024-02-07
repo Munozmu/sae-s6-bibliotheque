@@ -6,11 +6,12 @@ import { Adherent } from '../../../core/models/adherent';
 import { AuthService } from '../../../core/auth/auth.service';
 import { AbstractControl, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AdherentService } from '../../../core/services/adherent.service';
+import { BookCardResaComponent } from '../../../components/shared/book-card-resa/book-card-resa.component';
 
 @Component({
   selector: 'app-user-account',
   standalone: true,
-  imports: [BookCardSmallComponent, CommonModule, RouterModule, DatePipe, FormsModule, ReactiveFormsModule],
+  imports: [BookCardSmallComponent, CommonModule, RouterModule, DatePipe, FormsModule, ReactiveFormsModule, BookCardResaComponent],
   templateUrl: './user-account.component.html',
   styleUrl: './user-account.component.scss',
 })

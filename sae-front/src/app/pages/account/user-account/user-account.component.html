@@ -170,10 +170,11 @@
   } @else {
   <div class="w-full flex flex-col">
     <h1 class="text-3xl font-semibold my-4">Mes réservations</h1>
-    <div class="grid gap-10 grid-cols-5">
-      <app-book-card-small></app-book-card-small>
-      <app-book-card-small></app-book-card-small>
-      <app-book-card-small></app-book-card-small>
+    <div
+      class="grid gap-10 grid-cols-5"
+      *ngIf="currentUser$ | async as currentUser"
+    >
+      <app-book-card-resa></app-book-card-resa>
     </div>
   </div>
   }
