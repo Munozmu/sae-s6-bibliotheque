@@ -35,7 +35,6 @@ class DashboardController extends AbstractDashboardController
         // CategorieRepository $categorieRepository,
         EmpruntRepository $empruntRepository,
         LivreRepository $livreRepository,
-        LivreRepository $livreRepository,
         // ReservationsRepository $reservationsRepository,
     ) {
         $this->adherentRepository = $adherentRepository;
@@ -61,20 +60,6 @@ class DashboardController extends AbstractDashboardController
     {
         return Dashboard::new()
             ->setTitle(' Bibliothèque');
-    }
-
-    public function configureLivres(): Dashboard
-    {
-        return Dashboard::new()
-            ->setTitle('Livres');
-    }
-
-    #[Route('/admin/livre', name: 'livre_history')]
-    public function livreHistory(): Response
-    {
-        return $this->render('admin/history.html.twig', [
-            'livres' => $this->livreRepository->getAllLivresWithEmprunts(),
-        ]);
     }
 
     public function configureLivres(): Dashboard
