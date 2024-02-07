@@ -52,11 +52,13 @@ export class BookService {
           let reserved = false;
           let reservedByUser = false;
           let borrowedByUser = false;
+          let reservationId = 0;
 
           // Si le livre est réservé
           if (book.reservations && book.reservations.length > 0) {
             console.log('reservations:', book.reservations);
             reserved = true;
+            reservationId = book.reservations[0].id;
             if (book.reservations[0].reserver_par?.id === userId) {
               reservedByUser = true;
             }
@@ -77,7 +79,8 @@ export class BookService {
             borrowed,
             reserved,
             reservedByUser,
-            borrowedByUser
+            borrowedByUser,
+            reservationId
           };
         } else {
           return {
@@ -85,7 +88,8 @@ export class BookService {
             borrowed: false,
             reserved: false,
             reservedByUser: false,
-            borrowedByUser: false
+            borrowedByUser: false,
+            reservationId: undefined
           };
         }
       })

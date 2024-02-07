@@ -18,6 +18,11 @@ export class ReservationsService {
     const currentDate = new Date();
     const formattedDate: string = currentDate.toISOString();
 
-    return this.http.post(`${this.apiUrl}/reservations`, { dateResa: formattedDate, reserver_par: '/api/livres/' + bookId, lier: '/api/adherents/' + userId });
+    return this.http.post(`${this.apiUrl}/reservationss`, { dateResa: formattedDate, reserverPar: '/api/adherents/' + userId, lier: '/api/livres/' + bookId });
+  }
+
+  cancelReservation(reservationId: number) {
+    console.log('reservationId:', reservationId);
+    return this.http.delete(`${this.apiUrl}/reservationss/${reservationId}`);
   }
 }

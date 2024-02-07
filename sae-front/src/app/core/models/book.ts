@@ -13,7 +13,8 @@ export interface Book {
       id?: number;
     };
   }[];
-  reservations?: {
+  reservations: {
+    id: number;
     reserver_par?: {
       id?: number;
     };

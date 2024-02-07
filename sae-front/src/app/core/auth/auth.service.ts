@@ -30,13 +30,25 @@ export class AuthService {
 
     this.http.post(`${this.apiURL}/login`, credentials).subscribe(
       (response: any) => {
+        // Succès de la requête
         this.isAuthenticated = true;
         this.setToken(response);
         this.refreshCurrentUser();
+      },
+      (error) => {
+        // Gestion des erreurs
+        console.error('Une erreur est survenue lors de la connexion : ', error);
+        this.removeToken();
+        this.refreshCurrentUser();
+        // Vous pouvez afficher un message d'erreur à l'utilisateur ou prendre d'autres mesures nécessaires
+      },
+      () => {
+        // Cette fonction sera appelée lorsque l'observable sera complété
+        console.log('La requête de connexion est terminée.');
       }
     );
-
   }
+
 
   logout() {
     this.isAuthenticated = false;

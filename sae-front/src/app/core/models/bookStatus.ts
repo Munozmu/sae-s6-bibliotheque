@@ -4,4 +4,5 @@ export interface BookStatus {
   reserved: boolean;
   reservedByUser: boolean;
   borrowedByUser: boolean;
+  reservationId?: number;
 }

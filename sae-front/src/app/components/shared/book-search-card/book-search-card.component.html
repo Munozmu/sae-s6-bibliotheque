@@ -48,6 +48,7 @@
 
       @if (bookStatus.reservedByUser === true ) {
       <button
+        (click)="cancelReservation()"
         class="bg-red-700 text-white py-3 px-8 w-fit h-fit transition-all hover:bg-red-900"
       >
         Annuler la réservation
@@ -60,6 +61,7 @@
           bookStatus.reserved ||
           bookStatus.borrowed
         "
+        (click)="reserveBook()"
       >
         Réserver
       </button>

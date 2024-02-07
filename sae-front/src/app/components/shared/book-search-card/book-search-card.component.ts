@@ -4,6 +4,7 @@ import { Book } from '../../../core/models/book';
 import { BookStatus } from '../../../core/models/bookStatus';
 import { BookService } from '../../../core/services/book.service';
 import { CommonModule, DatePipe } from '@angular/common';
+import { ReservationsService } from '../../../core/services/reservations.service';
 
 @Component({
   selector: 'app-book-search-card',
@@ -20,11 +21,26 @@ export class BookSearchCardComponent implements OnInit {
 
   constructor(
     private bookService: BookService,
+    protected reservationService: ReservationsService,
   ) { }
 
 
   ngOnInit(): void {
 
+    this.refreshCurrentBookStatus();
+
+  }
+
+  cancelReservation() {
+    this.reservationService.cancelReservation(this.bookStatus.reservationId || 0).subscribe(
+      (res) => {
+        console.log('Reservation cancelled:', res);
+        this.refreshCurrentBookStatus();
+      }
+    );
+  }
+
+  refreshCurrentBookStatus() {
     this.bookService.getBookById(this.book.livreId || 0).subscribe(book => {
       this.bookService.getBookStatus(book).subscribe(status => {
         this.bookStatus = status;
@@ -32,6 +48,15 @@ export class BookSearchCardComponent implements OnInit {
       }
       );
     }
+    );
+  }
+
+  reserveBook() {
+    this.reservationService.postReservation(this.book.livreId || 0, 1).subscribe(
+      (res) => {
+        console.log('Reservation done:', res);
+        this.refreshCurrentBookStatus();
+      }
     );
   }
 
