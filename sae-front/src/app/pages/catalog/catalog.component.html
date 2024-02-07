@@ -83,10 +83,9 @@
   <section class="flex w-full my-10">
     @if (books.length > 0) {
     <div class="grid grid-cols-4 gap-4">
-      <app-book-card-small
-        *ngFor="let b of books"
-        [book]="b"
-      ></app-book-card-small>
+      <ng-container *ngFor="let b of books">
+        <app-book-card-small *ngIf="b" [book]="b"></app-book-card-small>
+      </ng-container>
     </div>
     } @else {
     <div class="flex w-full flex-col items-center justify-center col-span-5">
