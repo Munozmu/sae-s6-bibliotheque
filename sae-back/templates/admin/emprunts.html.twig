@@ -13,7 +13,7 @@
                 <ul class="list-unstyled">
                     {% for emprunt in LivresEmprunts %}
                         <li class="mb-3">
-                            <strong>Livre:</strong> {{ emprunt.correspondre.titre }} | <strong>Nombre d'emprunts:</strong> {{ emprunt.correspondre.titre }}
+                            <strong>Livre:</strong> {{ emprunt.correspondre.titre }} |
                             <strong>Emprunteur:</strong> {{ emprunt.adherent.nom }} {{ emprunt.adherent.prenom }} |
                             <strong>Date de début d'emprunt:</strong> {{ emprunt.dateEmprunt|date('Y-m-d') }} |
                             <strong>Date de fin d'emprunt:</strong> {{ emprunt.dateRetour ? emprunt.dateRetour|date('Y-m-d') : 'Non retourné' }}
