@@ -42,6 +42,7 @@ class EmpruntRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('e')
             ->leftJoin('e.correspondre', 'livre')
+            ->where('e.enCours = true')
             ->select('livre.titre', 'e.dateRetour')
             ->getQuery()
             ->getResult();
