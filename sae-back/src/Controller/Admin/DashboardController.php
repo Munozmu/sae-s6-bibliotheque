@@ -18,6 +18,8 @@ use App\Repository\CategorieRepository;
 use App\Repository\EmpruntRepository;
 use App\Repository\LivreRepository;
 use App\Repository\ReservationsRepository;
+use DateTime;
+use Doctrine\Migrations\Tools\Console\Command\UpToDateCommand;
 use Symfony\Component\HttpFoundation\Request;
 
 class DashboardController extends AbstractDashboardController
@@ -95,6 +97,43 @@ class DashboardController extends AbstractDashboardController
         ]);
     }
 
+    #[Route('/admin/formulaire', name: 'formulaire_emprunt')]
+    public function formulaire(Request $request): Response
+    {
+        $adherentId = $request->query->get('adherentId');
+        $livreId = $request->query->get('livreId');
+        $dateEmprunt = null;
+        $dateRetour = null;
+        $emprunteurs = [];
+        $allAdherents = $this->adherentRepository->findAll();
+        // $dateEmprunt = toDate($request->query->get('dateEmprunt'));
+        // $dateRetour = toDate($request->query->get('dateRetour'));
+        $adherent = null;
+        $livre = null;
+        foreach ($allAdherents as $adherent) {
+            if ($this->adherentRepository->peutEmprunter($adherent)) {
+                // Si l'adhérent peut emprunter, ajoutez-le au tableau $emprunteurs
+                $emprunteurs[] = $adherent;
+            }
+        }
+        if ($livreId) {
+            $livre = $this->livreRepository->find($livreId);
+        }
+        if ($adherentId) {
+            $adherent = $this->adherentRepository->find($adherentId);
+        }
+        if ($adherent && $livre && $dateEmprunt && $dateRetour ) {
+            $this->empruntRepository->makeEmprunt($adherent, $livre, $dateEmprunt, $dateRetour);
+        }
+        return $this->render('admin/formulaire.html.twig', [
+            'Adherents' => $emprunteurs,
+            'LivresEmpruntes' => $this->empruntRepository->getLivresNonDisponiblesAvecDateRetour(),
+            'LivresNonEmpruntes' => $this->livreRepository->getLivresNonEmpruntes(),
+            'NbEmprunts' => $this->adherentRepository->nbEmprunt($adherent),
+            
+        ]);
+    }
+
     public function configureMenuItems(): iterable
     {
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
@@ -102,6 +141,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToRoute('Historique','fas fa-history', 'livre_history');
         yield MenuItem::linkToCrud('Emprunt', 'fas fa-text', Emprunt::class);
         yield MenuItem::linkToCrud('Réservations', 'fas fa-text', Reservations::class);
+        yield MenuItem::linkToRoute('Formulaire','fas fa-text', 'formulaire_emprunt');
         yield MenuItem::linkToRoute('Retour','fas fa-text', 'retour_emprunt');
         // yield MenuItem::linkToRoute('Tableau de Bord', 'fas fa-chart-bar', 'emprunts');
         // yield MenuItem::linkToCrud('Reservations', 'fas fa-text', Reservations::class);

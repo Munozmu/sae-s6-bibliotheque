@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Adherent;
+use App\Entity\Emprunt;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
@@ -37,6 +38,37 @@ class AdherentRepository extends ServiceEntityRepository implements PasswordUpgr
         $user->setPassword($newHashedPassword);
         $this->getEntityManager()->persist($user);
         $this->getEntityManager()->flush();
+    }
+
+    public function peutEmprunter(Adherent $adherent): bool
+    {
+        // Récupérer le nombre d'emprunts actuels de l'adhérent
+        $nbEmprunts = count($adherent->getEmprunts());
+
+        // Vérifier si l'adhérent a moins de 3 emprunts (la limite)
+        if ($nbEmprunts < 3) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function nbEmprunt(Adherent $adherent): bool
+    {
+        // Récupérer le nombre d'emprunts actuels de l'adhérent
+        $nbEmprunts = count($adherent->getEmprunts());
+        return $nbEmprunts;
+    }
+
+    public function ajoutEmprunts(Adherent $adherent, Emprunt $emprunt): Void
+    {
+        if ($adherent) {
+            // Modifier l'état de l'emprunt
+            $adherent->addEmprunt($emprunt);
+
+            // Mettre à jour la base de données
+            $this->_em->flush();
+        }
     }
 
 //    /**
