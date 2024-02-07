@@ -53,24 +53,6 @@ class LivreRepository extends ServiceEntityRepository
             ->getSingleScalarResult();
     }
 
-    public function getLivresNonEmpruntes(): array
-    {
-        return $this->createQueryBuilder('livre')
-        ->leftJoin('livre.emprunts', 'emprunt')
-        ->andWhere('emprunt.enCours = false OR emprunt.id IS NULL')
-        ->select('livre.titre', 'livre.id')
-        ->getQuery()
-        ->getResult();
-    }
-
-    // public function getLivresNonDisponiblesAvecDateRetour(): array
-    // {
-    //     return $this->createQueryBuilder('livre')
-    //         ->andWhere('livre.isAvailable = false')
-    //         ->select('livre.titre', 'livre.emprunts.dateRetour')
-    //         ->getQuery()
-    //         ->getResult();
-    // }
 
 //    /**
     //     * @return Livre[] Returns an array of Livre objects
