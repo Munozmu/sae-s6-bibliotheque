@@ -25,12 +25,14 @@
     </button>
     @if (bookStatus.reservedByUser === true ) {
     <button
+      (click)="cancelReservation()"
       class="bg-red-700 text-white py-3 px-8 w-full h-fit transition-all hover:bg-red-900"
     >
       Annuler la réservation
     </button>
     } @else {
     <button
+      (click)="reserveBook()"
       class="bg-blue-700 text-white py-3 px-8 w-full h-fit transition-all hover:bg-blue-900 disabled:opacity-50 disabled:cursor-not-allowed"
       [disabled]="
         bookStatus.avalaible === false ||
