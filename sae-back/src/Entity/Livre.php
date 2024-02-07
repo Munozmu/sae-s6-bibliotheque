@@ -14,8 +14,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ApiResource(
-    formats: ['json'],
-    normalizationContext: ['groups' => ['book']]
+    formats: ['jsonapi'],
+    normalizationContext: ['groups' => ['book']],
 )]
 #[ORM\Entity(repositoryClass: LivreRepository::class)]
 #[ORM\EntityListeners([LivreNotifier::class])]
@@ -257,9 +257,36 @@ class Livre
 
         return $this;
     }
-  
+
     public function toString()
     {
         return $this->auteurs;
+    }
+
+    public function isAvailable(): ?bool
+    {
+        $isAvailable = true;
+
+        // Vérifie si le livre n'est pas emprunter actuellement
+        foreach ($this->getEmprunts() as $unEmprunts) {
+            if ($unEmprunts->isEnCours()) {
+                $isAvailable = false;
+            }
+        }
+        return $isAvailable;
+    }
+
+    public function isInReservation(?int $idAdherent): ?bool
+    {
+        $isInReservation = false;
+
+        $reservation = $this->getReservations();
+
+        if (count($reservation) > 0) {
+            if ($idAdherent !== $reservation[0]->getReserverPar()->getId()) {
+                $isInReservation = true;
+            }
+        }
+        return $isInReservation;
     }
 }
