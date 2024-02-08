@@ -1,67 +1,46 @@
 <div class="flex flex-col justify-center items-center h-full py-20 px-40">
   <!-- TABS NAVIGATION -->
   <div class="w-full">
-    <div
-      class="text-sm font-medium text-center text-gray-500 border-b border-gray-200"
-    >
+    <div class="text-sm font-medium text-center text-gray-500 border-b border-gray-200">
       <ul class="flex flex-wrap -mb-px">
         <li class="me-2" *ngFor="let t of tabs; let i = index">
-          <button
-            (click)="changeTab(t.link)"
-            [ngClass]="
+          <button (click)="changeTab(t.link)" [ngClass]="
               currentTab === t.link
                 ? 'inline-block p-4 text-blue-600 border-b-2 border-blue-600 rounded-t-lg active '
                 : 'inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300'
-            "
-          >
+            ">
             {{ t.title }}
           </button>
         </li>
 
         <li>
-          <a
-            class="inline-block p-4 text-gray-400 rounded-t-lg cursor-not-allowed"
-            >Mes emprunts</a
-          >
+          <a class="inline-block p-4 text-gray-400 rounded-t-lg cursor-not-allowed">Mes emprunts</a>
         </li>
       </ul>
     </div>
   </div>
   <div class="w-full mt-8 pb-4 border-b flex items-center gap-10">
     <div>
-      <img
-        class="rounded-full w-32 h-32 object-cover"
+      <img class="rounded-full w-32 h-32 object-cover"
         src="https://cdn.drivek.com/configurator-imgs/cars/fr/Original/AUDI/S3/39766_SEDAN-4-DOORS/audi-s3-sedan-2020-front-side-1.jpg"
-        alt="Image de profil"
-      />
+        alt="Image de profil" />
     </div>
     <div>
       <h1 class="text-3xl font-semibold">Mon compte</h1>
-      <h1
-        class="text-2xl font-light"
-        *ngIf="currentUser$ | async as currentUser"
-      >
+      <h1 class="text-2xl font-light" *ngIf="currentUser$ | async as currentUser">
         {{ currentUser.prenom }} {{ currentUser.nom }}
       </h1>
-      <span class="text-sm" *ngIf="currentUser$ | async as currentUser"
-        >Membre depuis le
-        {{ currentUser.dateAdhesion | date : "dd/MM/yyyy" }}</span
-      >
+      <span class="text-sm" *ngIf="currentUser$ | async as currentUser">Membre depuis le
+        {{ currentUser.dateAdhesion | date : "dd/MM/yyyy" }}</span>
     </div>
   </div>
 
   <!-- Profile section -->
   @if (currentTab === 'profile') {
-  <form
-    class="w-full"
-    [formGroup]="editProfileForm"
-    (ngSubmit)="onSubmitEditProfile()"
-  >
+  <form class="w-full" [formGroup]="editProfileForm" (ngSubmit)="onSubmitEditProfile()">
     <div class="w-full my-5">
       <h3 class="text-xl">Modifier vos informations</h3>
-      <span class="text-sm font-light text-gray-500"
-        >Pensez à sauvegarder après modification</span
-      >
+      <span class="text-sm font-light text-gray-500">Pensez à sauvegarder après modification</span>
     </div>
     <!-- Nom et Prénom sur la même ligne -->
     <div class="flex mb-4">
@@ -71,11 +50,7 @@
         </label>
         <input
           class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          id="nom"
-          type="text"
-          placeholder="Votre nom"
-          formControlName="nom"
-        />
+          id="nom" type="text" placeholder="Votre nom" formControlName="nom" />
       </div>
       <div class="w-1/2 ml-2">
         <label class="block text-gray-700 text-sm font-bold mb-2" for="prenom">
@@ -83,11 +58,7 @@
         </label>
         <input
           class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          id="prenom"
-          type="text"
-          placeholder="Votre prénom"
-          formControlName="prenom"
-        />
+          id="prenom" type="text" placeholder="Votre prénom" formControlName="prenom" />
       </div>
     </div>
 
@@ -99,75 +70,51 @@
         </label>
         <input
           class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          id="adresse"
-          type="text"
-          placeholder="Votre adresse"
-          formControlName="adressePostale"
-        />
+          id="adresse" type="text" placeholder="Votre adresse" formControlName="adressePostale" />
       </div>
       <div class="w-1/2 ml-2">
-        <label
-          class="block text-gray-700 text-sm font-bold mb-2"
-          for="telephone"
-        >
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="telephone">
           Téléphone
         </label>
         <input
           class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          id="telephone"
-          type="tel"
-          placeholder="Votre téléphone"
-          formControlName="numTel"
-        />
+          id="telephone" type="tel" placeholder="Votre téléphone" formControlName="numTel" />
       </div>
     </div>
 
     <!-- Mot de passe et Confirmation sur la même ligne -->
     <div class="flex mb-4">
       <div class="w-1/2 mr-2">
-        <label
-          class="block text-gray-700 text-sm font-bold mb-2"
-          for="motDePasse"
-        >
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="motDePasse">
           Mot de passe
         </label>
         <input
           class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          id="motDePasse"
-          type="password"
-          placeholder="Votre mot de passe"
-        />
+          id="motDePasse" type="password" placeholder="Votre mot de passe" />
       </div>
       <div class="w-1/2 ml-2">
-        <label
-          class="block text-gray-700 text-sm font-bold mb-2"
-          for="confirmationMotDePasse"
-        >
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="confirmationMotDePasse">
           Confirmation mot de passe
         </label>
         <input
           class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          id="confirmationMotDePasse"
-          type="password"
-          placeholder="Confirmez votre mot de passe"
-        />
+          id="confirmationMotDePasse" type="password" placeholder="Confirmez votre mot de passe" />
       </div>
     </div>
 
     <!-- Bouton Soumettre -->
-    <div class="flex flex-col items-center justify-end">
+    <div class="flex flex-col items-end justify-end">
       <span class="text-green-500 my-3" *ngIf="confirmMessage">
         Les modifications ont été sauvegardées
       </span>
       <button
         class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-        type="submit"
-      >
+        type="submit">
         Soumettre
       </button>
     </div>
   </form>
-  } @else {
+  } @else if (currentTab === 'booking'){
   <div class="w-full flex flex-col">
     <h1 class="text-3xl font-semibold my-4">Mes réservations</h1>
     <div class="grid gap-8 lg:gap-8 grid-cols-2 lg:grid-cols-5 lg:w-full">
@@ -176,14 +123,34 @@
       <app-book-card-small [isReserved]="true"></app-book-card-small>
       <app-book-card-small [isReserved]="true"></app-book-card-small>
       <app-book-card-small [isReserved]="true"></app-book-card-small>
-      <app-book-card-small [isReserved]="true" [isDisabled]="true"></app-book-card-small>
-      <app-book-card-small [isReserved]="true" [isDisabled]="true"></app-book-card-small>
-      <app-book-card-small [isReserved]="true" [isDisabled]="true"></app-book-card-small>
-      <app-book-card-small [isReserved]="true" [isDisabled]="true"></app-book-card-small>
-      <app-book-card-small [isReserved]="true" [isDisabled]="true"></app-book-card-small>
     </div>
   </div>
   }
+  @else if (currentTab === 'bookingMade'){
+  <div class="w-full flex flex-col">
+    <h1 class="text-3xl font-semibold my-4">Mes emprunts effectuées</h1>
+    <div class="grid gap-8 lg:gap-8 grid-cols-2 lg:grid-cols-5 lg:w-full">
+      <app-book-card-small [isReserved]="false" [isDisabled]="true"></app-book-card-small>
+      <app-book-card-small [isReserved]="false" [isDisabled]="true"></app-book-card-small>
+      <app-book-card-small [isReserved]="false" [isDisabled]="true"></app-book-card-small>
+      <app-book-card-small [isReserved]="false" [isDisabled]="true"></app-book-card-small>
+      <app-book-card-small [isReserved]="false" [isDisabled]="true"></app-book-card-small>  
+    </div>
+  </div>
+  }
+  @else if (currentTab === 'handleEmprunt'){
+  <div class="w-full flex flex-col">
+    <h1 class="text-3xl font-semibold my-4">Mes emprunts en cours</h1>
+    <div class="grid gap-8 lg:gap-8 grid-cols-2 lg:grid-cols-5 lg:w-full">
+      <app-book-card-small [isReserved]="true" [isEmprunt]="true"></app-book-card-small>
+      <app-book-card-small [isReserved]="true" [isEmprunt]="true"></app-book-card-small>
+      <app-book-card-small [isReserved]="true" [isEmprunt]="true"></app-book-card-small>
+      <app-book-card-small [isReserved]="true" [isEmprunt]="true"></app-book-card-small>
+      <app-book-card-small [isReserved]="true" [isEmprunt]="true"></app-book-card-small>
+    </div>
+  </div>
+  }
+
 
   <!-- TODO: Check if there was a reservation
   <div class="w-full mt-8 lg:my-14 pb-2 border-b">
