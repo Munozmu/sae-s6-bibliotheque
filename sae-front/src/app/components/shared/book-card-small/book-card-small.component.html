@@ -20,8 +20,11 @@
       <button *ngIf="!isReserved" class="bg-blue-500 hover:bg-blue-700 text-white text-sm xl:text-base font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
         Réserver
       </button>
-      <p *ngIf="isReserved" class="text-sm font-light text-gray-700">
+      <p *ngIf="isReserved && !isEmprunt" class="text-sm font-light text-gray-700">
         Réservé depuis le XX/XX/XXXX
+      </p>
+      <p *ngIf="isEmprunt" class="text-sm font-light text-gray-700">
+        A rendre avant le XX/XX/XXXX
       </p>
     </div>
   </div>
