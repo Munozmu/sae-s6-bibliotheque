@@ -1,0 +1,58 @@
+{# templates/admin/formulaire_emprunt.html.twig #}
+
+{% extends '@EasyAdmin/page/content.html.twig' %}
+
+{% block title %}Formulaire d'emprunt{% endblock %}
+
+{% block body %}
+    <h1>Formulaire d'emprunt</h1>
+
+    {# Afficher la liste déroulante des adhérents #}
+    <form action="{{ path('formulaire_emprunt') }}" method="get">
+        <label for="adherent">Choisir un adhérent :</label>
+        <select name="adherentId" id="adherent">
+            <option value="">-- Choisir un adhérent --</option>
+            {% for adherent in Adherents %}
+                <option value="{{ adherent.id }}">{{ adherent.nom }} {{ adherent.prenom }}</option>
+            {% endfor %}
+        </select>
+        <br><br>
+
+        {# Afficher la liste déroulante des livres disponibles #}
+        <label for="livre">Choisir un livre disponible :</label>
+        <select name="livreId" id="livre">
+            <option value="">-- Choisir un livre --</option>
+            {% for livre in LivresNonEmpruntes %}
+                <option value="{{ livre.id }}">{{ livre.titre }}</option>
+            {% endfor %}
+        </select>
+        <br><br>
+
+        {# Afficher la liste des livres non disponibles avec leur date de retour #}
+        <h2>Livres non disponibles avec date de retour :</h2>
+        <ul>
+            {% for livre in LivresEmpruntes %}
+                <li>{{ livre.titre }} - Retour prévu le {{ livre.dateRetour|date('d/m/Y') }}</li>
+            {% endfor %}
+        </ul>
+        <br>
+
+        {# Saisie des dates d'emprunt et de retour #}
+        <label for="dateEmprunt">Date d'emprunt :</label>
+        <input type="date" id="dateEmprunt" name="dateEmprunt" required>
+        <br><br>
+
+        <label for="dateRetour">Date de retour prévue :</label>
+        <input type="date" id="dateRetour" name="dateRetour" required>
+        <br><br>
+
+        {# Bouton de soumission #}
+        <input type="submit" value="Valider">
+    </form>
+
+    {# Afficher le nombre d'emprunts de l'adhérent et sa capacité à emprunter #}
+    {% if NbEmprunts is defined and PeutEmprunter is defined %}
+        <p>Nombre d'emprunts : {{ NbEmprunts }}</p>
+        <p>Capacité d'emprunt : {{ PeutEmprunter ? 'Oui' : 'Non' }}</p>
+    {% endif %}
+{% endblock %}

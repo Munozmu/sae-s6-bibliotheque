@@ -6,15 +6,15 @@ import { BookStatus } from '../../../core/models/bookStatus';
 import { BookService } from '../../../core/services/book.service';
 import { ReservationsService } from '../../../core/services/reservations.service';
 
+
 @Component({
   selector: 'app-book-card-small',
   standalone: true,
   imports: [DatePipe, RouterModule, CommonModule],
   templateUrl: './book-card-small.component.html',
-  styleUrl: './book-card-small.component.scss'
+  styleUrl: './book-card-small.component.scss',
 })
 export class BookCardSmallComponent {
-
   @Input() book: Book = {} as Book;
 
   bookStatus: BookStatus = {} as BookStatus;
@@ -67,5 +67,4 @@ export class BookCardSmallComponent {
       });
 
   }
-
 }
