@@ -33,34 +33,42 @@ export class CatalogComponent implements OnInit {
   ngOnInit(): void {
 
     // Get all books
-    this.bookService.getAllBooks().subscribe((books) => {
-      this.books = books;
-    });
+    this.getAllBooks();
 
     // Get all categories
     this.categorieService.getAllCategories().subscribe((categories) => {
       this.categories = categories;
     });
 
-    // Check URL params
     this.route.queryParams.subscribe(params => {
       if (params['category']) {
-        this.categorieService.getCategory(params['category']).subscribe((cat) => {
-          this.books = cat.livres ? cat.livres : [];
-          this.currentCategory = cat;
-        });
-        this.isSelectedCat = true;
+        this.getBooksByCategory(params['category']);
 
       }
       else {
-        // Get all books
-        this.bookService.getAllBooks().subscribe((books) => {
-          this.books = books;
-        });
-        this.isSelectedCat = false;
+        this.getAllBooks();
       }
     });
 
   }
+
+  getAllBooks() {
+    this.books = [];
+    this.bookService.getAllBooks().subscribe((books) => {
+      this.books = books;
+    });
+    this.isSelectedCat = false;
+  }
+
+  getBooksByCategory(category: number) {
+    this.router.navigate(['/catalog'], { queryParams: { category: category } });
+    this.categorieService.getCategory(category).subscribe((cat) => {
+      this.books = [];
+      this.books = cat.livres ? cat.livres : [];
+      this.currentCategory = cat;
+    });
+    this.isSelectedCat = true;
+  }
+
 
 }

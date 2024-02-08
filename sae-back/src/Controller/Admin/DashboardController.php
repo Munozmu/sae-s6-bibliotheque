@@ -20,6 +20,7 @@ use App\Repository\LivreRepository;
 use App\Repository\ReservationsRepository;
 use DateTime;
 use Doctrine\Migrations\Tools\Console\Command\UpToDateCommand;
+
 use Symfony\Component\HttpFoundation\Request;
 
 class DashboardController extends AbstractDashboardController
@@ -38,13 +39,14 @@ class DashboardController extends AbstractDashboardController
         EmpruntRepository $empruntRepository,
         LivreRepository $livreRepository,
         // ReservationsRepository $reservationsRepository,
-    )
-    {
+    ) {
         $this->adherentRepository = $adherentRepository;
         // $this->auteurRepository = $auteurRepository;
         // $this->categorieRepository = $categorieRepository;
         $this->empruntRepository = $empruntRepository;
         $this->livreRepository = $livreRepository;
+        $this->livreRepository = $livreRepository;
+
         // $this->reservationsRepository = $reservationsRepository;
     }
 
@@ -134,15 +136,23 @@ class DashboardController extends AbstractDashboardController
         ]);
     }
 
+
     public function configureMenuItems(): iterable
     {
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
         yield MenuItem::section('gestion');
+
+        yield MenuItem::linkToRoute('Historique', 'fas fa-history', 'livre_history');
+        yield MenuItem::linkToRoute('Historique', 'fas fa-history', 'livre_history');
+        yield MenuItem::linkToCrud('Emprunt', 'fas fa-text', Emprunt::class);
+        yield MenuItem::linkToRoute('Retour', 'fas fa-text', 'retour_emprunt');
+
         yield MenuItem::linkToRoute('Historique','fas fa-history', 'livre_history');
         yield MenuItem::linkToCrud('Emprunt', 'fas fa-text', Emprunt::class);
         yield MenuItem::linkToCrud('Réservations', 'fas fa-text', Reservations::class);
         yield MenuItem::linkToRoute('Formulaire','fas fa-text', 'formulaire_emprunt');
         yield MenuItem::linkToRoute('Retour','fas fa-text', 'retour_emprunt');
+
         // yield MenuItem::linkToRoute('Tableau de Bord', 'fas fa-chart-bar', 'emprunts');
         // yield MenuItem::linkToCrud('Reservations', 'fas fa-text', Reservations::class);
         yield MenuItem::linkToCrud('Adherent', 'fas fa-text', Adherent::class);

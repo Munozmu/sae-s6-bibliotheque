@@ -53,6 +53,41 @@ class LivreRepository extends ServiceEntityRepository
             ->getSingleScalarResult();
     }
 
+
+    //    /**
+    //     * @return Livre[] Returns an array of Livre objects
+    //     */
+    //    public function findByExampleField($value): array
+    //    {
+    //        return $this->createQueryBuilder('l')
+    //            ->andWhere('l.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->orderBy('l.id', 'ASC')
+    //            ->setMaxResults(10)
+    //            ->getQuery()
+    //            ->getResult()
+    //        ;
+    //    }
+
+
+    // Version historique
+    public function getAllLivresWithEmprunts(): array
+    {
+        return $this->createQueryBuilder('l')
+            ->leftJoin('l.emprunts', 'e', Join::WITH, 'e.enCours = false')
+            ->orderBy('l.titre', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function countAllEmprunts(): int
+    {
+        return $this->createQueryBuilder('e')
+            ->select('COUNT(e.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
     public function getLivresNonEmpruntes(): array
     {
         return $this->createQueryBuilder('livre')

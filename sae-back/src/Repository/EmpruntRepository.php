@@ -39,6 +39,7 @@ class EmpruntRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+
     public function getLivresNonDisponiblesAvecDateRetour(): array
     {
         return $this->createQueryBuilder('e')
@@ -48,6 +49,7 @@ class EmpruntRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
 
     public function getActualEmprunts(): array
     {
@@ -82,4 +84,5 @@ class EmpruntRepository extends ServiceEntityRepository
         $entityManager->persist($emprunt);
         $entityManager->flush();
     }
+
 }

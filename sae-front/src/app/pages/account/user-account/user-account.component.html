@@ -170,17 +170,11 @@
   } @else {
   <div class="w-full flex flex-col">
     <h1 class="text-3xl font-semibold my-4">Mes réservations</h1>
-    <div class="grid gap-8 lg:gap-8 grid-cols-2 lg:grid-cols-5 lg:w-full">
-      <app-book-card-small [isReserved]="true"></app-book-card-small>
-      <app-book-card-small [isReserved]="true"></app-book-card-small>
-      <app-book-card-small [isReserved]="true"></app-book-card-small>
-      <app-book-card-small [isReserved]="true"></app-book-card-small>
-      <app-book-card-small [isReserved]="true"></app-book-card-small>
-      <app-book-card-small [isReserved]="true" [isDisabled]="true"></app-book-card-small>
-      <app-book-card-small [isReserved]="true" [isDisabled]="true"></app-book-card-small>
-      <app-book-card-small [isReserved]="true" [isDisabled]="true"></app-book-card-small>
-      <app-book-card-small [isReserved]="true" [isDisabled]="true"></app-book-card-small>
-      <app-book-card-small [isReserved]="true" [isDisabled]="true"></app-book-card-small>
+    <div
+      class="grid gap-10 grid-cols-5"
+      *ngIf="currentUser$ | async as currentUser"
+    >
+      <app-book-card-resa></app-book-card-resa>
     </div>
   </div>
   }
