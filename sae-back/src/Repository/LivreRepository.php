@@ -70,23 +70,6 @@ class LivreRepository extends ServiceEntityRepository
     //    }
 
 
-    // Version historique
-    public function getAllLivresWithEmprunts(): array
-    {
-        return $this->createQueryBuilder('l')
-            ->leftJoin('l.emprunts', 'e', Join::WITH, 'e.enCours = false')
-            ->orderBy('l.titre', 'ASC')
-            ->getQuery()
-            ->getResult();
-    }
-
-    public function countAllEmprunts(): int
-    {
-        return $this->createQueryBuilder('e')
-            ->select('COUNT(e.id)')
-            ->getQuery()
-            ->getSingleScalarResult();
-    }
 
     public function getLivresNonEmpruntes(): array
     {
