@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Doctrine\Orm\Filter\ExistsFilter;
+use ApiPlatform\Metadata\ApiFilter;
 use Symfony\Component\Validator\Constraints as Assert;
 
 use Doctrine\DBAL\Types\Types;
@@ -14,9 +16,10 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ApiResource(
-    formats: ['jsonapi'],
-    normalizationContext: ['groups' => ['book']],
+    formats: ['json'],
+    normalizationContext: ['groups' => ['book']]
 )]
+#[ApiFilter(ExistsFilter::class, properties: ['reservations'])]
 #[ORM\Entity(repositoryClass: LivreRepository::class)]
 #[ORM\EntityListeners([LivreNotifier::class])]
 class Livre
