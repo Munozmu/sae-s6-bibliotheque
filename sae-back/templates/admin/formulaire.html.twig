@@ -4,7 +4,9 @@
 
 {% block title %}Formulaire d'emprunt{% endblock %}
 
-{% block body %}
+{% block body_id 'dashboard' %}
+
+{% block main %}
     <h1>Formulaire d'emprunt</h1>
 
     {# Afficher la liste déroulante des adhérents #}
@@ -65,7 +67,7 @@
             <br><br>
 
         {# Afficher la liste des livres non disponibles avec leur date de retour #}
-        <h2>Livres non disponibles avec date de retour :</h2>
+        <h2>Livres non disponibles :</h2>
         <ul>
             {% for livre in LivresEmpruntes %}
                 <li>{{ livre.titre }} - Retour prévu le {{ livre.dateRetour|date('d/m/Y') }}</li>
@@ -74,9 +76,9 @@
         <br>
 
         {# Saisie des dates d'emprunt et de retour #}
-        <label for="dateRetour">Date de retour prévue :</label>
+        {# <label for="dateRetour">Date de retour prévue :</label>
         <input type="date" id="dateRetour" name="dateRetour" required>
-        <br><br>
+        <br><br> #}
         {# Bouton de soumission #}
         <input type="submit" value="Valider">
     </form>
@@ -86,4 +88,17 @@
         <p>Nombre d'emprunts : {{ NbEmprunts }}</p>
         <p>Capacité d'emprunt : {{ PeutEmprunter ? 'Oui' : 'Non' }}</p>
     {% endif %}
+    {% block javascripts %}
+    {{ parent() }}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const errorMessage = "{{ app.session.flashbag.get('error')|join(' ') }}";
+            if(errorMessage.trim() !== '') {
+                alert(errorMessage);
+            }
+        });
+    </script>
+    {% endblock %}
+
 {% endblock %}
+

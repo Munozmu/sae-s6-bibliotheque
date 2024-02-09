@@ -39,7 +39,7 @@ class LivreRepository extends ServiceEntityRepository
     public function getAllLivresWithEmprunts(): array
     {
         return $this->createQueryBuilder('l')
-            ->leftJoin('l.emprunts', 'e', Join::WITH, 'e.enCours = false')
+            ->leftJoin('l.emprunts', 'e', Join::WITH, 'e.enCours = true')
             ->orderBy('l.titre', 'ASC')
             ->getQuery()
             ->getResult();
@@ -76,7 +76,7 @@ class LivreRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('livre')
             ->leftJoin('livre.emprunts', 'emprunt')
             ->andWhere('emprunt.enCours = false OR emprunt.id IS NULL')
-            ->select('livre.titre', 'livre.id')
+            ->select('DISTINCT livre.titre', 'livre.id')
             ->getQuery()
             ->getResult();
     }
