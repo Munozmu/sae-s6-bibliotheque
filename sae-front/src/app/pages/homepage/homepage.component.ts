@@ -103,8 +103,8 @@ export class HomepageComponent implements OnInit {
       queryParams: {
         keyword: this.searchBarValue ? this.searchBarValue : '',
         auteur: this.rechercheForm.value.auteur,
-        dateMin: this.rechercheForm.value.dateMin,
-        dateMax: this.rechercheForm.value.dateMax
+        dateMin: this.rechercheForm.value.dateMin ? this.rechercheForm.value.dateMin : '1000-01-01',
+        dateMax: this.rechercheForm.value.dateMax ? this.rechercheForm.value.dateMax : '3000-01-01'
       }
     });
 

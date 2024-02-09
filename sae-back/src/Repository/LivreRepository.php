@@ -112,8 +112,8 @@ class LivreRepository extends ServiceEntityRepository
         $resultSet = $conn->executeQuery($sql, [
             'keyword' => '%' . $keyword . '%',
             'lang' => '%' . $lang . '%',
-            'anneeMin' => $anneeMin . '-01-01',
-            'anneeMax' => $anneeMax . '-12-31',
+            'anneeMin' => $anneeMin,
+            'anneeMax' => $anneeMax,
             'auteur' => '%' . $author . '%',
             'categorie' => '%' . $category . '%'
         ]);
