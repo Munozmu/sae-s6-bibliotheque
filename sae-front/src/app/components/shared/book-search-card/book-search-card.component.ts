@@ -52,12 +52,22 @@ export class BookSearchCardComponent implements OnInit {
   }
 
   reserveBook() {
-    this.reservationService.postReservation(this.book.livreId || 0, 1).subscribe(
-      (res) => {
-        console.log('Reservation done:', res);
-        this.refreshCurrentBookStatus();
-      }
-    );
+    this.reservationService.postReservation(this.book.livre_id || 0, 1).subscribe(
+      {
+        next: (response) => {
+          // Gérer la réponse réussie si nécessaire
+          console.log('Réponse réussie : ', response);
+          this.refreshCurrentBookStatus();
+        },
+        error: (error) => {
+          // Gérer l'erreur ici
+          console.error('Limite de réservation atteinte : ', error);
+          if (error.status === 500) {
+            alert('Vous avez atteint la limite de réservation. Vous ne pouvez réserver que 3 livres à la fois.');
+          }
+        }
+      });
+
   }
 
 }
