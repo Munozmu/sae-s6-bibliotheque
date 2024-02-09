@@ -95,6 +95,9 @@ export class UserAccountComponent implements OnInit {
     );
   }
 
-
+  logout(): void {
+    this.router.navigate(['/']);
+    this.authService.logout();
+  }
 
 }
