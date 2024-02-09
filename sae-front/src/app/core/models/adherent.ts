@@ -8,4 +8,13 @@ export interface Adherent {
   adressePostale: string;
   numTel: number;
   photo: string;
+  reservations: {
+    dateResa: Date;
+    id: number;
+    lier: {
+      titre: string;
+      photoCouverture: string;
+      id: number;
+    }
+  }[];
 }

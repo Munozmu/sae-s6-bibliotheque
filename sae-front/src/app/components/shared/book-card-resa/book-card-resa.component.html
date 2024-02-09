@@ -11,6 +11,13 @@
       {{ title }}
     </h5>
   </div>
+  <div class="flex flex-col w-full px-2">
+    <p>
+      Réservé depuis le :
+      <span class="text-gray-400">{{ dateResa | date : "yy/MM/dd" }}</span>
+    </p>
+    <p>{{ getExpirationDate(dateResa) }} jours restants</p>
+  </div>
   <div class="flex flex-col justify-center mt-6 gap-2 p-3">
     <button
       [routerLink]="['/book/', id]"
@@ -18,10 +25,25 @@
     >
       Voir les détails
     </button>
+    @if (bookStatus.reservedByUser === true ) {
     <button
-      class="bg-blue-700 w-full text-white py-2 px-3 h-fit transition-all hover:bg-blue-900"
+      (click)="cancelReservation()"
+      class="bg-red-700 text-white py-3 px-8 w-full h-fit transition-all hover:bg-red-900"
     >
-      Réserver
+      Annuler la réservation
     </button>
+    } @else {
+    <button
+      (click)="reserveBook()"
+      class="bg-blue-700 text-white py-3 px-8 w-full h-fit transition-all hover:bg-blue-900 disabled:opacity-50 disabled:cursor-not-allowed"
+      [disabled]="
+        bookStatus.avalaible === false ||
+        bookStatus.reserved ||
+        bookStatus.borrowed
+      "
+    >
+      Re-réserver
+    </button>
+    }
   </div>
 </div>

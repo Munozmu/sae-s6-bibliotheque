@@ -73,6 +73,10 @@ export class UserAccountComponent implements OnInit {
 
   }
 
+  refreshReservation() {
+    this.authService.refreshCurrentUser();
+  }
+
   changeTab(link: string): void {
     // add param to url
     this.router.navigate(['/account'], { queryParams: { tab: link } });
