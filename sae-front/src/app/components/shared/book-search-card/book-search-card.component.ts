@@ -62,9 +62,7 @@ export class BookSearchCardComponent implements OnInit {
         error: (error) => {
           // Gérer l'erreur ici
           console.error('Limite de réservation atteinte : ', error);
-          if (error.status === 500) {
-            alert('Vous avez atteint la limite de réservation. Vous ne pouvez réserver que 3 livres à la fois.');
-          }
+          alert('Vous avez atteint la limite de réservation. Vous ne pouvez réserver que 3 livres à la fois.');
         }
       });
 
