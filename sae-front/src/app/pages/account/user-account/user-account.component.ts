@@ -52,6 +52,7 @@ export class UserAccountComponent implements OnInit {
     // Get tab param in the url
     this.route.queryParams.subscribe(params => {
       this.currentTab = params['tab'];
+      this.refreshReservation();
     });
 
     // Get user

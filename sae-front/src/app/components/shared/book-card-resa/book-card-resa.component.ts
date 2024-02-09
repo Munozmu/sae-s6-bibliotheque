@@ -19,6 +19,7 @@ export class BookCardResaComponent implements OnInit {
   @Input() id: number = 0;
   @Input() photoPath: string = '';
   @Input() dateResa: Date = new Date();
+  @Input() photoCouverture: string = '';
 
 
   bookStatus: BookStatus = {} as BookStatus;

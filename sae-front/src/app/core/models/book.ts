@@ -28,4 +28,5 @@ export interface Book {
   prenom?: string;
   auteurPrenom?: string;
   auteurId?: number;
+  photo_couverture?: string;
 }
