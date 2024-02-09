@@ -46,7 +46,7 @@ class Livre
     #[Groups(['book', 'reservation', 'emprunt', 'adherent'])]
     private ?string $photoCouverture = null;
 
-    #[ORM\OneToMany(mappedBy: 'correspondre', targetEntity: Emprunt::class)]
+    #[ORM\OneToMany(mappedBy: 'correspondre', targetEntity: Emprunt::class, cascade: ['remove'])]
     #[Groups(['book'])]
     private Collection $emprunts;
 
@@ -68,7 +68,7 @@ class Livre
     #[Groups(['book'])]
     private ?string $resume = null;
 
-    #[ORM\OneToMany(mappedBy: 'lier', targetEntity: Reservations::class)]
+    #[ORM\OneToMany(mappedBy: 'lier', targetEntity: Reservations::class, cascade: ['remove'])]
     #[Groups(['book'])]
     private Collection $reservations;
 
