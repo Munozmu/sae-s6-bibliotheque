@@ -6,6 +6,7 @@ import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../auth/auth.service';
 import { BookStatus } from '../models/bookStatus';
+import { Categories } from '../models/categories';
 
 @Injectable({
   providedIn: 'root'
@@ -19,16 +20,17 @@ export class BookService {
     private authService: AuthService
   ) { }
 
-  getAllBooks(): Observable<Book[]> {
-    return this.http.get<Book[]>(`${this.apiUrl}/livres`);
+  getAllBooks(page?: number): Observable<Book[]> {
+    if (!page) page = 1;
+    return this.http.get<Book[]>(`${this.apiUrl}/livres?page=${page}`);
   }
 
   getBookById(id: number): Observable<Book> {
     return this.http.get<Book>(`${this.apiUrl}/livres/${id}`);
   }
 
-  getAllCategories(): Observable<string[]> {
-    return this.http.get<string[]>(`${this.apiUrl}/categories`);
+  getAllCategories(): Observable<Categories[]> {
+    return this.http.get<Categories[]>(`${this.apiUrl}/categories`);
   }
 
   getAllAuthors(): Observable<Author[]> {

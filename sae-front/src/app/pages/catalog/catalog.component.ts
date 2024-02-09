@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { Categories } from '../../core/models/categories';
 import { CategoriesService } from '../../core/services/categories.service';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { first } from 'rxjs';
 
 @Component({
   selector: 'app-catalog',
@@ -18,6 +19,7 @@ export class CatalogComponent implements OnInit {
 
   books: Book[] = [];
   categories: Categories[] = [];
+  currentPagination: number = 1;
 
   isSelectedCat: boolean = false;
 
@@ -40,16 +42,22 @@ export class CatalogComponent implements OnInit {
       this.categories = categories;
     });
 
-    this.route.queryParams.subscribe(params => {
+    this.route.queryParams.pipe(first()).subscribe(params => {
       if (params['category']) {
+        this.isSelectedCat = true;
         this.getBooksByCategory(params['category']);
-
-      }
-      else {
+      } else {
+        this.isSelectedCat = false;
         this.getAllBooks();
       }
     });
 
+  }
+
+  selectCategory(category: number) {
+    this.router.navigate(['/catalog'], { queryParams: { category: category } });
+    this.isSelectedCat = false;
+    this.getBooksByCategory(category);
   }
 
   getAllBooks() {
@@ -68,6 +76,23 @@ export class CatalogComponent implements OnInit {
       this.currentCategory = cat;
     });
     this.isSelectedCat = true;
+  }
+
+  paginationPlus() {
+    this.currentPagination++;
+    this.bookService.getAllBooks(this.currentPagination).subscribe((books) => {
+      this.books = books;
+    });
+
+  }
+
+  paginationMinus() {
+    if (this.currentPagination > 1) {
+      this.currentPagination--;
+      this.bookService.getAllBooks(this.currentPagination).subscribe((books) => {
+        this.books = books;
+      });
+    }
   }
 
 
