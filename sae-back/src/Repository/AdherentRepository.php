@@ -46,17 +46,20 @@ class AdherentRepository extends ServiceEntityRepository implements PasswordUpgr
         $nbEmprunts = count($adherent->getEmprunts());
 
         // Vérifier si l'adhérent a moins de 3 emprunts (la limite)
-        if ($nbEmprunts < 3) {
+        if ($nbEmprunts < 5) {
             return true;
         } else {
             return false;
         }
     }
 
-    public function nbEmprunt(Adherent $adherent): bool
+    public function nbEmprunt(): bool
     {
-        // Récupérer le nombre d'emprunts actuels de l'adhérent
-        $nbEmprunts = count($adherent->getEmprunts());
+        $adherents = $this->findAll();
+        foreach($adherents as $adherent){
+            $nbEmprunts [] = count($adherent->getEmprunts());
+        }
+        
         return $nbEmprunts;
     }
 

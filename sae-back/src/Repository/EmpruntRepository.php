@@ -34,6 +34,7 @@ class EmpruntRepository extends ServiceEntityRepository
     public function getAllEmprunts(): array
     {
         return $this->createQueryBuilder('e')
+            
             ->orderBy('e.id', 'ASC')
             ->getQuery()
             ->getResult();
@@ -65,7 +66,7 @@ class EmpruntRepository extends ServiceEntityRepository
         if ($emprunt) {
             // Modifier l'état de l'emprunt
             $emprunt->setEnCours(false);
-
+            $emprunt->setDateRetour(new DateTime());
             // Mettre à jour la base de données
             $this->_em->flush();
         }
