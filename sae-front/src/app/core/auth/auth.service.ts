@@ -18,12 +18,18 @@ export class AuthService {
     private http: HttpClient,
     private adherentService: AdherentService
   ) {
-    this.refreshCurrentUser();
-    console.log(this.isLoggedIn());
+
+    if (!this.isLoggedIn()) {
+      this.currentUserSubject.next(null);
+      console.log('currentUserSubject', this.currentUserSubject.getValue());
+    } else {
+      this.refreshCurrentUser();
+      console.log(this.isLoggedIn());
+    }
   }
 
   // Create global BehaviorSubject to share the authentication state
-  private currentUserSubject: BehaviorSubject<Adherent> = new BehaviorSubject<Adherent>({} as Adherent);
+  private currentUserSubject: BehaviorSubject<Adherent | null> = new BehaviorSubject<Adherent | null>({} as Adherent);
   currentUser$: Observable<Adherent | null> = this.currentUserSubject.asObservable();
 
   login(credentials: { username: string, password: string }) {

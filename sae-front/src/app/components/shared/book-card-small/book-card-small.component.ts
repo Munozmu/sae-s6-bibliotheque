@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 import { BookStatus } from '../../../core/models/bookStatus';
 import { BookService } from '../../../core/services/book.service';
 import { ReservationsService } from '../../../core/services/reservations.service';
+import { AuthService } from '../../../core/auth/auth.service';
 
 
 @Component({
@@ -19,14 +20,20 @@ export class BookCardSmallComponent {
 
   bookStatus: BookStatus = {} as BookStatus;
 
+  isLoggedIn = false;
+
   constructor(
     private bookService: BookService,
     private reservationService: ReservationsService,
+    private authService: AuthService
   ) { }
 
   ngOnInit(): void {
 
     this.refreshCurrentBookStatus();
+
+    this.isLoggedIn = this.authService.isLoggedIn();
+
 
   }
 

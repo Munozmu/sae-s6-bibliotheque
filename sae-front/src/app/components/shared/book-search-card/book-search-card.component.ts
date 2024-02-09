@@ -41,7 +41,7 @@ export class BookSearchCardComponent implements OnInit {
   }
 
   refreshCurrentBookStatus() {
-    this.bookService.getBookById(this.book.livreId || 0).subscribe(book => {
+    this.bookService.getBookById(this.book.livre_id || 0).subscribe(book => {
       this.bookService.getBookStatus(book).subscribe(status => {
         this.bookStatus = status;
         console.log('Bookstatus:', this.bookStatus);

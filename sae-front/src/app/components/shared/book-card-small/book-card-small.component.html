@@ -7,12 +7,10 @@
     />
   </div>
   <div class="flex flex-col px-3 pt-2">
-
     <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">
       {{ book.titre }}
     </h5>
     <p class="font-normal text-gray-700">
-
       {{ book.langue }} - {{ book.dateSortie | date : "yyyy" }}
       <span *ngIf="book.auteurs">
         - {{ book.auteurs[0].prenom }} {{ book.auteurs[0].nom }}</span
@@ -40,7 +38,8 @@
       [disabled]="
         bookStatus.avalaible === false ||
         bookStatus.reserved ||
-        bookStatus.borrowed
+        bookStatus.borrowed ||
+        isLoggedIn === false
       "
     >
       Réserver
