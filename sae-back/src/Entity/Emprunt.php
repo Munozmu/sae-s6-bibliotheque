@@ -2,11 +2,18 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\Put;
+use ApiPlatform\Metadata\Post;
 use Doctrine\DBAL\Types\Types;
+use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Delete;
 use Doctrine\ORM\Mapping as ORM;
+use App\State\LoanStateProcessor;
 use ApiPlatform\Metadata\ApiResource;
-use App\EventListener\EmpruntNotifier;
 use App\Repository\EmpruntRepository;
+use App\EventListener\EmpruntNotifier;
+use ApiPlatform\Metadata\GetCollection;
 use Doctrine\ORM\Mapping\EntityListeners;
 use phpDocumentor\Reflection\Types\Boolean;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -17,6 +24,15 @@ use Symfony\Component\Serializer\Annotation\Groups;
 )]
 #[ORM\Entity(repositoryClass: EmpruntRepository::class)]
 #[ORM\EntityListeners([EmpruntNotifier::class])]
+#[Post(
+    //            security: "is_granted('ROLE_ADMIN')"
+    processor: LoanStateProcessor::class,
+),]
+#[GetCollection()]
+#[Get()]
+#[Delete()]
+#[Patch()]
+#[Put()]
 class Emprunt
 {
     #[ORM\Id]
@@ -29,7 +45,10 @@ class Emprunt
     #[Groups(['emprunt', 'adherent', 'book'])]
     private ?\DateTimeInterface $dateEmprunt = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(
+        type: Types::DATE_MUTABLE,
+        nullable: true
+    )]
     #[Groups(['emprunt', 'adherent', 'book'])]
     private ?\DateTimeInterface $dateRetour = null;
 

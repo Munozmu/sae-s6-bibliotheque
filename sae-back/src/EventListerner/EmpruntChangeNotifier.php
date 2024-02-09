@@ -12,7 +12,7 @@ use Doctrine\ORM\EntityManagerInterface;
 class EmpruntNotifier
 {
 
-    public function prePersist(Emprunt $emprunts, PrePersistEventArgs $event, EntityManagerInterface $ent): void
+    public function prePersist(Emprunt $emprunts, PrePersistEventArgs $event): void
     {
 
         $maxEmprunts = 3;
