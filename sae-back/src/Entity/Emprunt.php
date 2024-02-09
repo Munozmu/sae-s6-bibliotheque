@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Metadata\ApiResource;
 use App\EventListener\EmpruntNotifier;
 use App\Repository\EmpruntRepository;
+use Doctrine\DBAL\Types\StringType;
 use Doctrine\ORM\Mapping\EntityListeners;
 use phpDocumentor\Reflection\Types\Boolean;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -109,7 +110,7 @@ class Emprunt
 
     public function __toString()
     {
-        return $this->dateEmprunt + $this->dateRetour;
+        return $this->adherent ;
     }
 
     public function isEnCours(): ?bool

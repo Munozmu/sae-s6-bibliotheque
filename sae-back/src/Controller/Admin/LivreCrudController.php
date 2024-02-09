@@ -25,6 +25,7 @@ class LivreCrudController extends AbstractCrudController
             TextField::new('langue'),
             DateField::new('dateSortie'),
             TextField::new('photoCouverture'),
+            TextField::new('resume'),
             AssociationField::new('categories')
             ->formatValue(function ($value, $entity) {
                 // Personnalisez la façon dont les catégories sont affichées dans la liste

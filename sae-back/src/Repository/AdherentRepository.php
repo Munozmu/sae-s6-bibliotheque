@@ -53,10 +53,13 @@ class AdherentRepository extends ServiceEntityRepository implements PasswordUpgr
         }
     }
 
-    public function nbEmprunt(Adherent $adherent): bool
+    public function nbEmprunt(): bool
     {
-        // Récupérer le nombre d'emprunts actuels de l'adhérent
-        $nbEmprunts = count($adherent->getEmprunts());
+        $adherents = $this->findAll();
+        foreach($adherents as $adherent){
+            $nbEmprunts [] = count($adherent->getEmprunts());
+        }
+        
         return $nbEmprunts;
     }
 

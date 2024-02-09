@@ -19,14 +19,50 @@
         <br><br>
 
         {# Afficher la liste déroulante des livres disponibles #}
-        <label for="livre">Choisir un livre disponible :</label>
-        <select name="livreId" id="livre">
+        <label for="livre1">Choisir un livre disponible :</label>
+        <select name="livreId1" id="livre1">
             <option value="">-- Choisir un livre --</option>
             {% for livre in LivresNonEmpruntes %}
                 <option value="{{ livre.id }}">{{ livre.titre }}</option>
             {% endfor %}
         </select>
         <br><br>
+
+            <label for="livre2">Choisir un livre disponible :</label>
+            <select name="livreId2" id="livre2">
+                <option value="">-- Choisir un livre --</option>
+                {% for livre in LivresNonEmpruntes %}
+                    <option value="{{ livre.id }}">{{ livre.titre }}</option>
+                {% endfor %}
+            </select>
+            <br><br>
+
+            <label for="livre3">Choisir un livre disponible :</label>
+            <select name="livreId3" id="livre3">
+                <option value="">-- Choisir un livre --</option>
+                {% for livre in LivresNonEmpruntes %}
+                    <option value="{{ livre.id }}">{{ livre.titre }}</option>
+                {% endfor %}
+            </select>
+            <br><br>
+
+            <label for="livre4">Choisir un livre disponible :</label>
+            <select name="livreId4" id="livre4">
+                <option value="">-- Choisir un livre --</option>
+                {% for livre in LivresNonEmpruntes %}
+                    <option value="{{ livre.id }}">{{ livre.titre }}</option>
+                {% endfor %}
+            </select>
+            <br><br>
+
+            <label for="livre5">Choisir un livre disponible :</label>
+            <select name="livreId5" id="livre5">
+                <option value="">-- Choisir un livre --</option>
+                {% for livre in LivresNonEmpruntes %}
+                    <option value="{{ livre.id }}">{{ livre.titre }}</option>
+                {% endfor %}
+            </select>
+            <br><br>
 
         {# Afficher la liste des livres non disponibles avec leur date de retour #}
         <h2>Livres non disponibles avec date de retour :</h2>
@@ -38,14 +74,9 @@
         <br>
 
         {# Saisie des dates d'emprunt et de retour #}
-        <label for="dateEmprunt">Date d'emprunt :</label>
-        <input type="date" id="dateEmprunt" name="dateEmprunt" required>
-        <br><br>
-
         <label for="dateRetour">Date de retour prévue :</label>
         <input type="date" id="dateRetour" name="dateRetour" required>
         <br><br>
-
         {# Bouton de soumission #}
         <input type="submit" value="Valider">
     </form>

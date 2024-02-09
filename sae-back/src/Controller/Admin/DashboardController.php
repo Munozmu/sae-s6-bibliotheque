@@ -99,39 +99,66 @@ class DashboardController extends AbstractDashboardController
         ]);
     }
 
+
     #[Route('/admin/formulaire', name: 'formulaire_emprunt')]
     public function formulaire(Request $request): Response
     {
         $adherentId = $request->query->get('adherentId');
-        $livreId = $request->query->get('livreId');
-        $dateEmprunt = null;
-        $dateRetour = null;
+        $livreId1 = $request->query->get('livreId1');
+        $livreId2 = $request->query->get('livreId2');
+        $livreId3 = $request->query->get('livreId3');
+        $livreId4 = $request->query->get('livreId4');
+        $livreId5 = $request->query->get('livreId5');
+        // $dateEmprunt = null;
+        // $dateRetour = null;
         $emprunteurs = [];
         $allAdherents = $this->adherentRepository->findAll();
-        // $dateEmprunt = toDate($request->query->get('dateEmprunt'));
-        // $dateRetour = toDate($request->query->get('dateRetour'));
+        $dateEmprunt = new DateTime($request->query->get('dateEmprunt'));
+        $dateRetour = new DateTime($request->query->get('dateRetour'));
         $adherent = null;
-        $livre = null;
+        $livre1 = null;
+        $livre2 = null;
+        $livre3 = null;
+        $livre4 = null;
+        $livre5 = null;
         foreach ($allAdherents as $adherent) {
             if ($this->adherentRepository->peutEmprunter($adherent)) {
                 // Si l'adhérent peut emprunter, ajoutez-le au tableau $emprunteurs
                 $emprunteurs[] = $adherent;
             }
         }
-        if ($livreId) {
-            $livre = $this->livreRepository->find($livreId);
+        if ($livreId1) {
+            $livre1 = $this->livreRepository->find($livreId1);
+        }
+        if ($livreId2) {
+            $livre2 = $this->livreRepository->find($livreId2);
+        }
+        if ($livreId3) {
+            $livre3 = $this->livreRepository->find($livreId3);
+        }
+        if ($livreId4) {
+            $livre2 = $this->livreRepository->find($livreId4);
+        }
+        if ($livreId5) {
+            $livre3 = $this->livreRepository->find($livreId5);
         }
         if ($adherentId) {
             $adherent = $this->adherentRepository->find($adherentId);
         }
-        if ($adherent && $livre && $dateEmprunt && $dateRetour ) {
-            $this->empruntRepository->makeEmprunt($adherent, $livre, $dateEmprunt, $dateRetour);
+        if ($adherent && $livre1 && $dateEmprunt && $dateRetour ) {
+            $this->empruntRepository->makeEmprunt($adherent, $livre1, $dateEmprunt, $dateRetour);
+        }
+        if ($adherent && $livre2 && $dateEmprunt && $dateRetour ) {
+            $this->empruntRepository->makeEmprunt($adherent, $livre2, $dateEmprunt, $dateRetour);
+        }
+        if ($adherent && $livre3 && $dateEmprunt && $dateRetour ) {
+            $this->empruntRepository->makeEmprunt($adherent, $livre3, $dateEmprunt, $dateRetour);
         }
         return $this->render('admin/formulaire.html.twig', [
             'Adherents' => $emprunteurs,
             'LivresEmpruntes' => $this->empruntRepository->getLivresNonDisponiblesAvecDateRetour(),
             'LivresNonEmpruntes' => $this->livreRepository->getLivresNonEmpruntes(),
-            'NbEmprunts' => $this->adherentRepository->nbEmprunt($adherent),
+            'NbEmprunts' => $this->adherentRepository->nbEmprunt(),
             
         ]);
     }

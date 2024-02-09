@@ -12,10 +12,10 @@ use Doctrine\ORM\EntityManagerInterface;
 class EmpruntNotifier
 {
 
-    public function prePersist(Emprunt $emprunts, PrePersistEventArgs $event, EntityManagerInterface $ent): void
+    public function prePersist(Emprunt $emprunts, PrePersistEventArgs $event): void
     {
 
-        $maxEmprunts = 3;
+        $maxEmprunts = 5;
         $adherent = $emprunts->getAdherent();
         $livre = $emprunts->getCorrespondre();
         //Check si l'utilisateur a dépassé le nombre d'emprunt
@@ -25,10 +25,12 @@ class EmpruntNotifier
 
         $reservations = $livre->getReservations();
         $idEmprunteur =  $emprunts->getAdherent()->getId();
-        $idAdherentResa = $reservations[0]->getReserverPar()->getId();
-        // Check si le livre est empruntable par l'utilisateur
-        if (!$livre->isAvailable() && $idAdherentResa !== $idEmprunteur) {
-            throw new \Exception("Le livre que vous voulez emprunter n'est pas disponible");
-        }
+        if (count($reservations) > 0){
+            $idAdherentResa = $reservations[0]->getReserverPar()->getId();
+            // Check si le livre est empruntable par l'utilisateur
+            if (!$livre->isAvailable() && $idAdherentResa !== $idEmprunteur) {
+                throw new \Exception("Le livre que vous voulez emprunter n'est pas disponible");
+            }
+        }    
     }
 }
