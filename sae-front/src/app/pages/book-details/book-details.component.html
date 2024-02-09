@@ -21,7 +21,9 @@
   <div class="flex my-10">
     <div class="flex justify-start">
       <img
-        src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fstatic.fnac-static.com%2Fmultimedia%2FImages%2FFR%2FNR%2Ff7%2F9a%2F7f%2F8362743%2F1507-1%2Ftsp20220729061039%2FL-Art-de-la-guerre.jpg&f=1&nofb=1&ipt=1c9c0acddcea2dd47fd29abb195d3ccf5f2758a90bfdbc549c889c34e876595c&ipo=images"
+        src="https://ia800505.us.archive.org/view_archive.php?archive=/25/items/m_covers_0010/m_covers_0010_52.zip&file=0010525{{
+          currentBook.id
+        }}4-M.jpg"
         alt=""
         class="py-6"
       />
@@ -95,9 +97,14 @@
   <section class="flex flex-col mt-20">
     <h1 class="text-3xl font-semibold mb-10">Livres du même auteur</h1>
     <div class="grid gap-5 grid-cols-3">
-      <app-book-card-small></app-book-card-small>
-      <app-book-card-small></app-book-card-small>
-      <app-book-card-small></app-book-card-small>
+      <ng-container *ngIf="authorBooks">
+        <ng-container *ngFor="let book of authorBooks; let i = index">
+          <ng-container *ngIf="i < 3">
+            <!-- Condition pour afficher seulement les trois premiers livres -->
+            <app-book-card-small [book]="book"></app-book-card-small>
+          </ng-container>
+        </ng-container>
+      </ng-container>
     </div>
   </section>
 </section>

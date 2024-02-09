@@ -29,11 +29,13 @@
   </div>
   <div class="w-full mt-8 pb-4 border-b flex items-center gap-10">
     <div>
-      <img
-        class="rounded-full w-32 h-32 object-cover"
-        src="https://cdn.drivek.com/configurator-imgs/cars/fr/Original/AUDI/S3/39766_SEDAN-4-DOORS/audi-s3-sedan-2020-front-side-1.jpg"
-        alt="Image de profil"
-      />
+      <ng-container *ngIf="currentUser$ | async as currentUser">
+        <img
+          [src]="currentUser.photo"
+          class="rounded-full w-32 h-32 object-cover"
+          alt="Image de profil"
+        />
+      </ng-container>
     </div>
     <div>
       <h1 class="text-3xl font-semibold">Mon compte</h1>

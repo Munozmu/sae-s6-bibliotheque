@@ -1,3 +1,5 @@
+import { Book } from "./book";
+
 export interface Author {
   id: number;
   nom: string;
@@ -7,4 +9,5 @@ export interface Author {
   nationalite?: string;
   photo?: string;
   description?: string;
+  livres: Book[];
 }

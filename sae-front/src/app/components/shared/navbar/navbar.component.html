@@ -56,11 +56,13 @@
             >{{ currentUser.prenom }} {{ currentUser.nom }}</span
           >
         </div>
-        <img
-          class="w-8 h-8 rounded-full"
-          src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fupload.wikimedia.org%2Fwikipedia%2Fcommons%2F3%2F33%2FTom_Cruise_by_Gage_Skidmore_2.jpg&f=1&nofb=1&ipt=21055b92b1aef61d4440a1836fb909480fb54603951bf8f3ca4e63668602eea2&ipo=images"
-          alt="user photo"
-        />
+        <ng-container *ngIf="currentUser$ | async as currentUser">
+          <img
+            class="w-8 h-8 rounded-full"
+            [src]="currentUser.photo"
+            alt="user photo"
+        /></ng-container>
+
         } @else {
         <div class="flex flex-col px-4 items-end">
           <span class="font-bold">Mon compte</span>

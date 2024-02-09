@@ -53,7 +53,7 @@ export class HomepageComponent implements OnInit {
 
 
     // DEV ONLY : Connect user
-    this.authService.login({ username: 'loic@gmail.com', password: 'loic' });
+    //this.authService.login({ username: 'loic@gmail.com', password: 'loic' });
 
     // Get routes param and actualize form values
     this.route.queryParams

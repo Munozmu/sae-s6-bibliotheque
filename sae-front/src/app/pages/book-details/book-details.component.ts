@@ -8,6 +8,7 @@ import { catchError, of } from 'rxjs';
 import { CommonModule, DatePipe } from '@angular/common';
 import { AuthService } from '../../core/auth/auth.service';
 import { ReservationsService } from '../../core/services/reservations.service';
+import { AuthorService } from '../../core/services/author.service';
 
 @Component({
   selector: 'app-book-details',
@@ -24,12 +25,15 @@ export class BookDetailsComponent implements OnInit {
   isBookBorrowed = true;
   isUserLogged = false;
 
+  authorBooks: Book[] = [];
+
   constructor(
     private bookService: BookService,
     private route: ActivatedRoute,
     private router: Router,
     private authService: AuthService,
-    private reservationService: ReservationsService
+    private reservationService: ReservationsService,
+    private authorService: AuthorService
   ) { }
 
   currentUser$ = this.authService.currentUser$;
@@ -39,34 +43,45 @@ export class BookDetailsComponent implements OnInit {
     // Get the last segment of the URL (the book ID)
     const bookId = parseInt(this.route.snapshot.paramMap.get('id') || '0');
 
+    // Get author books
+
+
     // Check if the user is logged
     this.isUserLogged = this.authService.isLoggedIn();
 
     this.bookService.getBookById(bookId)
       .pipe(
         catchError((error) => {
-          // Check if the error status is 404
+          // Vérifie si le statut d'erreur est 404
           if (error.status === 404) {
-            // Redirect to the home page or any other page as needed
+            // Redirige vers la page d'accueil ou toute autre page nécessaire
             this.router.navigate(['/']);
-            // You can also return an observable to replace the original one
-            return of(null); // or any other observable
+            // Vous pouvez également renvoyer un observable pour remplacer l'observable d'origine
+            return of(null); // ou tout autre observable
           } else {
-            // If it's not a 404 error, re-throw the error
+            // S'il ne s'agit pas d'une erreur 404, rejeter l'erreur
             throw error;
           }
         })
       )
       .subscribe((book: Book | null) => {
-        // Check if book is not null to avoid errors if you decide to return an observable in catchError
+        // Vérifie si le livre n'est pas nul pour éviter les erreurs si vous décidez de retourner un observable dans catchError
         if (book) {
           this.currentBook = book;
 
+          // Appel au service de l'auteur après avoir récupéré le livre
+          this.authorService.getAuthorById(this.currentBook.auteurs[0].id).subscribe((author) => {
+            if (author) {
+              this.authorBooks = author.livres;
+              console.log(this.authorBooks);
+            }
+          });
+
           // -------
-          // Disabled the button if the book is already borrowed or reserved
+          // Désactive le bouton si le livre est déjà emprunté ou réservé
           // -------
 
-          // Si il y a un emprunt
+          // S'il y a un emprunt
           if (this.currentBook.emprunts) {
             const emprunts = this.currentBook.emprunts as any[];
             if (emprunts.length === 0 || !emprunts[emprunts.length - 1].enCours) {
@@ -94,6 +109,7 @@ export class BookDetailsComponent implements OnInit {
         }
 
       });
+
   }
 
 
