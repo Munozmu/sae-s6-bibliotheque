@@ -21,8 +21,11 @@ export interface Book {
     };
   }[];
   auteurs: Author[];
+  auteur_id?: number;
   resume?: string;
   auteurNom?: string;
+  auteur_nom?: string;
+  prenom?: string;
   auteurPrenom?: string;
   auteurId?: number;
 }

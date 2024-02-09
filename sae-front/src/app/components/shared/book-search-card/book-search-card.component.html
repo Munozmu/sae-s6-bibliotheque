@@ -31,8 +31,8 @@
       </p>
       <p class="font-normal text-gray-700">
         <a class="underline">
-          <span *ngIf="book.auteurId"
-            >{{ book.auteurNom }} {{ book.auteurPrenom }}</span
+          <span *ngIf="book.auteur_id"
+            >{{ book.auteur_nom }} {{ book.prenom }}</span
           >
         </a>
         - {{ book.dateSortie | date : "YYYY" }} - 256 pages
