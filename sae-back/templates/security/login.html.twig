@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>
+			{% block title %}Log in!
+			{% endblock %}
+		</title>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+		<style>
+			body {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				height: 100vh;
+				background-color: #f5f5f5;
+			}
+			.form-signin {
+				width: 100%;
+				max-width: 400px;
+				padding: 15px;
+				margin: auto;
+				background-color: #fff;
+				border-radius: 5px;
+				box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+			}
+			.form-signin .form-control {
+				position: relative;
+				box-sizing: border-box;
+				height: auto;
+				padding: 10px;
+				font-size: 16px;
+			}
+			.form-signin label {
+				font-weight: bold;
+			}
+			.form-signin button {
+				margin-top: 15px;
+			}
+		</style>
+	</head>
+	<body>
+		<form method="post" class="form-signin">
+			{% if error %}
+				<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+			{% endif %}
+
+			{% if app.user %}
+				<div class="mb-3">
+					You are logged in as
+					{{ app.user.userIdentifier }},
+					<a href="{{ path('app_admin_logout') }}">Logout</a>
+				</div>
+			{% endif %}
+
+			<h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+			<label for="inputEmail">Email</label>
+			<input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control mb-2" autocomplete="email" required autofocus>
+			<label for="inputPassword">Password</label>
+			<input type="password" name="password" id="inputPassword" class="form-control mb-2" autocomplete="current-password" required>
+
+			<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+			<button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+		</form>
+	</body>
+</html>
