@@ -2,9 +2,6 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Metadata\Get;
-use ApiPlatform\Metadata\Put;
-use ApiPlatform\Metadata\Post;
 use Doctrine\DBAL\Types\Types;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Delete;
@@ -24,15 +21,6 @@ use Symfony\Component\Serializer\Annotation\Groups;
 )]
 #[ORM\Entity(repositoryClass: EmpruntRepository::class)]
 #[ORM\EntityListeners([EmpruntNotifier::class])]
-#[Post(
-    //            security: "is_granted('ROLE_ADMIN')"
-    processor: LoanStateProcessor::class,
-),]
-#[GetCollection()]
-#[Get()]
-#[Delete()]
-#[Patch()]
-#[Put()]
 class Emprunt
 {
     #[ORM\Id]

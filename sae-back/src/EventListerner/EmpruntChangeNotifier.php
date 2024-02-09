@@ -27,7 +27,7 @@ class EmpruntNotifier
         $idEmprunteur =  $emprunts->getAdherent()->getId();
         $idAdherentResa = $reservations[0]->getReserverPar()->getId();
         // Check si le livre est empruntable par l'utilisateur
-        if (!$livre->isAvailable() && $idAdherentResa !== $idEmprunteur) {
+        if (!$livre->isAvailable() || $idAdherentResa !== $idEmprunteur) {
             throw new \Exception("Le livre que vous voulez emprunter n'est pas disponible");
         }
     }
