@@ -103,7 +103,7 @@ class DashboardController extends AbstractDashboardController
     #[Route('/admin/formulaire', name: 'formulaire_emprunt')]
 public function formulaire(Request $request): Response
 {
-    try {
+    
         $adherentId = $request->query->get('adherentId');
         $livreId1 = $request->query->get('livreId1');
         $livreId2 = $request->query->get('livreId2');
@@ -162,13 +162,8 @@ public function formulaire(Request $request): Response
             // 'NbEmprunts' => $this->adherentRepository->nbEmprunt(),
             
         ]);
-    } catch (\Exception $e) {
-        // Gérer l'exception ici, par exemple en renvoyant une réponse avec un message d'erreur
-        return $this->render('admin/password.html.twig', [
-            'Reponse' => "Une erreur est survenue : Le nombre total d'emprunt a été atteint, veuillez rendre des livres avant de pouvoir emprunter à nouveau",
-        ]);
     }
-}
+
 
     
 

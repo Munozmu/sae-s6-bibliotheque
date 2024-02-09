@@ -4,23 +4,50 @@
 
 {% block body_id 'dashboard' %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 960px;
+            margin: auto;
+            padding: 20px;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        .card {
+            margin-bottom: 20px;
+        }
+    </style>
+{% endblock %}
+
 {% block main %}
     <div class="container">
         <section>
             <h2>Livres Empruntés</h2>
             <br></br>
-            <div class="bg-light p-3 rounded mb-3">
-                <ul class="list-unstyled">
-                    {% for emprunt in LivresEmprunts %}
-                        <li class="mb-3">
-                            <strong>Emprunteur:</strong> {{ emprunt.adherent.nom }} {{ emprunt.adherent.prenom }} |
-                            <strong>Livre:</strong> {{ emprunt.correspondre.titre }} |
-                            <strong>Date de début d'emprunt:</strong> {{ emprunt.dateEmprunt|date('Y-m-d') }} |
+            {% for emprunt in LivresEmprunts %}
+                <div class="card">
+                    <div class="card-body">
+                        <p class="card-text">
+                            <strong>Emprunteur:</strong> {{ emprunt.adherent.nom }} {{ emprunt.adherent.prenom }} <br>
+                            <strong>Livre:</strong> {{ emprunt.correspondre.titre }} <br>
+                            <strong>Date de début d'emprunt:</strong> {{ emprunt.dateEmprunt|date('Y-m-d') }} <br>
                             <strong>Date de fin d'emprunt:</strong> {{ emprunt.dateRetour ? emprunt.dateRetour|date('Y-m-d') : 'Non retourné' }}
-                        </li>
-                    {% endfor %}
-                </ul>
-            </div>
+                        </p>
+                    </div>
+                </div>
+            {% endfor %}
         </section>
     </div>
 {% endblock %}

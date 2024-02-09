@@ -88,17 +88,6 @@
         <p>Nombre d'emprunts : {{ NbEmprunts }}</p>
         <p>Capacité d'emprunt : {{ PeutEmprunter ? 'Oui' : 'Non' }}</p>
     {% endif %}
-    {% block javascripts %}
-    {{ parent() }}
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const errorMessage = "{{ app.session.flashbag.get('error')|join(' ') }}";
-            if(errorMessage.trim() !== '') {
-                alert(errorMessage);
-            }
-        });
-    </script>
-    {% endblock %}
 
 {% endblock %}
 
